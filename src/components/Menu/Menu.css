@@ -1,0 +1,46 @@
+.Menu{
+    padding: 20px 0 20px 0;
+    color: white;
+   }
+   .Menu-items{
+    background-color: #ff8533;
+    padding: 20px;
+    width: 100%;
+    height: 80px;
+    top: 0px;
+    display: flex;
+    flex-direction: row;   
+    list-style-type:none ;
+    justify-content: flex-end;
+    position: fixed;
+   }
+   .Menu-items li{
+       margin-right: 30px;
+       padding: 5px;
+   }
+   .Menu-items li:hover{
+       background: red;
+       cursor: pointer;
+       border-radius: 5px;
+   }
+
+   .tabela{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+}
+
+.btn{
+    margin: 5px;
+}
+
+.operacoes{
+    width: 180px;
+    text-align: center;
+}
+
+.iconOperations{
+    width: 20px;
+    height: 20px;
+}

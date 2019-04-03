@@ -1,0 +1,84 @@
+.Login{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffb380;
+  }
+  .Login-body{ 
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    background-color: #fff;
+    width: 40%;
+    height: 75%;
+    text-align: center;
+    padding: 20px; 
+    border-radius: 40px;
+    border: solid black 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+  .Login-bodyTop{
+    width: 100%;
+  }
+  .Login-body-subTitle{
+    margin: 0px;
+  }
+  .Login-body-title{
+    margin: 0px;
+    padding: 20px;
+  }
+  .Login-body-middleForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .Login-body-userInformation, .Login-body-userInformation-1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+  }
+  .Login-body-buttons{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .Login-body-image{
+    height: 110px;
+    width: 200px;
+  }
+  
+  .buttonNewUser{
+    padding: 10px;
+    width: 70%;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+  }
+  
+  .Login-body-buttonLogin{
+    border-radius: 10px;
+    padding: 10px;
+    width: 30%;
+    background-color: #4d0099;
+    border: solid 2px black;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .buttonNewUser {
+    background-color: #7300e6;
+    border: solid 2px black;
+  }
+  .buttonNewUser:hover, .Login-body-buttonLogin:hover{
+    background-color: #661aff;
+  }

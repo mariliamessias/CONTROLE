@@ -1,0 +1,11 @@
+.SimpleLink{
+    margin: 10px;
+    width: 80%;
+    text-align: right;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.SimpleLink:hover{
+    color: blue;
+}
