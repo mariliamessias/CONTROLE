@@ -18,31 +18,70 @@ class Menu extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleShowModal = this.handleShowModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleShowPagar = this.handleShowPagar.bind(this);
+        this.handleClosePagar = this.handleClosePagar.bind(this);
   
         this.state = {
           show: false,
           showModal: false,
+          showPagar: false,
           disabled : true,
           despesas: [],
           description:'', 
           dateVencto:'', 
+          _id: '',
           status: '',
           value:'',
-          item : ''
+          item : '',
+          usuario:''
         };
 
         this.save = this.save.bind(this);
         this.pagarDespesa = this.pagarDespesa.bind(this);
         this.setDescription =  this.setDescription.bind(this);
         this.setDateVencto = this.setDateVencto.bind(this);
+        this.setUsuario = this.setUsuario.bind(this);
         this.setValue = this.setValue.bind(this);
         this.validaForm = this.validaForm.bind(this);
       }
       
-      pagarDespesa(item){
-        console.log(`Clicou em pagar! ${item._id}`);
-        this.setState({item : 'biscoito'});
-
+      pagarDespesa(){
+        console.log(this.state.item.description);
+        $.ajax({
+          url:'http://localhost:5000/despesas/'+this.state.item._id,
+          contentType: 'application/json',
+          type: 'PUT',
+          data: JSON.stringify({
+            description:this.state.item.description, 
+            usuario: this.state.item.usuario,
+            dateVencto:this.state.item.dateVencto, 
+            value: this.state.item.value, 
+            status: 'paga'
+          }),
+          success: function(resposta){
+            $.ajax({
+              url: "http://localhost:5000/despesas",
+              dataType: "json",
+              success:function(resposta){
+                const result = resposta.map(item => 
+                  {
+                    if (item.status === 'cadastrada'){
+                      return item;
+                    }
+                });
+    
+                this.setState({despesas:result});
+                this.handleCloseModal();
+              }.bind(this)
+            })
+            this.handleClosePagar();
+            
+          }.bind(this),
+          
+          error: function (resposta) {
+            console.log(`Mensagem: ${resposta}`);
+          }
+        })
       }
 
       excluirDespesa(){
@@ -54,7 +93,13 @@ class Menu extends Component{
               url: "http://localhost:5000/despesas",
               dataType: "json",
               success:function(resposta){
-                this.setState({despesas:resposta});
+                const result = resposta.map(item => 
+                  {
+                    if (item.status === 'cadastrada'){
+                      return item;
+                    }
+                });
+                this.setState({despesas:result});
                 this.handleCloseModal();
               }.bind(this)
             })
@@ -72,12 +117,42 @@ class Menu extends Component{
         handleClose() {
           this.setState({ show: false });
         }
-         handleShow() {
+         handleShow(item) {
+          let date = new Date(item.dateVencto);
+          let dateConv = '';
+           if(item.description || item.value || item.dateVencto || item.status || item.usuario){
+             if (item.dateVencto) {
+               dateConv = date.getFullYear() + '-' + ('0'+ (date.getMonth() + 1)).slice(-2) + '-' + ('0'+ date.getDate()).slice(-2);
+             }
+            this.setState({
+              description: item.description,
+              value: item.value,
+              dateVencto: dateConv,
+              status: item.status,
+              usuario: item.usuario
+            })
+           }else {
+             this.setState({
+              description: '',
+              value: '',
+              dateVencto: '',
+              status: '',
+              usuario: ''
+             })
+           };
           this.setState({ show: true });
         }
 
         handleShowModal(item){
           this.setState({item:item, showModal: true});
+        }
+
+        handleShowPagar(item){
+          this.setState({item:item, showPagar: true })
+        }
+
+        handleClosePagar(item){
+          this.setState({showPagar: false})
         }
         
         handleCloseModal(){
@@ -88,20 +163,27 @@ class Menu extends Component{
             url: "http://localhost:5000/despesas",
             dataType: "json",
             success:function(resposta){
-              this.setState({despesas:resposta});
+              const result = resposta.map(item => 
+              {
+                if (item.status === 'cadastrada'){
+                  return item;
+                }
+              });
+              this.setState({despesas:result});
             }.bind(this)
           })
         } 
 
         save(){
-            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "") {
-                $.ajax({
+            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
+              $.ajax({
                     url:'http://localhost:5000/despesas',
                     contentType: 'application/json',
                     dataType: 'json',
                     type: 'post',
                     data: JSON.stringify({
                       description:this.state.description, 
+                      usuario: this.state.usuario,
                       dateVencto:this.state.dateVencto, 
                       value: this.state.value, 
                       status: 'cadastrada'
@@ -113,11 +195,11 @@ class Menu extends Component{
                       this.handleClose();
                       this.state.description = "";
                       this.state.dateVencto = "";
+                      this.state.usuario = "";
                       this.state.value = "";
                       this.state.status = "";
                     }.bind(this),
                     error: function(resposta){
-                      console.log("erro");
                     }
                   })
             }else{
@@ -126,7 +208,7 @@ class Menu extends Component{
         }
 
         validaForm(){
-            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "") {
+            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
                 this.state.disabled = false;
             }else{
                 this.state.disabled = true;
@@ -140,6 +222,11 @@ class Menu extends Component{
 
         setDateVencto(evento){
           this.setState({dateVencto :evento.target.value});
+          this.validaForm();
+        }
+
+        setUsuario(evento){
+          this.setState({usuario :evento.target.value});
           this.validaForm();
         }
 
@@ -167,6 +254,9 @@ class Menu extends Component{
                     <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
                     <SimpleText>Valor da despesa:</SimpleText>
                     <InputText type="number" placeholder="R$ 0,00" value={this.state.value} onChange={this.setValue}></InputText>
+                    <SimpleText>De que lontra é a conta?</SimpleText>
+
+                    <InputText type="text" value={this.state.usuario} onChange={this.setUsuario}></InputText>
                   </Modal.Body>
                   <Modal.Footer>
                       <Button variant="secondary" onClick={this.handleClose}>
@@ -189,16 +279,34 @@ class Menu extends Component{
                       <Button variant="secondary" onClick={this.handleCloseModal}>
                         Cancelar
                       </Button>
-                      <Button disabled={this.state.disabled}  variant="primary" onClick={(event) => {this.excluirDespesa()}}>
+                      <Button variant="primary" onClick={(event) => {this.excluirDespesa()}}>
                         Confirmar
                       </Button>
                   </Modal.Footer>
-                </Modal>              
+                </Modal>  
+
+                <Modal show={this.state.showPagar} onHide={this.handleClosePagar}>
+                  <Modal.Header closeButton>
+                      <Modal.Title>Pagar Despesa</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <SimpleText>Tem certeza que deseja confirmar o pagamento dessa despesa?</SimpleText>
+                   </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={this.handleClosePagar}>
+                        Cancelar
+                      </Button>
+                      <Button variant="primary" onClick={(event) => {this.pagarDespesa()}}>
+                        Confirmar
+                      </Button>
+                  </Modal.Footer>
+                </Modal>                
                 
           <Table striped bordered hover className="tabela">
             <thead>
                 <tr>
                 <th>Despesa</th>
+                <th>Lontroso</th>
                 <th>Data de Vencimento</th>
                 <th>Valor</th>
                 <th>Operação</th>
@@ -207,20 +315,24 @@ class Menu extends Component{
             <tbody>
                 {
                     this.state.despesas.map((item) => {
+                      if (item !== '' && item !== undefined){
                         return (
-                            <tr key={item._id}>
-                            <td>{item.description}</td>
-                            <td>{item.dateVencto}</td>
-                            <td>{item.value}</td>
-                            <td className="operacoes">
-                              <div className="operacoes">
-                                <button className="btn btn-success" onClick={()=> this.pagarDespesa(item)}><img className="iconOperations" src={check} /></button>
-                                <button className="btn btn-danger" onClick={() => this.handleShowModal(item)}><img className="iconOperations" src={excluir} /></button>
-                                <button className="btn btn-info" onClick={() => this.editarDespesa(item)}><img className="iconOperations" src={editar} /></button>
-                              </div>
-                            </td>
-                            </tr> 
-                        )
+                          <tr key={item._id}>
+                          <td>{item.description}</td>
+                          <td>{item.usuario}</td>
+                          <td>{item.dateVencto}</td>
+                          <td>{item.value}</td>
+                          <td className="operacoes">
+                            <div className="operacoes">
+                              <button className="btn btn-success" onClick={()=> this.handleShowPagar(item)}><img className="iconOperations" src={check} /></button>
+                              <button className="btn btn-danger" onClick={() => this.handleShowModal(item)}><img className="iconOperations" src={excluir} /></button>
+                              <button className="btn btn-info" onClick={() => this.handleShow(item)}><img className="iconOperations" src={editar} /></button>
+                            </div>
+                          </td>
+                          </tr> 
+                      )
+                      }
+
                     })
                 }
             </tbody>

@@ -3,10 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.4",
+    "babel-loader": "^8.0.5",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.0",
+    "next": "^8.0.4",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.6",
     "react-burger-menu": "^2.6.8",
-    "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "webpack": "^4.28.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -22,5 +29,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {}
 }
