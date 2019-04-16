@@ -26,6 +26,7 @@ class Menu extends Component{
           showModal: false,
           showPagar: false,
           disabled : true,
+          cadastrar: false,
           despesas: [],
           description:'', 
           dateVencto:'', 
@@ -43,10 +44,10 @@ class Menu extends Component{
         this.setUsuario = this.setUsuario.bind(this);
         this.setValue = this.setValue.bind(this);
         this.validaForm = this.validaForm.bind(this);
+        this.editarDespesa = this.editarDespesa.bind(this);
       }
       
       pagarDespesa(){
-        console.log(this.state.item.description);
         $.ajax({
           url:'http://localhost:5000/despesas/'+this.state.item._id,
           contentType: 'application/json',
@@ -110,130 +111,171 @@ class Menu extends Component{
         })
       }
 
-      editarDespesa(item){
-        console.log(`Você clicou em Editar Despesa! ${item._id}`);
+      editarDespesa(){
+        $.ajax({
+          url:'http://localhost:5000/despesas/'+this.state._id,
+          contentType: 'application/json',
+          type: 'PUT',
+          data: JSON.stringify({
+            description:this.state.description, 
+            usuario: this.state.usuario,
+            dateVencto:this.state.dateVencto, 
+            value: this.state.value, 
+            status: 'cadastrada'
+          }),
+          success: function(resposta){
+            $.ajax({
+              url: "http://localhost:5000/despesas",
+              dataType: "json",
+              success:function(resposta){
+                const result = resposta.map(item => 
+                  {
+                    if (item.status === 'cadastrada'){
+                      return item;
+                    }
+                });
+    
+                this.setState({despesas:result});
+                this.handleClose();
+              }.bind(this)
+            })
+            // this.handleClosePagar();
+          }.bind(this),
+          
+          error: function (resposta) {
+            console.log(`Mensagem: ${resposta}`);
+          }
+        })
       }
 
-        handleClose() {
-          this.setState({ show: false });
-        }
-         handleShow(item) {
-          let date = new Date(item.dateVencto);
-          let dateConv = '';
-           if(item.description || item.value || item.dateVencto || item.status || item.usuario){
-             if (item.dateVencto) {
-               dateConv = date.getFullYear() + '-' + ('0'+ (date.getMonth() + 1)).slice(-2) + '-' + ('0'+ date.getDate()).slice(-2);
-             }
-            this.setState({
-              description: item.description,
-              value: item.value,
-              dateVencto: dateConv,
-              status: item.status,
-              usuario: item.usuario
-            })
-           }else {
-             this.setState({
-              description: '',
-              value: '',
-              dateVencto: '',
-              status: '',
-              usuario: ''
-             })
-           };
-          this.setState({ show: true });
-        }
-
-        handleShowModal(item){
-          this.setState({item:item, showModal: true});
-        }
-
-        handleShowPagar(item){
-          this.setState({item:item, showPagar: true })
-        }
-
-        handleClosePagar(item){
-          this.setState({showPagar: false})
-        }
+      handleClose() {
+        this.setState({ show: false });
+      }
         
-        handleCloseModal(){
-          this.setState({showModal: false})
-        }
-        componentDidMount(){
-          $.ajax({
-            url: "http://localhost:5000/despesas",
-            dataType: "json",
-            success:function(resposta){
-              const result = resposta.map(item => 
-              {
-                if (item.status === 'cadastrada'){
-                  return item;
-                }
-              });
-              this.setState({despesas:result});
-            }.bind(this)
+      handleShow(item) {
+        let date = new Date(item.dateVencto);
+        let dateConv = '';
+          if(item.description || item.value || item.dateVencto || item.status || item.usuario){
+            if (item.dateVencto) {
+              this.setState({cadastrar: false});
+              dateConv = date.getFullYear() + '-' + ('0'+ (date.getMonth() + 1)).slice(-2) + '-' + ('0'+ date.getUTCDate()).slice(-2);
+            }
+          this.setState({
+            _id: item._id,
+            description: item.description,
+            value: item.value,
+            dateVencto: dateConv,
+            status: item.status,
+            usuario: item.usuario
           })
-        } 
+          }else {
+            this.setState({
+            description: '',
+            value: '',
+            dateVencto: '',
+            status: '',
+            usuario: '',
+            cadastrar: true
+            })
+          };
+        this.setState({ show: true });
+      }
 
-        save(){
-            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
-              $.ajax({
-                    url:'http://localhost:5000/despesas',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    type: 'post',
-                    data: JSON.stringify({
-                      description:this.state.description, 
-                      usuario: this.state.usuario,
-                      dateVencto:this.state.dateVencto, 
-                      value: this.state.value, 
-                      status: 'cadastrada'
-                    }),
-                    success: function(resposta){
-                      var teste = this.state.despesas;
-                      teste.push(resposta);
-                      this.setState({despesas:teste});
-                      this.handleClose();
-                      this.state.description = "";
-                      this.state.dateVencto = "";
-                      this.state.usuario = "";
-                      this.state.value = "";
-                      this.state.status = "";
-                    }.bind(this),
-                    error: function(resposta){
-                    }
-                  })
-            }else{
-                alert("preencha todos os campos")
-            }  
-        }
+      handleShowModal(item){
+        this.setState({item:item, showModal: true});
+      }
 
-        validaForm(){
-            if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
-                this.state.disabled = false;
-            }else{
-                this.state.disabled = true;
-            } 
-        }
+      handleShowPagar(item){
+        this.setState({item:item, showPagar: true })
+      }
 
-        setDescription(evento){
-          this.setState({description :evento.target.value});
-          this.validaForm();
-        }
+      handleClosePagar(item){
+        this.setState({showPagar: false})
+      }
+      
+      handleCloseModal(){
+        this.setState({showModal: false})
+      }
+      componentDidMount(){
+        $.ajax({
+          url: "http://localhost:5000/despesas",
+          dataType: "json",
+          success:function(resposta){
+            const result = resposta.map(item => 
+            {
+              if (item.status === 'cadastrada'){
+                return item;
+              }
+            });
+            this.setState({despesas:result});
+          }.bind(this)
+        })
+      } 
 
-        setDateVencto(evento){
-          this.setState({dateVencto :evento.target.value});
-          this.validaForm();
+      save(cadastrar){
+        if (cadastrar) {
+          if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
+            $.ajax({
+                  url:'http://localhost:5000/despesas',
+                  contentType: 'application/json',
+                  dataType: 'json',
+                  type: 'post',
+                  data: JSON.stringify({
+                    description:this.state.description, 
+                    usuario: this.state.usuario,
+                    dateVencto:this.state.dateVencto, 
+                    value: this.state.value, 
+                    status: 'cadastrada'
+                  }),
+                  success: function(resposta){
+                    var teste = this.state.despesas;
+                    teste.push(resposta);
+                    this.setState({despesas:teste});
+                    this.handleClose();
+                    this.state.description = "";
+                    this.state.dateVencto = "";
+                    this.state.usuario = "";
+                    this.state.value = "";
+                    this.state.status = "";
+                  }.bind(this),
+                  error: function(resposta){
+                  }
+                })
+          }else{
+              alert("preencha todos os campos")
+          }  
+        }else{
+          this.editarDespesa();
         }
+      }
 
-        setUsuario(evento){
-          this.setState({usuario :evento.target.value});
-          this.validaForm();
-        }
+      validaForm(){
+          if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
+              this.state.disabled = false;
+          }else{
+              this.state.disabled = true;
+          } 
+      }
 
-        setValue(evento){
-          this.setState({value :evento.target.value});
-          this.validaForm();
-        }
+      setDescription(evento){
+        this.setState({description :evento.target.value});
+        this.validaForm();
+      }
+
+      setDateVencto(evento){
+        this.setState({dateVencto :evento.target.value});
+        this.validaForm();
+      }
+
+      setUsuario(evento){
+        this.setState({usuario :evento.target.value});
+        this.validaForm();
+      }
+
+      setValue(evento){
+        this.setState({value :evento.target.value});
+        this.validaForm();
+      }
 
       render() {
         return (
@@ -262,7 +304,7 @@ class Menu extends Component{
                       <Button variant="secondary" onClick={this.handleClose}>
                         Cancelar
                       </Button>
-                      <Button disabled={this.state.disabled}  variant="primary" onClick={(event) => {this.save()}}>
+                      <Button disabled={this.state.disabled}  variant="primary" onClick={(event) => {this.save(this.state.cadastrar)}}>
                         Salvar
                       </Button>
                   </Modal.Footer>
@@ -316,12 +358,19 @@ class Menu extends Component{
                 {
                     this.state.despesas.map((item) => {
                       if (item !== '' && item !== undefined){
+                        
+                        let dateTr = new Date(item.dateVencto);
+                        dateTr.setUTCHours(5);
+                        let dateCon= '';
+                        
+                        dateCon =  ('0'+ dateTr.getUTCDate()).slice(-2) + '/'+ ('0'+ (dateTr.getMonth() + 1)).slice(-2)+'/'+dateTr.getFullYear();
+                        
                         return (
                           <tr key={item._id}>
                           <td>{item.description}</td>
                           <td>{item.usuario}</td>
-                          <td>{item.dateVencto}</td>
-                          <td>{item.value}</td>
+                          <td>{dateCon}</td>
+                          <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
                           <td className="operacoes">
                             <div className="operacoes">
                               <button className="btn btn-success" onClick={()=> this.handleShowPagar(item)}><img className="iconOperations" src={check} /></button>
