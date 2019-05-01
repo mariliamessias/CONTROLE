@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import $ from 'jquery';
 import check from '../../images/check.png';
 import Button from 'react-bootstrap/Button';
@@ -283,7 +284,9 @@ class Menu extends Component{
             <ul className="Menu-items">
                 <li>Consultar Despesas Pagas</li>
                 <li onClick={this.handleShow}>Cadastrar Nova Despesa</li>
-                <li>Sair</li>
+                <li>            
+                  <Link to="/" className="Menu-items-btn-sair">Sair</Link>
+                </li>
             </ul>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>

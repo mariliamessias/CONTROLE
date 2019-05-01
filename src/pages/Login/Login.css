@@ -71,7 +71,7 @@
     width: 30%;
     background-color: #4d0099;
     border: solid 2px black;
-    color: white;
+    color: black;
     text-decoration: none;
   }
   
@@ -81,4 +81,6 @@
   }
   .buttonNewUser:hover, .Login-body-buttonLogin:hover{
     background-color: #661aff;
+    text-decoration: none;
+    color: white;
   }

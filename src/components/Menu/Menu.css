@@ -44,3 +44,13 @@
     width: 20px;
     height: 20px;
 }
+
+.Menu-items-btn-sair{
+    color: white;
+}
+
+.Menu-items-btn-sair:hover{
+    text-decoration:none;
+    color: white;
+
+}
