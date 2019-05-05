@@ -140,7 +140,6 @@ class Menu extends Component{
                 this.handleClose();
               }.bind(this)
             })
-            // this.handleClosePagar();
           }.bind(this),
           
           error: function (resposta) {
@@ -212,6 +211,10 @@ class Menu extends Component{
           }.bind(this)
         })
       } 
+
+      componentWillMount(){
+        alert(this.props.state.email +' teste ' + this.props.state.nome);
+      }
 
       save(cadastrar){
         if (cadastrar) {
