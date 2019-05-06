@@ -39,7 +39,17 @@
     width: 180px;
     text-align: center;
 }
-
+.Menu-items-userName{
+    margin-right:52%;
+    font-size: 25px;
+}
+.form-control-lg{
+    width: 90% !important;
+    font-size: 1rem !important;
+}
+.Menu-items-select{
+    padding: 10px;
+}
 .iconOperations{
     width: 20px;
     height: 20px;

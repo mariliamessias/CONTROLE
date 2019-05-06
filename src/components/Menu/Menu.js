@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import InputText from '../InputText/InputTex';
 import Table from 'react-bootstrap/Table';
 import './Menu.css';
+import CurrencyInput from 'react-currency-input';
 import SimpleText from '../SimpleText/SimpleText';
 import excluir from '../../images/delete.png';
 import editar from '../../images/change.png';
@@ -71,7 +72,11 @@ class Menu extends Component{
                       return item;
                     }
                 });
-    
+                
+                result.sort(function(a,b) { 
+                  return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
+                });
+
                 this.setState({despesas:result});
                 this.handleCloseModal();
               }.bind(this)
@@ -100,6 +105,9 @@ class Menu extends Component{
                     if (item.status === 'cadastrada'){
                       return item;
                     }
+                });
+                result.sort(function(a,b) { 
+                  return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
                 });
                 this.setState({despesas:result});
                 this.handleCloseModal();
@@ -135,7 +143,9 @@ class Menu extends Component{
                       return item;
                     }
                 });
-    
+                result.sort(function(a,b) { 
+                  return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
+                });
                 this.setState({despesas:result});
                 this.handleClose();
               }.bind(this)
@@ -197,6 +207,7 @@ class Menu extends Component{
         this.setState({showModal: false})
       }
       componentDidMount(){
+
         $.ajax({
           url: "http://localhost:5000/despesas",
           dataType: "json",
@@ -207,14 +218,15 @@ class Menu extends Component{
                 return item;
               }
             });
+
+            result.sort(function(a,b) { 
+              return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
+            });
+
             this.setState({despesas:result});
           }.bind(this)
         })
-      } 
-
-      componentWillMount(){
-        alert(this.props.state.email +' teste ' + this.props.state.nome);
-      }
+      }    
 
       save(cadastrar){
         if (cadastrar) {
@@ -234,6 +246,11 @@ class Menu extends Component{
                   success: function(resposta){
                     var teste = this.state.despesas;
                     teste.push(resposta);
+
+                    teste.sort(function(a,b) { 
+                      return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
+                    });
+
                     this.setState({despesas:teste});
                     this.handleClose();
                     this.state.description = "";
@@ -276,17 +293,21 @@ class Menu extends Component{
         this.validaForm();
       }
 
-      setValue(evento){
-        this.setState({value :evento.target.value});
+      setValue(evento, value, maskedVaklue){
+        this.setState({value :value});
         this.validaForm();
       }
 
       render() {
+
+        const { value } = this.state
+
         return (
           <div className="Menu">
             <ul className="Menu-items">
+               <p className="Menu-items-userName">{this.props.state.nome}</p>
                 <li>Consultar Despesas Pagas</li>
-                <li onClick={this.handleShow}>Cadastrar Nova Despesa</li>
+                <li onClick={this.handleShow}>Cadastrar Despesa</li>
                 <li>            
                   <Link to="/" className="Menu-items-btn-sair">Sair</Link>
                 </li>
@@ -301,10 +322,17 @@ class Menu extends Component{
                     <SimpleText>Data de vencimento:</SimpleText>
                     <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
                     <SimpleText>Valor da despesa:</SimpleText>
-                    <InputText type="number" placeholder="R$ 0,00" value={this.state.value} onChange={this.setValue}></InputText>
+                    <div className="Menu-items-select">
+                    <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue}/>
+                    </div>
                     <SimpleText>De que lontra é a conta?</SimpleText>
-
-                    <InputText type="text" value={this.state.usuario} onChange={this.setUsuario}></InputText>
+                    <div className="Menu-items-select">
+                      <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
+                      <option value="" selected disabled>Selecione uma Lontra</option>
+                      <option value="mol">Mol</option>
+                      <option value="coita">Coita</option>
+                    </select>
+                    </div>
                   </Modal.Body>
                   <Modal.Footer>
                       <Button variant="secondary" onClick={this.handleClose}>

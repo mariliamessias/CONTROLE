@@ -34,7 +34,6 @@ validaPagina(){
       const result = this.getResult();
       
      if (result.status === 200) {
-          // return <Menu location={this.props.location.state}/>
           return <Menu state={{
             id: result.responseJSON.id,
             nome: result.responseJSON.nome,
@@ -54,7 +53,6 @@ validaPagina(){
 
   render() {
       return (
-
       <div id="App">
         <SideBar />
         <div id="page-wrap">
