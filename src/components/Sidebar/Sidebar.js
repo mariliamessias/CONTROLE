@@ -14,7 +14,7 @@ class SideBar extends Component {
 componentDidMount(){
     let valueSum = 0;
     $.ajax({
-      url: "http://localhost:5000/despesas",
+      url: "https://api-despesas.herokuapp.com/despesas",
       dataType: "json",
       success:function(resposta){
         resposta.forEach(item => 

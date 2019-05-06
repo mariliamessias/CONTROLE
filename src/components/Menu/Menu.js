@@ -51,7 +51,7 @@ class Menu extends Component{
       
       pagarDespesa(){
         $.ajax({
-          url:'http://localhost:5000/despesas/'+this.state.item._id,
+          url:'https://api-despesas.herokuapp.com/despesas/'+this.state.item._id,
           contentType: 'application/json',
           type: 'PUT',
           data: JSON.stringify({
@@ -63,7 +63,7 @@ class Menu extends Component{
           }),
           success: function(resposta){
             $.ajax({
-              url: "http://localhost:5000/despesas",
+              url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
                 const result = resposta.map(item => 
@@ -93,11 +93,11 @@ class Menu extends Component{
 
       excluirDespesa(){
         $.ajax({
-          url:'http://localhost:5000/despesas/'+this.state.item._id,
+          url:'https://api-despesas.herokuapp.com/despesas/'+this.state.item._id,
           type: 'DELETE',
           success : function(response){
             $.ajax({
-              url: "http://localhost:5000/despesas",
+              url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
                 const result = resposta.map(item => 
@@ -122,7 +122,7 @@ class Menu extends Component{
 
       editarDespesa(){
         $.ajax({
-          url:'http://localhost:5000/despesas/'+this.state._id,
+          url:'https://api-despesas.herokuapp.com/despesas/'+this.state._id,
           contentType: 'application/json',
           type: 'PUT',
           data: JSON.stringify({
@@ -134,7 +134,7 @@ class Menu extends Component{
           }),
           success: function(resposta){
             $.ajax({
-              url: "http://localhost:5000/despesas",
+              url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
                 const result = resposta.map(item => 
@@ -209,7 +209,7 @@ class Menu extends Component{
       componentDidMount(){
 
         $.ajax({
-          url: "http://localhost:5000/despesas",
+          url: "https://api-despesas.herokuapp.com/despesas",
           dataType: "json",
           success:function(resposta){
             const result = resposta.map(item => 
@@ -232,7 +232,7 @@ class Menu extends Component{
         if (cadastrar) {
           if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
             $.ajax({
-                  url:'http://localhost:5000/despesas',
+                  url:'https://api-despesas.herokuapp.com/despesas',
                   contentType: 'application/json',
                   dataType: 'json',
                   type: 'post',
@@ -328,7 +328,7 @@ class Menu extends Component{
                     <SimpleText>De que lontra é a conta?</SimpleText>
                     <div className="Menu-items-select">
                       <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
-                      <option value="" selected disabled>Selecione uma Lontra</option>
+                      <option value="" disabled>Selecione uma Lontra</option>
                       <option value="mol">Mol</option>
                       <option value="coita">Coita</option>
                     </select>
