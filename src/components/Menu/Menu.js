@@ -289,6 +289,15 @@ class Menu extends Component{
             if(this.state.description === ""){
               return this.showValidationError('desc', 'A descrição precisa ser preenchida.');
             }
+            if(this.state.dateVencto === ""){
+              return this.showValidationError('data', 'A data de vencimento precisa ser preenchida.');
+            }
+            if(this.state.value === ""){
+              return this.showValidationError('valor', 'O valor precisa ser preenchido.');
+            }
+            if(this.state.usuario === ""){
+              return this.showValidationError('usuario', 'A lontra precisa ser selecionada.');
+            }
           }
         }
       }
