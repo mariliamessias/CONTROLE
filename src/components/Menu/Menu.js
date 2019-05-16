@@ -276,16 +276,16 @@ class Menu extends Component{
                 })
           }else{
               if(this.state.description === ""){
-                return this.showValidationError('desc', 'A descrição precisa ser preenchida.');
+                return this.showValidationError('desc', 'Preencha a descrição.');
               }
               if(this.state.dateVencto === ""){
-                return this.showValidationError('data', 'A data de vencimento precisa ser preenchida.');
+                return this.showValidationError('data', 'Preencha o valor.');
               }
               if(this.state.value === ""){
-                return this.showValidationError('valor', 'O valor precisa ser preenchido.');
+                return this.showValidationError('valor', 'Preencha o valor.');
               }
               if(this.state.usuario === ""){
-                return this.showValidationError('usuario', 'A lontra precisa ser selecionada.');
+                return this.showValidationError('usuario', 'Selecione uma lontra.');
               }
               
           }  
@@ -305,7 +305,7 @@ class Menu extends Component{
               return this.showValidationError('valor', 'O valor precisa ser preenchido.');
             }
             if(this.state.usuario === ""){
-              return this.showValidationError('usuario', 'A lontra precisa ser selecionada.');
+              return this.showValidationError('usuario', 'Selecione uma lontra.');
             }
           }
         }
