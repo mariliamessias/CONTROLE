@@ -21,11 +21,14 @@ class Menu extends Component{
         this.handleShowModal = this.handleShowModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleShowPagar = this.handleShowPagar.bind(this);
+        this.handleShowSair = this.handleShowSair.bind(this);
         this.handleClosePagar = this.handleClosePagar.bind(this);
-  
+        this.handleCloseSair = this.handleCloseSair.bind(this);
+
         this.state = {
           show: false,
           showModal: false,
+          showSair: false,
           showPagar: false,
           disabled : false,
           cadastrar: false,
@@ -46,10 +49,8 @@ class Menu extends Component{
         this.setDateVencto = this.setDateVencto.bind(this);
         this.setUsuario = this.setUsuario.bind(this);
         this.setValue = this.setValue.bind(this);
-        // this.validaForm = this.validaForm.bind(this);
         this.editarDespesa = this.editarDespesa.bind(this);
         this.showValidationError = this.showValidationError.bind(this);
-
       }
       
       pagarDespesa(){
@@ -204,6 +205,14 @@ class Menu extends Component{
 
       handleClosePagar(item){
         this.setState({showPagar: false})
+      }
+
+      handleCloseSair(){
+        this.setState({showSair: false})
+      }
+
+      handleShowSair(){
+        this.setState({showSair: true })
       }
       
       handleCloseModal(){
@@ -367,9 +376,7 @@ class Menu extends Component{
                <p className="Menu-items-userName">{this.props.state.nome}</p>
                 <li>Consultar Despesas Pagas</li>
                 <li onClick={this.handleShow}>Cadastrar Despesa</li>
-                <li>            
-                  <Link to="/" className="Menu-items-btn-sair">Sair</Link>
-                </li>
+                <li onClick={this.handleShowSair}>Sair</li>
             </ul>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
@@ -441,6 +448,23 @@ class Menu extends Component{
                   </Modal.Footer>
                 </Modal>                
                 
+                <Modal show={this.state.showSair} onHide={this.handleCloseSair}>
+                  <Modal.Header closeButton>
+                      <Modal.Title>Oh no!</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <SimpleText>Tem certeza que deseja sair?</SimpleText>
+                   </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={this.handleCloseSair}>
+                        Cancelar
+                      </Button>
+                      <Button>
+                        <Link to="/" className="Menu-items-btn-sair">Sair</Link>
+                      </Button>
+                  </Modal.Footer>
+                </Modal>  
+
           <Table striped bordered hover className="tabela">
             <thead>
                 <tr>
