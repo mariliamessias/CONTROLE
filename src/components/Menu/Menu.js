@@ -27,7 +27,7 @@ class Menu extends Component{
           show: false,
           showModal: false,
           showPagar: false,
-          disabled : true,
+          disabled : false,
           cadastrar: false,
           despesas: [],
           description:'', 
@@ -36,7 +36,8 @@ class Menu extends Component{
           status: '',
           value:'',
           item : '',
-          usuario:''
+          usuario:'',
+          errors:[],
         };
 
         this.save = this.save.bind(this);
@@ -45,8 +46,10 @@ class Menu extends Component{
         this.setDateVencto = this.setDateVencto.bind(this);
         this.setUsuario = this.setUsuario.bind(this);
         this.setValue = this.setValue.bind(this);
-        this.validaForm = this.validaForm.bind(this);
+        // this.validaForm = this.validaForm.bind(this);
         this.editarDespesa = this.editarDespesa.bind(this);
+        this.showValidationError = this.showValidationError.bind(this);
+
       }
       
       pagarDespesa(){
@@ -263,44 +266,91 @@ class Menu extends Component{
                   }
                 })
           }else{
-              alert("preencha todos os campos")
+              if(this.state.description === ""){
+                return this.showValidationError('desc', 'A descrição precisa ser preenchida.');
+              }
+              if(this.state.dateVencto === ""){
+                return this.showValidationError('data', 'A data de vencimento precisa ser preenchida.');
+              }
+              if(this.state.value === ""){
+                return this.showValidationError('valor', 'O valor precisa ser preenchido.');
+              }
+              if(this.state.usuario === ""){
+                return this.showValidationError('usuario', 'A lontra precisa ser selecionada.');
+              }
+              
           }  
         }else{
-          this.editarDespesa();
+          if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "")
+          {
+            this.editarDespesa();
+          }else
+          {
+            if(this.state.description === ""){
+              return this.showValidationError('desc', 'A descrição precisa ser preenchida.');
+            }
+          }
         }
       }
 
-      validaForm(){
-          if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
-              this.state.disabled = false;
-          }else{
-              this.state.disabled = true;
-          } 
+      clearValidationError(elm, msg){
+        this.setState((prevState) =>{
+          let newArr = [];
+          for(let err of prevState.errors){
+            if(elm != err.elm){
+              newArr.push(err);
+            }
+          }
+          return {errors: newArr};;
+        });
       }
 
       setDescription(evento){
         this.setState({description :evento.target.value});
-        this.validaForm();
+        this.clearValidationError("desc");
       }
 
       setDateVencto(evento){
         this.setState({dateVencto :evento.target.value});
-        this.validaForm();
+        this.clearValidationError("data");
       }
 
       setUsuario(evento){
         this.setState({usuario :evento.target.value});
-        this.validaForm();
+        this.clearValidationError("usuario");
       }
 
       setValue(evento, value, maskedVaklue){
         this.setState({value :value});
-        this.validaForm();
+        this.clearValidationError("valor");
+      }
+
+      showValidationError(elm, msg){
+        this.setState((prevState) =>({
+          errors: [...prevState.errors, {elm, msg}]
+        }));
       }
 
       render() {
 
-        const { value } = this.state
+        const { value } = this.state;
+
+        let descErr = null,
+            dataErr = null,
+            valorErr = null,
+            userErr = null;
+        
+        for(let err of this.state.errors){
+          if (err.elm === "desc"){
+            descErr = err.msg;
+          }else if(err.elm === "data"){
+            dataErr = err.msg;
+          }else if(err.elm === "valor"){
+            valorErr = err.msg;
+          }else if(err.elm === "usuario"){
+            userErr = err.msg;
+          }
+        }
 
         return (
           <div className="Menu">
@@ -319,12 +369,15 @@ class Menu extends Component{
                   <Modal.Body>
                     <SimpleText>Descrição da Despesa:</SimpleText>
                     <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText>
+                    <span className="Login-body-error">{descErr ? descErr : "" }</span>
                     <SimpleText>Data de vencimento:</SimpleText>
                     <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
+                    <span className="Login-body-error">{dataErr ? dataErr : "" }</span>
                     <SimpleText>Valor da despesa:</SimpleText>
                     <div className="Menu-items-select">
                     <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue}/>
                     </div>
+                    <span className="Login-body-error">{valorErr ? valorErr : "" }</span>
                     <SimpleText>De que lontra é a conta?</SimpleText>
                     <div className="Menu-items-select">
                       <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
@@ -332,6 +385,7 @@ class Menu extends Component{
                       <option value="mol">Mol</option>
                       <option value="coita">Coita</option>
                     </select>
+                    <span className="Login-body-error">{userErr ? userErr : "" }</span>
                     </div>
                   </Modal.Body>
                   <Modal.Footer>
