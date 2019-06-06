@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import SimpleText from '../SimpleText/SimpleText';
+import PubSub from 'pubsub-js';
 import $ from 'jquery';
 
 class SideBar extends Component {
@@ -10,8 +11,9 @@ class SideBar extends Component {
       value: ''
     }
     }
+
     
-componentDidMount(){
+componentWillMount(){
     let valueSum = 0;
     $.ajax({
       url: "https://api-despesas.herokuapp.com/despesas",
@@ -27,14 +29,29 @@ componentDidMount(){
         this.setState({value:valueSum.toFixed(2).toString().replace(".", ",")});
       }.bind(this)
     })
+}
+
+componentDidMount(){
+
+
+  PubSub.subscribe('atualizaResposta', (topico,objeto) => {
+    let valueSum = 0;
+    objeto.forEach(item => 
+      {
+        if (item.status === 'cadastrada'){
+          valueSum = parseFloat(item.value) + valueSum;
+        }       
+    });
+    this.setState({value:valueSum.toFixed(2).toString().replace(".", ",")}); 
+  });
+
   }
 
 render(){
 
   var date =  new Date(). getMonth(); //Current Date.
   var meses = ["Janeiro", "Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]  
-
-
+  
   return (    
     <Menu>
         <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>

@@ -5,23 +5,23 @@
 .homeStatus{
     padding: 0px 0px 20px;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .homeStatusTitle{
     padding: 0px 0px 20px;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .homeStatusValorVencidas{
     padding: 0px 0px 20px;
     color: Red;
-    font-size: 45px;
+    font-size: 30px;
 }
 
 .homeStatusValorEmDia{
     padding: 0px 0px 20px;
     color: blue;
-    font-size: 45px;
+    font-size: 30px;
 }

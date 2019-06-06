@@ -7,6 +7,7 @@
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.0",
     "next": "^8.0.4",
+    "pubsub-js": "^1.7.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-burger-menu": "^2.6.8",

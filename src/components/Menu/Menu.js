@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import $ from 'jquery';
+import PubSub from 'pubsub-js';
 import check from '../../images/check.png';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -70,7 +71,7 @@ class Menu extends Component{
               url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
-                const result = resposta.map(item => 
+                const result = resposta.filter(item => 
                   {
                     if (item.status === 'cadastrada'){
                       return item;
@@ -82,6 +83,7 @@ class Menu extends Component{
                 });
 
                 this.setState({despesas:result});
+                PubSub.publish("atualizaResposta",result);
                 this.handleCloseModal();
               }.bind(this)
             })
@@ -104,7 +106,7 @@ class Menu extends Component{
               url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
-                const result = resposta.map(item => 
+                const result = resposta.filter(item => 
                   {
                     if (item.status === 'cadastrada'){
                       return item;
@@ -114,6 +116,7 @@ class Menu extends Component{
                   return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
                 });
                 this.setState({despesas:result});
+                PubSub.publish("atualizaResposta",result);
                 this.handleCloseModal();
               }.bind(this)
             })
@@ -141,7 +144,7 @@ class Menu extends Component{
               url: "https://api-despesas.herokuapp.com/despesas",
               dataType: "json",
               success:function(resposta){
-                const result = resposta.map(item => 
+                const result = resposta.filter(item => 
                   {
                     if (item.status === 'cadastrada'){
                       return item;
@@ -151,6 +154,7 @@ class Menu extends Component{
                   return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
                 });
                 this.setState({despesas:result});
+                PubSub.publish("atualizaResposta",result);
                 this.handleClose();
               }.bind(this)
             })
@@ -224,7 +228,7 @@ class Menu extends Component{
           url: "https://api-despesas.herokuapp.com/despesas",
           dataType: "json",
           success:function(resposta){
-            const result = resposta.map(item => 
+            const result = resposta.filter(item => 
             {
               if (item.status === 'cadastrada'){
                 return item;
@@ -270,6 +274,8 @@ class Menu extends Component{
                     this.state.usuario = "";
                     this.state.value = "";
                     this.state.status = "";
+
+                    PubSub.publish("atualizaResposta",teste);
                   }.bind(this),
                   error: function(resposta){
                   }
