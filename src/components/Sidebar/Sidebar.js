@@ -8,44 +8,68 @@ class SideBar extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = { 
-      value: ''
+      valueTotal: '',
+      valueCoita: '',
+      valueMol: ''
     }
     }
 
     
 componentWillMount(){
-    let valueSum = 0;
+    let despesaCoita = 0;
+    let despesaMol = 0;
+    const today = new Date();
     $.ajax({
       url: "https://api-despesas.herokuapp.com/despesas",
       dataType: "json",
       success:function(resposta){
         resposta.forEach(item => 
           {
-            if (item.status === 'cadastrada'){
-              valueSum = parseFloat(item.value) + valueSum;
-              return valueSum;
+            const date = new Date (item.dateVencto);
+            if (item.status === 'cadastrada' && date.getMonth() === today.getMonth()){
+              if(item.usuario === 'coita'){
+                despesaCoita = parseFloat(item.value) + despesaCoita;
+              }else{
+                despesaMol = parseFloat(item.value) + despesaMol;
+              }
             }
         });
-        this.setState({value:valueSum.toFixed(2).toString().replace(".", ",")});
+
+        this.setState({
+          valueMol:despesaMol.toLocaleString('pt-BR'),
+          valueCoita:despesaCoita.toLocaleString('pt-BR'),
+          valueTotal:(despesaCoita + despesaMol).toLocaleString('pt-BR')
+        });
       }.bind(this)
     })
 }
 
 componentDidMount(){
 
-
   PubSub.subscribe('atualizaResposta', (topico,objeto) => {
-    let valueSum = 0;
+    let despesaCoita = 0;
+    let despesaMol = 0;
+    const today = new Date();
+
     objeto.forEach(item => 
       {
-        if (item.status === 'cadastrada'){
-          valueSum = parseFloat(item.value) + valueSum;
+        const date = new Date (item.dateVencto);
+        if (item.status === 'cadastrada' && date.getMonth() === today.getMonth()){
+          if(item.usuario === 'coita'){
+            despesaCoita = parseFloat(item.value) + despesaCoita;
+          }else {
+              despesaMol = parseFloat(item.value) + despesaMol;
+          } 
         }       
     });
-    this.setState({value:valueSum.toFixed(2).toString().replace(".", ",")}); 
+    this.setState({
+      valueMol: despesaMol.toLocaleString('pt-BR'),
+      valueCoita: despesaCoita.toLocaleString('pt-BR'),
+      valueTotal:(despesaCoita + despesaMol).toLocaleString('pt-BR')
+    }); 
   });
 
-  }
+}
 
 render(){
 
@@ -55,12 +79,12 @@ render(){
   return (    
     <Menu>
         <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> que ainda não estão vencidas ({meses[date]}):</SimpleText>
-        <SimpleText className="homeStatusValorEmDia"><b>{`R$ ${this.state.value}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> vencidas do mês atual:</SimpleText>
-        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.value}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> vencidas acumuladas dos meses anteriores:</SimpleText>
-        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.value}`}</b></SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> de coita:</SimpleText>
+        <SimpleText className="homeStatusValorEmDia"><b>{`R$ ${this.state.valueCoita}`}</b></SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> de mol:</SimpleText>
+        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueMol}`}</b></SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> das duas lontras:</SimpleText>
+        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueTotal}`}</b></SimpleText>
    
     </Menu>
   );
