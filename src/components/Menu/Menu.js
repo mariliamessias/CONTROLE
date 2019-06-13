@@ -12,6 +12,8 @@ import CurrencyInput from 'react-currency-input';
 import SimpleText from '../SimpleText/SimpleText';
 import excluir from '../../images/delete.png';
 import editar from '../../images/change.png';
+import carregando from '../../images/loading.svg';
+
 
 class Menu extends Component{   
     constructor(props, context){
@@ -27,6 +29,7 @@ class Menu extends Component{
         this.handleCloseSair = this.handleCloseSair.bind(this);
 
         this.state = {
+          isLoading: true,
           show: false,
           showModal: false,
           showSair: false,
@@ -239,9 +242,14 @@ class Menu extends Component{
               return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
             });
 
-            this.setState({despesas:result});
+            this.setState({
+              despesas:result,
+              isLoading: false,
+            });
           }.bind(this)
         })
+
+        
       }    
 
       save(cadastrar){
@@ -377,7 +385,8 @@ class Menu extends Component{
         }
 
         return (
-          <div className="Menu">
+
+            <div className="Menu">
             <ul className="Menu-items">
                <p className="Menu-items-userName">{this.props.state.nome}</p>
                 <li>Consultar Despesas Pagas</li>
@@ -482,36 +491,38 @@ class Menu extends Component{
                 </tr>
             </thead>
             <tbody>
-                {
-                    this.state.despesas.map((item) => {
-                      if (item !== '' && item !== undefined){
-                        
-                        let dateTr = new Date(item.dateVencto);
-                        dateTr.setUTCHours(5);
-                        let dateCon= '';
-                        
-                        dateCon =  ('0'+ dateTr.getUTCDate()).slice(-2) + '/'+ ('0'+ (dateTr.getMonth() + 1)).slice(-2)+'/'+dateTr.getFullYear();
-                        
-                        return (
-                          <tr key={item._id}>
-                          <td>{item.description}</td>
-                          <td>{item.usuario}</td>
-                          <td>{dateCon}</td>
-                          <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
-                          <td className="operacoes">
-                            <div className="operacoes">
-                              <button className="btn btn-success" onClick={()=> this.handleShowPagar(item)}><img className="iconOperations" src={check} /></button>
-                              <button className="btn btn-danger" onClick={() => this.handleShowModal(item)}><img className="iconOperations" src={excluir} /></button>
-                              <button className="btn btn-info" onClick={() => this.handleShow(item)}><img className="iconOperations" src={editar} /></button>
-                            </div>
-                          </td>
-                          </tr> 
-                      )
-                      }
+            {
+              this.state.isLoading ? (  <div className="loadingImg"><img className="home__loading" src={carregando} alt="Carregando"/></div> ) : 
+                (this.state.despesas.map((item) => {
+                  if (item !== '' && item !== undefined){
+                    
+                    let dateTr = new Date(item.dateVencto);
+                    dateTr.setUTCHours(5);
+                    let dateCon= '';
+                    
+                    dateCon =  ('0'+ dateTr.getUTCDate()).slice(-2) + '/'+ ('0'+ (dateTr.getMonth() + 1)).slice(-2)+'/'+dateTr.getFullYear();
+                    
+                    return (
+                      <tr key={item._id}>
+                      <td>{item.description}</td>
+                      <td>{item.usuario}</td>
+                      <td>{dateCon}</td>
+                      <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
+                      <td className="operacoes">
+                        <div className="operacoes">
+                          <button className="btn btn-success" onClick={()=> this.handleShowPagar(item)}><img className="iconOperations" src={check} /></button>
+                          <button className="btn btn-danger" onClick={() => this.handleShowModal(item)}><img className="iconOperations" src={excluir} /></button>
+                          <button className="btn btn-info" onClick={() => this.handleShow(item)}><img className="iconOperations" src={editar} /></button>
+                        </div>
+                      </td>
+                      </tr> 
+                  )
+                  }
 
-                    })
-                }
-            </tbody>
+                }))
+            }
+        </tbody>
+
         </Table>;
         </div>
         );

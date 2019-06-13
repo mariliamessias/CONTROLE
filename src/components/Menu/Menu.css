@@ -64,3 +64,12 @@
     color: white;
 
 }
+
+.home__loading{
+    margin: 0 auto;
+}
+
+.loadingImg{
+    position: absolute;
+    width: 100%;
+}
