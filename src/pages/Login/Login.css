@@ -7,36 +7,87 @@
     align-items: center;
     background-color: #ffb380;
   }
-  .Login-body{ 
-    font-family: 'Courier New', Courier, monospace;
-    color: black;
-    background-color: #fff;
-    width: 40%;
-    height: 75%;
-    text-align: center;
-    padding: 20px; 
-    border-radius: 40px;
-    border: solid black 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+
+  .login_none {
+    display: none;    
   }
-  .Login-bodyTop{
-    width: 100%;
-  }
+
   .Login-body-subTitle{
     margin: 0px;
   }
+
+  .Login-bodyTop{
+    width: 100%;
+  }
+
+  .Login-body-error{
+    color: red;
+    font-size: 12px;
+    padding: 0px;
+  }
+
+  .buttonNewUser {
+    background-color: #7300e6;
+    border: solid 2px black;
+    padding: 10px;
+    width: 70%;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+  }
+
+  .buttonNewUser:hover, .Login-body-buttonLogin:hover{
+    background-color: #661aff;
+    text-decoration: none;
+    color: white;
+  }
+
   .Login-body-title{
     margin: 0px;
     padding: 20px;
   }
+
+  .Login-body{ 
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    background-color: #fff;
+    border: solid black 5px;
+    border-radius: 20px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    /* width: 40%;
+    height: 75%; */
+    text-align: center;
+    /* padding: 20px; */
+  }
+
   .Login-body-middleForm{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+  }
+
+  .Login-body-buttons{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Login-body-container{
+    text-align: right;
+    padding-right: 30px;
+    width: 80%;
+  }
+
+
+  .login_loading{
+    width: 50px;
+    margin:0;
   }
   .Login-body-userInformation, .Login-body-userInformation-1{
     display: flex;
@@ -44,37 +95,7 @@
     align-items: center;
     width: 80%;
   }
-  .Login-body-buttons{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .Login-body-image{
-    height: 85px;
-    width: 150px;
-  }
-  
-  .Login-body-container{
-    text-align: right;
-    padding-right: 30px;
-    width: 80%;
-  }
-  .Login-body-error{
-    color: red;
-    font-size: 12px;
-    padding: 0px;
-  }
-  .buttonNewUser{
-    padding: 10px;
-    width: 70%;
-    border-radius: 10px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 18px;
-  }
-  
+
   .Login-body-buttonLogin{
     border-radius: 10px;
     padding: 10px;
@@ -94,22 +115,132 @@
     color: white;
     text-decoration: none;
   }
-  
+
+/*
+
+  .Login-body{ 
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    background-color: #fff;
+    width: 40%;
+    height: 75%;
+    text-align: center;
+    padding: 20px; 
+    border-radius: 40px;
+    border: solid black 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+  .Login-body-image{
+    height: 85px;
+    width: 150px;
+  }    
+
+*/
+
+@media (max-width: 767px) {
+
+  .Login{
+    height: 100%;
+    padding: 20px;
+  }
+
+  .Login-body{ 
+    text-align: center;
+    padding: 50px; 
+  }
+
+  .Login-body-image{
+    height: 100px;
+    width: 190px;
+  }  
+
+  .buttonNewUser{
+    width: 100%;
+    padding: 10px;
+  }
+
+  .ButtonDefault{
+    width: 90%;
+  }
+
+  .Login-body-userInformation, .Login-body-userInformation-1{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .Login-body-middleForm {
+    margin-top: 10px;
+  }
+
+  .Login-body-buttonLogin{
+    width: 90%;
+  }
+
+  .Login-body-buttonLoginCarregando{
+    width: 90%;
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+ 
+  .Login-body-image{
+    height: 100px;
+    width: 200px;
+  }  
+
+  .Login-body{
+    padding: 30px
+  }
+
+  .Login-body-userInformation, .Login-body-userInformation-1{
+    width: 100%;
+  }
+
+  .ButtonDefault{
+    width: 100%;
+  }
+
   .buttonNewUser {
-    background-color: #7300e6;
-    border: solid 2px black;
-  }
-  .buttonNewUser:hover, .Login-body-buttonLogin:hover{
-    background-color: #661aff;
-    text-decoration: none;
-    color: white;
+    padding: 10px;
+    width: 90%;
   }
 
-  .login_loading{
-    width: 50px;
-    margin:0;
+  .Login-body-buttonLogin{
+    width: 90%;
   }
 
-  .login_none {
-    display: none;    
+  .Login-body-buttonLoginCarregando{
+    width: 90%;
   }
+
+ }
+
+ @media (min-width: 992px) and (max-width: 1199px) {
+
+  .Login-body{
+    padding: 30px;
+    width: 60%;
+  }
+
+  .Login-body-buttons{
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1200px) {
+
+  .Login-body{
+    padding: 30px;
+    width: 750px;
+  }
+
+  .Login-body-buttons{
+    flex-direction: row;
+  }
+}
