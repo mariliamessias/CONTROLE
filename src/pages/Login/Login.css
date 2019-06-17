@@ -84,6 +84,16 @@
     color: black;
     text-decoration: none;
   }
+
+  .Login-body-buttonLoginCarregando{
+    border-radius: 12px;
+    padding: 0px;
+    width: 30%;
+    background-color: #ff8533;
+    border: solid 2px black;
+    color: white;
+    text-decoration: none;
+  }
   
   .buttonNewUser {
     background-color: #7300e6;
@@ -93,4 +103,13 @@
     background-color: #661aff;
     text-decoration: none;
     color: white;
+  }
+
+  .login_loading{
+    width: 50px;
+    margin:0;
+  }
+
+  .login_none {
+    display: none;    
   }

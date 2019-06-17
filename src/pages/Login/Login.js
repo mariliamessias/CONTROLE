@@ -6,6 +6,7 @@ import InputText from '../../components/InputText/InputTex';
 import SimpleText from '../../components/SimpleText/SimpleText';
 import Logo from '../../images/lontrasLogo.jpg'
 import SimpleLink from '../../components/SimpleLink/SimpleLink';
+import carregando from '../../images/loading.svg';
 import './Login.css';
 
 class Login extends Component {
@@ -19,6 +20,9 @@ class Login extends Component {
       redirect: false,
       token: "",
       errors:[],
+      buttonStatus: 'Login-body-buttonLogin',
+      buttonValue: 'Entrar',
+      loadingImage : 'login_none'
     };
 
     this.showValidationError = this.showValidationError.bind(this);
@@ -45,7 +49,7 @@ class Login extends Component {
     }else if(this.state.password === ""){
       return this.showValidationError('password', 'A senha deve ser preenchida!');
     }
-
+    this.setState({ buttonStatus:'Login-body-buttonLoginCarregando', buttonValue: 'Carregando', loadingImage: 'login_loading'})
   $.ajax({
     url:'https://api-sky.herokuapp.com/api/auth/sign-in',
     contentType: 'application/json',
@@ -64,11 +68,13 @@ class Login extends Component {
      return this.setRedirect();
   }.bind(this),
     error: function(resposta){
+      this.setState({ buttonStatus:'Login-body-buttonLogin', buttonValue: 'Entrar', loadingImage: 'login_none'})
       if (resposta.status === 401){
         return this.showValidationError('login', 'A senha informada está incorreta.'); 
       }else if (resposta.status === 404){
         return this.showValidationError('login', 'O email informado não foi localizado.'); 
       }
+      
     }.bind(this)
   })
 }
@@ -77,7 +83,6 @@ class Login extends Component {
     this.setState({email: e.target.value});
     this.clearValidationError("email");
     this.clearValidationError("login");
-
   }
 
   onPasswordChange(e){
@@ -148,13 +153,12 @@ class Login extends Component {
             </div>
             <span className="Login-body-error">{loginErr ? loginErr : "" }</span>
 
-           
             <SimpleLink>Recuperar a senha</SimpleLink>
           </div>
           <div className="Login-body-buttons">
             <ButtonDefault className="buttonNewUser">Criar Conta</ButtonDefault>
             {this.renderRedirect()}
-            <button className="Login-body-buttonLogin" onClick={this.submitLogin.bind(this)}>Entrar</button>
+            <button className={this.state.buttonStatus} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando"/>{this.state.buttonValue}</button>
           </div>
 
         </div>
