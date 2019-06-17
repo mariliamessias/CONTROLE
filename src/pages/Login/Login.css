@@ -57,10 +57,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    /* width: 40%;
-    height: 75%; */
     text-align: center;
-    /* padding: 20px; */
   }
 
   .Login-body-middleForm{
@@ -115,30 +112,6 @@
     color: white;
     text-decoration: none;
   }
-
-/*
-
-  .Login-body{ 
-    font-family: 'Courier New', Courier, monospace;
-    color: black;
-    background-color: #fff;
-    width: 40%;
-    height: 75%;
-    text-align: center;
-    padding: 20px; 
-    border-radius: 40px;
-    border: solid black 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-  }
-  .Login-body-image{
-    height: 85px;
-    width: 150px;
-  }    
-
-*/
 
 @media (max-width: 767px) {
 
