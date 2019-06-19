@@ -81,7 +81,6 @@
     width: 80%;
   }
 
-
   .login_loading{
     width: 50px;
     margin:0;
@@ -196,9 +195,13 @@
 
  @media (min-width: 992px) and (max-width: 1199px) {
 
+  .Login-body-image{
+    height: 120px;
+    width: 200px;
+  } 
   .Login-body{
     padding: 30px;
-    width: 60%;
+    width: 50%;
   }
 
   .Login-body-buttons{
@@ -208,9 +211,13 @@
 
 @media (min-width: 1200px) {
 
+  .Login-body-image{
+    height: 120px;
+    width: 200px;
+  } 
   .Login-body{
-    padding: 30px;
-    width: 750px;
+    padding: 20px;
+    width: 500px;
   }
 
   .Login-body-buttons{
