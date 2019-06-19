@@ -16,7 +16,7 @@
     position: fixed;
    }
    .Menu-items li{
-       font-size: 18px;
+       font-size: 15px;
        margin-right: 30px;
        padding: 5px;
    }
@@ -79,6 +79,11 @@
 
 @media (max-width: 767px) {
 
+    .Menu-items{
+        height: 60px;
+        padding: 10px;
+    }
+
     .Menu-items-userName{
         margin: 0;
         display: none;
@@ -89,17 +94,13 @@
         width: 100%;
     }
     .Menu-items li{
-        font-size: 15px;
         margin-right: 10px;
         padding: 5px;
     }
 
     .tabela{
         width: 50%;
-        }
-       
-
-
+    }
 }
   
 @media (min-width: 768px) and (max-width: 991px) {
