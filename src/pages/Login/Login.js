@@ -24,8 +24,9 @@ class Login extends Component {
       buttonValue: 'Entrar',
       loadingImage : 'login_none'
     };
-
     this.showValidationError = this.showValidationError.bind(this);
+    this.inputRef = React.createRef();
+    this.buttonRef = React.createRef();
   }
 
   setRedirect = () => {
@@ -110,6 +111,18 @@ class Login extends Component {
     });
   }
 
+  handleSubmit = (e) => {
+    if (e.key === "Enter"){
+      this.inputRef.current.focusTextInput();
+    }
+  };
+
+  handleSumitButton = (e) => {
+    if (e.key === "Enter"){
+      this.buttonRef.current.focus();
+    }
+  };
+
   render() {
 
     let emailErr = null,
@@ -138,7 +151,7 @@ class Login extends Component {
           <div className="Login-body-middleForm">
             <div className="Login-body-userInformation">
               <SimpleText className="userEmail">Email:</SimpleText>
-              <InputText onChange={this.onEmailChange.bind(this)} type="text"></InputText>
+              <InputText onChange={this.onEmailChange.bind(this)} onKeyPress={this.handleSubmit.bind(this)}  type="text" ></InputText>
             </div>
             <div className="Login-body-container">
               <span className="Login-body-error">{emailErr ? emailErr : ""}</span>
@@ -146,7 +159,7 @@ class Login extends Component {
            
             <div className="Login-body-userInformation-1">
               <SimpleText className="userPassword">Senha:</SimpleText>
-              <InputText onChange={this.onPasswordChange.bind(this)} type="password"></InputText>
+              <InputText onChange={this.onPasswordChange.bind(this)} onKeyPress={this.handleSumitButton.bind(this)} ref={this.inputRef} type="password"></InputText>
             </div>
             <div className="Login-body-container">
               <span className="Login-body-error">{passwordErr ? passwordErr : ""}</span>
@@ -158,7 +171,7 @@ class Login extends Component {
           <div className="Login-body-buttons">
             <ButtonDefault className="buttonNewUser">Criar Conta</ButtonDefault>
             {this.renderRedirect()}
-            <button className={this.state.buttonStatus} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando"/>{this.state.buttonValue}</button>
+            <button className={this.state.buttonStatus} ref={this.buttonRef} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando"/>{this.state.buttonValue}</button>
           </div>
 
         </div>

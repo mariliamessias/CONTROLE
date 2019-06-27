@@ -19,6 +19,7 @@ componentWillMount(){
     let despesaCoita = 0;
     let despesaMol = 0;
     const today = new Date();
+    const month = today.getMonth() + 1;
     $.ajax({
       url: "https://api-despesas.herokuapp.com/despesas",
       dataType: "json",
@@ -26,7 +27,8 @@ componentWillMount(){
         resposta.forEach(item => 
           {
             const date = new Date (item.dateVencto);
-            if (item.status === 'cadastrada' && date.getMonth() === today.getMonth()){
+            const monthItem = date.getUTCMonth() + 1;
+            if (item.status === 'cadastrada' && monthItem === month){
               if(item.usuario === 'coita'){
                 despesaCoita = parseFloat(item.value) + despesaCoita;
               }else{
@@ -54,7 +56,8 @@ componentDidMount(){
     objeto.forEach(item => 
       {
         const date = new Date (item.dateVencto);
-        if (item.status === 'cadastrada' && date.getMonth() === today.getMonth()){
+        const monthItem = date.getUTCMonth() + 1;
+        if (item.status === 'cadastrada' && monthItem === today.getMonth() + 1){
           if(item.usuario === 'coita'){
             despesaCoita = parseFloat(item.value) + despesaCoita;
           }else {

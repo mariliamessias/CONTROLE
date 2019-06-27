@@ -157,7 +157,7 @@ class Menu extends Component{
                   return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime() 
                 });
                 this.setState({despesas:result});
-                PubSub.publish("atualizaResposta",result);
+                PubSub.publish("atualizaResposta", result);
                 this.handleClose();
               }.bind(this)
             })
@@ -179,7 +179,7 @@ class Menu extends Component{
           if(item.description || item.value || item.dateVencto || item.status || item.usuario){
             if (item.dateVencto) {
               this.setState({cadastrar: false});
-              dateConv = date.getFullYear() + '-' + ('0'+ (date.getMonth() + 1)).slice(-2) + '-' + ('0'+ date.getUTCDate()).slice(-2);
+              dateConv = date.getUTCFullYear() + '-' + ('0'+ (date.getUTCMonth() + 1)).slice(-2) + '-' + ('0'+ date.getUTCDate()).slice(-2);
             }
           this.setState({
             _id: item._id,
@@ -395,7 +395,7 @@ class Menu extends Component{
             </ul>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>
-                      <Modal.Title>Cadastro de nova despesa</Modal.Title>
+                      <Modal.Title>Despesa</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <SimpleText>Descrição da Despesa:</SimpleText>

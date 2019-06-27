@@ -1,12 +1,19 @@
 import React from 'react';
 import './ButtonDefault.css';
 
-function ButtonDefault(props){
-  return (
-    <div className="ButtonDefault">
-        <button className={props.className}>{props.children}</button>
-    </div>
-  )
+class ButtonDefault extends React.Component{
+  constructor(props){
+    super(props);
+
+ }
+
+  render(){
+    return (
+      <div className="ButtonDefault">
+          <button className={this.props.className}>{this.props.children}</button>
+      </div>
+    )
+  }
 }
 
 export default ButtonDefault;
