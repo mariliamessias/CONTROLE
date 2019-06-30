@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
+import Paid from './pages/Paids/Paid';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -11,6 +12,7 @@ ReactDOM.render(
     <Switch>
         <Route path="/" exact={true} component={Login}/>
         <Route path="/home" component={Home}/>
+        <Route path="/pagas" component={Paid}/>
     </Switch>
 </BrowserRouter>
 , document.getElementById('root'));

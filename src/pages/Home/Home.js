@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Menu from '../../components/Menu/Menu';
+import Content from '../../components/Content/Content';
 import SideBar from '../../components/Sidebar/Sidebar';
 import {Link, Redirect} from 'react-router-dom';
 import $ from 'jquery';
@@ -34,11 +35,17 @@ validaPagina(){
       const result = this.getResult();
       
      if (result.status === 200) {
-          return <Menu state={{
+          return <div>
+
+          <Menu state={{
             id: result.responseJSON.id,
             nome: result.responseJSON.nome,
             email: result.responseJSON.email
-          }}/>
+          }}/> 
+          <Content/>
+
+          </div>
+
       }else {
         return <Redirect to={{
           pathname:'/',
