@@ -39,7 +39,7 @@ class Login extends Component {
     if (this.state.redirect) {
       return <Redirect to={{
         pathname:'/home',
-        state: { token: this.state.token , id: this.state.id}
+        //state: { token: this.state.token , id: this.state.id}
       }}/>
     }
   }

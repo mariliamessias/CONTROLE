@@ -31,31 +31,31 @@ getResult() {
 
 validaPagina(){
 
-  if (this.props.location.state !== undefined){
-      const result = this.getResult();
+  // if (this.props.location.state !== undefined){
+  //     const result = this.getResult();
       
-     if (result.status === 200) {
+  //    if (result.status === 200) {
           return <div>
 
           <Menu state={{
-            id: result.responseJSON.id,
-            nome: result.responseJSON.nome,
-            email: result.responseJSON.email
+            // id: result.responseJSON.id,
+            // nome: result.responseJSON.nome,
+            // email: result.responseJSON.email
           }}/> 
           <Content/>
 
           </div>
 
-      }else {
-        return <Redirect to={{
-          pathname:'/',
-        }}/>  
-      } 
-  }else {
-    return <Redirect to={{
-      pathname:'/',
-    }}/>  
-  }
+  //     }else {
+  //       return <Redirect to={{
+  //         pathname:'/',
+  //       }}/>  
+  //     } 
+  // }else {
+  //   return <Redirect to={{
+  //     pathname:'/',
+  //   }}/>  
+  // }
 }
 
   render() {
@@ -63,7 +63,9 @@ validaPagina(){
       <div id="App">
         <SideBar />
         <div id="page-wrap">
-        {this.validaPagina()}
+        {/* {this.validaPagina()} */}
+        <Menu/> 
+        <Content/>
         </div>
       </div>
       );

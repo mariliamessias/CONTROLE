@@ -520,7 +520,7 @@ class Content extends React.Component {
                         }
                     </tbody>
 
-                </Table>;
+                </Table>
       </div>
         )
     }
