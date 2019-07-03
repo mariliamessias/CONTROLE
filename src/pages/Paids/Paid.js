@@ -2,24 +2,36 @@ import React, { Component } from 'react';
 import SideBar from '../../components/Sidebar/Sidebar';
 import Table from 'react-bootstrap/Table';
 import excluir from '../../images/delete.png';
-import {Link, Redirect} from 'react-router-dom';
-import $ from 'jquery';
-import ButtonDefault from '../../components/Button/ButtonDefault';
+import PubSub from 'pubsub-js';
+import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom';
 import SimpleText from '../../components/SimpleText/SimpleText';
-import SimpleLink from '../../components/SimpleLink/SimpleLink';
+import Modal from 'react-bootstrap/Modal';
+import $ from 'jquery';
 import Menu from '../../components/Menu/Menu';
-import carregando from '../../images/loading.svg';
 import './Paid.css';
 
 class Paid extends Component {
   constructor(props){
     super(props)
 
+    this.handleShowSair = this.handleShowSair.bind(this);
+    this.handleCloseSair = this.handleCloseSair.bind(this);
+
     this.state = {
-      despesas: [] 
+      despesas: [],
+      showSair: false
     }
   }
 
+  handleShowSair(){
+    this.setState({showSair: true })
+  }
+
+  handleCloseSair(){
+    this.setState({showSair: false})
+  }
+  
   componentDidMount(){
 
     $.ajax({
@@ -43,12 +55,32 @@ class Paid extends Component {
       }.bind(this)
     })
 
+    PubSub.subscribe('sairModal', (topico,objeto) => {
+      this.handleShowSair();
+    });
   } 
 
   render() {
 
+
     return (
       <div className="Paid">
+            <Modal show={this.state.showSair} onHide={this.handleCloseSair}>
+              <Modal.Header closeButton>
+                  <Modal.Title>Oh no!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                  <SimpleText>Tem certeza que deseja sair?</SimpleText>
+              </Modal.Body>
+              <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleCloseSair}>
+                      Cancelar
+          </Button>
+                  <Button>
+                      <Link to="/" className="Menu-items-btn-sair">Sair</Link>
+                  </Button>
+              </Modal.Footer>
+          </Modal>
           <SideBar />
           <Menu/>
           <Table striped bordered hover className="tabela">
@@ -58,7 +90,6 @@ class Paid extends Component {
                             <th>Lontroso</th>
                             <th>Data de Vencimento</th>
                             <th>Valor</th>
-                            <th>Data do Pagamento</th>
                             <th>Operacao</th>
                         </tr>
                     </thead>
@@ -79,7 +110,6 @@ class Paid extends Component {
                                                  <td>{item.usuario}</td>
                                                  <td>{dateCon}</td>
                                                  <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
-                                                 <td></td>
                                                   <td className="operacoes">
                                                      <div className="operacoes">
                                                          <button className="btn btn-danger"><img className="iconOperations" src={excluir} /></button>
