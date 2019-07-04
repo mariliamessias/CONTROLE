@@ -27,6 +27,7 @@
   }
 
   .buttonNewUser {
+    color: white;
     background-color: #7300e6;
     border: solid 2px black;
     padding: 10px;
@@ -98,7 +99,7 @@
     width: 30%;
     background-color: #4d0099;
     border: solid 2px black;
-    color: black;
+    color: white;
     text-decoration: none;
   }
 
