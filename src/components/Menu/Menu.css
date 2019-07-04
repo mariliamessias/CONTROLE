@@ -78,11 +78,17 @@
 }
 
 @media (max-width: 767px) {
+    .Menu{
+        padding: 70px 0 20px 0;
+       }
 
     .Menu-items{
-        height: 60px;
-        padding: 10px;
-    }
+        height: 150px;
+        flex-direction: column;   
+        list-style-type:none ;
+        justify-content: flex-end;
+        position: fixed;
+       }
 
     .Menu-items-userName{
         margin: 0;
@@ -94,17 +100,23 @@
         width: 100%;
     }
     .Menu-items li{
+        text-align: right;
+        margin-left: 120px;
+        font-size: 18px;
         margin-right: 10px;
         padding: 5px;
     }
-
+    
     .tabela{
         width: 50%;
     }
 }
   
 @media (min-width: 768px) and (max-width: 991px) {
-   
+    .Menu-items{
+        height: 60px;
+        padding: 10px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
