@@ -87,7 +87,7 @@ class Paid extends Component {
                     <thead>
                         <tr>
                             <th>Despesa</th>
-                            <th>Lontroso</th>
+                            <th>Usuário</th>
                             <th>Data de Vencimento</th>
                             <th>Valor</th>
                             <th>Operacao</th>

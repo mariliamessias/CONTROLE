@@ -145,7 +145,7 @@ class Login extends Component {
         <div className="Login-body">
         <div className="Login-bodyTop">
           <img className ="Login-body-image" src={Logo} />
-          <h2 className="Login-body-title">MolTrole</h2>
+          <h2 className="Login-body-title">Controle</h2>
         </div>
           <SimpleText className="simpleSubtitle">Informe abaixo seus dados de acesso:</SimpleText>
           <div className="Login-body-middleForm">

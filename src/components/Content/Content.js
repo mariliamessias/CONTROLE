@@ -303,7 +303,7 @@ class Content extends React.Component {
                 return this.showValidationError('valor', 'Preencha o valor.');
               }
               if(this.state.usuario === ""){
-                return this.showValidationError('usuario', 'Selecione uma lontra.');
+                return this.showValidationError('usuario', 'Selecione um Usuario.');
               }
               
           }  
@@ -323,7 +323,7 @@ class Content extends React.Component {
               return this.showValidationError('valor', 'Preencha o valor.');
             }
             if(this.state.usuario === ""){
-              return this.showValidationError('usuario', 'Selecione uma lontra.');
+              return this.showValidationError('usuario', 'Selecione um Usuario.');
             }
           }
         }
@@ -406,10 +406,10 @@ class Content extends React.Component {
                             <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
                         </div>
                         <span className="Login-body-error">{valorErr ? valorErr : ""}</span>
-                        <SimpleText>De que lontra é a conta?</SimpleText>
+                        <SimpleText>De que Usuário é a conta?</SimpleText>
                         <div className="Menu-items-select">
                             <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
-                                <option value="" disabled>Selecione uma Lontra</option>
+                                <option value="" disabled>Selecione um Usuario</option>
                                 <option value="mol">Mol</option>
                                 <option value="coita">Coita</option>
                             </select>
@@ -481,7 +481,7 @@ class Content extends React.Component {
                     <thead>
                         <tr>
                             <th>Despesa</th>
-                            <th>Lontroso</th>
+                            <th>Usuário</th>
                             <th>Data de Vencimento</th>
                             <th>Valor</th>
                             <th>Operação</th>

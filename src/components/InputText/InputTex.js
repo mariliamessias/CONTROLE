@@ -12,12 +12,10 @@ class InputText extends React.Component{
     };
 
     this.focusTextInput = () => {
-      // Foca o input de texto usando a API DOM diretamente
       if (this.textInput) this.textInput.focus();
     };
   }
   componentDidMount() {
-    // auto-foca o input na montagem
     this.focusTextInput();
   }
   

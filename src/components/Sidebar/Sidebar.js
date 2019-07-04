@@ -82,11 +82,11 @@ render(){
   return (    
     <Menu>
         <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> de coita:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Usuario 2:</SimpleText>
         <SimpleText className="homeStatusValorEmDia"><b>{`R$ ${this.state.valueCoita}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> de mol:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Usuario 1:</SimpleText>
         <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueMol}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> das duas lontras:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> dos dois Usuarios:</SimpleText>
         <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueTotal}`}</b></SimpleText>
    
     </Menu>
