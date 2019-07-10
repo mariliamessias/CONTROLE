@@ -2,6 +2,7 @@
     padding: 30px;
     background-color: #ffb380;
     text-align: center;
+    height: 100vh;
 }
 
 .newAccount-content-title{
@@ -14,22 +15,43 @@
 }
 
 .newAccount-content{
-    width: 60%;
+    width: 80%;
     margin: auto;
     padding: 20px;
-    background: white;
+    background: white; 
     border: solid 5px black;
     border-radius: 20px; 
 }
 
+.newAccount-form-column-one{
+    width: 49%;
+    height: auto;
+    padding: 20px;
+    margin: 0 20px 0 0;
+}
+
+.newAccount-form-column-two{
+    width: 0.5%;
+    height: auto;
+    background: black;
+}
+
+.newAccount-form-column-three{
+    width: 49%;
+    height: auto;
+    padding: 20px;
+    margin: 0 0 0 20px;
+}
 
 .newAccount-form{
     padding: 0px 30px 0px 30px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
 }
 
 .newAccount-form-buttons{
     width: 100%;
-    padding: 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -49,6 +71,10 @@
     justify-content: center !important;  */
 }
 
+.newAccount-content-body{
+    display: flex;
+}
+
 .newAccount-form-item-input{
     width: 100%;
 }
@@ -57,7 +83,9 @@
     background-color: #7300e6;
     border: solid 2px black;
     padding: 10px;
-    width: 30% !important;
+    color: white;
+    margin: 10px;
+    width: 20% !important;
     border-radius: 10px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 18px;
