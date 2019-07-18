@@ -71,11 +71,13 @@
 
 .newAccount-form-image{
    max-width: 100% !important;
-   height: auto;
+   height: 350px;
+   width: 400px;
 }
 
 .newAccount-form-icon{
     width: 50%;
+    min-width: 50%;
 }
 .button-newAccount{
     background-color: #7300e6;
@@ -117,6 +119,13 @@
     .newAccount-form-icon{
         width: 60%;
     }
+
+    
+    .newAccount-form-image{
+        height: auto;
+        width: auto;
+     }
+  
   }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -131,6 +140,12 @@
     .button-newAccount{
         width: 30% !important;
     }
+
+    .newAccount-form-image{
+        height: auto;
+        width: auto;
+     }
+  
   
 }
 
@@ -139,13 +154,21 @@
         width: 80%;
    }
    .newAccount-form-icon{
-    width: 80%;
+    width: 70%;
 }
+
+.newAccount-form-image{
+    height: 300px;
+    width: 300px;
+ }
 }
 
 @media (min-width: 1200px) {
     .newAccount-content{
-        width: 70%;
+        width: 50%;
    }
-
+   .newAccount-form-image{
+    height: 300px;
+    width: auto;
+ }
 }
