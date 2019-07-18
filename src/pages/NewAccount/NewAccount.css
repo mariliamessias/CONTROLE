@@ -62,6 +62,7 @@
 .newAccount-form-section1{
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .newAccount-form-section2{
@@ -98,7 +99,18 @@
     .newAccount-content{
         width: 90%;
    }
-  
+
+   .newAccount-form-section1{
+       flex-direction: column;
+   }
+
+    .button-newAccount{
+        width: 100% !important;
+    }
+
+    .newAccount-form-icon{
+        width: 80%;
+    }
   }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -106,6 +118,13 @@
     .newAccount-content{
         width: 80%;
    }
+   .newAccount-form-section1{
+        flex-direction: column;
+    }
+
+    .button-newAccount{
+        width: 30% !important;
+    }
   
 }
 
@@ -113,6 +132,9 @@
     .newAccount-content{
         width: 80%;
    }
+   .newAccount-form-icon{
+    width: 80%;
+}
 }
 
 @media (min-width: 1200px) {
