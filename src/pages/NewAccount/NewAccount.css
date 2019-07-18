@@ -97,9 +97,15 @@
 
 @media (max-width: 767px) {
     .newAccount-content{
-        width: 90%;
+        width: 100%;
+   }
+   .newAccount{
+       padding: 15px;
    }
 
+   .newAccount-form{
+       padding: 5px;
+   }
    .newAccount-form-section1{
        flex-direction: column;
    }
@@ -109,7 +115,7 @@
     }
 
     .newAccount-form-icon{
-        width: 80%;
+        width: 60%;
     }
   }
 
