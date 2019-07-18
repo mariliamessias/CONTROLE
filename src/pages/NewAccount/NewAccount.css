@@ -1,8 +1,9 @@
 .newAccount{
     padding: 30px;
     background-color: #ffb380;
+    background-attachment: fixed;
     text-align: center;
-    height: 100vh;
+    height: 100%;
 }
 
 .newAccount-content-title{
@@ -15,39 +16,17 @@
 }
 
 .newAccount-content{
-    width: 80%;
-    margin: auto;
+    margin: 20px auto 20px auto;
     padding: 20px;
     background: white; 
     border: solid 5px black;
     border-radius: 20px; 
 }
 
-.newAccount-form-column-one{
-    width: 49%;
-    height: auto;
-    padding: 20px;
-    margin: 0 20px 0 0;
-}
-
-.newAccount-form-column-two{
-    width: 0.5%;
-    height: auto;
-    background: black;
-}
-
-.newAccount-form-column-three{
-    width: 49%;
-    height: auto;
-    padding: 20px;
-    margin: 0 0 0 20px;
-}
-
 .newAccount-form{
-    padding: 0px 30px 0px 30px;
+    padding: 0px 30px 0px 10px;
     display: flex;
-    flex-direction: row;
-    padding: 20px;
+    flex-direction: column;
 }
 
 .newAccount-form-buttons{
@@ -65,10 +44,7 @@
 
 .newAccount-form-item-text{
     padding: 0px 10px; 
-    text-align: left;
-    /* display: flex !important;
-    align-items: center !important; 
-    justify-content: center !important;  */
+    text-align: right;
 }
 
 .newAccount-content-body{
@@ -78,7 +54,28 @@
 .newAccount-form-item-input{
     width: 100%;
 }
+.newAccount-form-content{
+    display: flex;
+    flex-direction: column;
+}
 
+.newAccount-form-section1{
+    display: flex;
+    width: 100%;
+}
+
+.newAccount-form-section2{
+    width: 100%;
+}
+
+.newAccount-form-image{
+   max-width: 100% !important;
+   height: auto;
+}
+
+.newAccount-form-icon{
+    width: 50%;
+}
 .button-newAccount{
     background-color: #7300e6;
     border: solid 2px black;
@@ -96,3 +93,31 @@
     text-decoration: none;
     color: white;
   }
+
+@media (max-width: 767px) {
+    .newAccount-content{
+        width: 90%;
+   }
+  
+  }
+
+@media (min-width: 768px) and (max-width: 991px) {
+ 
+    .newAccount-content{
+        width: 80%;
+   }
+  
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .newAccount-content{
+        width: 80%;
+   }
+}
+
+@media (min-width: 1200px) {
+    .newAccount-content{
+        width: 70%;
+   }
+
+}
