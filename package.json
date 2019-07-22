@@ -5,6 +5,7 @@
   "dependencies": {
     "babel-loader": "^8.0.5",
     "bootstrap": "^4.3.1",
+    "formik": "^1.5.8",
     "jquery": "^3.4.0",
     "next": "^8.0.4",
     "pubsub-js": "^1.7.0",

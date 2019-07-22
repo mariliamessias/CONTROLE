@@ -1,0 +1,146 @@
+.newAccount-content{
+    margin: 20px auto 20px auto;
+    padding: 20px;
+    background: white; 
+    border: solid 5px black;
+    border-radius: 20px; 
+}
+
+.newAccount-form{
+    padding: 0px 30px 0px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.newAccount-form-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.newAccount-form-item{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.newAccount-form-item-text{
+    padding: 0px 10px; 
+    text-align: right;
+}
+
+.newAccount-content-body{
+    display: flex;
+}
+
+.newAccount-form-item-input{
+    width: 100%;
+}
+.newAccount-form-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.newAccount-form-group-one{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.newAccount-form-group-two{
+    width: 100%;
+}
+
+.newAccount-form-image{
+   max-width: 100% !important;
+   height: 350px;
+   width: 400px;
+}
+
+.Form-Error{
+    color: red;
+    text-align: right;
+}
+
+.newAccount-form-icon{
+    width: 50%;
+    min-width: 50%;
+}
+.button-newAccount{
+    background-color: #7300e6;
+    border: solid 2px black;
+    padding: 10px;
+    color: white;
+    margin: 10px;
+    width: 20% !important;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+}
+
+.button-newAccount:hover{
+    background-color: #661aff;
+    text-decoration: none;
+    color: white;
+  }
+
+@media (max-width: 767px) {
+   .newAccount-form{
+       padding: 5px;
+   }
+   .newAccount-form-group-one{
+       flex-direction: column;
+   }
+
+    .button-newAccount{
+        width: 100% !important;
+    }
+
+    .newAccount-form-icon{
+        width: 60%;
+    }
+
+    
+    .newAccount-form-image{
+        height: auto;
+        width: auto;
+     }
+  
+  }
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+   .newAccount-form-group-one{
+        flex-direction: column;
+    }
+
+    .button-newAccount{
+        width: 30% !important;
+    }
+
+    .newAccount-form-image{
+        height: auto;
+        width: auto;
+     }
+  
+  
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+   .newAccount-form-icon{
+    width: 70%;
+}
+
+.newAccount-form-image{
+    height: 300px;
+    width: 300px;
+ }
+}
+
+@media (min-width: 1200px) {
+   .newAccount-form-image{
+    height: 300px;
+    width: auto;
+ }
+}
