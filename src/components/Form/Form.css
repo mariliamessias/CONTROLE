@@ -6,6 +6,10 @@
     border-radius: 20px; 
 }
 
+.invalid-feedback{
+    text-align: right !important;
+}
+
 .newAccount-form{
     padding: 0px 30px 0px 10px;
     display: flex;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import ButtonDefault from '../../components/Button/ButtonDefault';
@@ -7,6 +8,7 @@ import SimpleText from '../../components/SimpleText/SimpleText';
 import Logo from '../../images/lontrasLogo.jpg'
 import SimpleLink from '../../components/SimpleLink/SimpleLink';
 import carregando from '../../images/loading.svg';
+import * as Yup from 'yup';
 import './Login.css';
 
 class Login extends Component {
@@ -94,7 +96,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.inputEmailRef.current.focusTextInput();
+    //this.inputEmailRef.current.focusTextInput();
   }
 
   onEmailChange(e) {
@@ -158,7 +160,26 @@ class Login extends Component {
     }
 
     return (
-      <div className="Login">
+      <Formik
+      initialValues={{
+        email: '',
+        password: ''
+      }}
+      validationSchema={Yup.object().shape({
+        email: Yup.string()
+          .email('Email inválido.')
+          .required('Email é obrigatório.'),
+        password: Yup.string()
+          .min(6, 'A senha precisa conter no mínimo 6 caracteres.')
+          .required('Senha é obrigatória.'),
+      })}
+
+      onSubmit={fields => {
+        alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
+      }}
+      render={({ errors, status, touched }) => (
+        <Form>
+          <div className="Login">
         <div className="Login-body">
           <div className="Login-bodyTop">
             <img className="Login-body-image" src={Logo} />
@@ -168,10 +189,11 @@ class Login extends Component {
           <div className="Login-body-middleForm">
             <div className="Login-body-userInformation">
               <SimpleText className="userEmail">Email:</SimpleText>
-              <InputText onChange={this.onEmailChange.bind(this)} ref={this.inputEmailRef} onKeyPress={this.handleSubmit.bind(this)} type="text" ></InputText>
-            </div>
+              <Field className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} name="email"  type="text" />
+              <ErrorMessage name="email" component="div" className="invalid-feedback" />
+             </div>
             <div className="Login-body-container">
-              <span className="Login-body-error">{emailErr ? emailErr : ""}</span>
+              {/* <span className="Login-body-error">{emailErr ? emailErr : ""}</span> */}
             </div>
 
             <div className="Login-body-userInformation-1">
@@ -190,9 +212,13 @@ class Login extends Component {
             {this.renderRedirect()}
             <button className={this.state.buttonStatus} ref={this.buttonRef} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
           </div>
-
         </div>
       </div>
+        </Form>
+      )}
+      />
+
+      
     );
   }
 }
