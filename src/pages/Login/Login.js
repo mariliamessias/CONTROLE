@@ -123,8 +123,8 @@ class Login extends Component {
             error: function (resposta) {
               this.setState({ buttonStatus: 'Login-body-buttonLogin', buttonValue: 'Entrar', loadingImage: 'login_none' })
               if (resposta.status === 401 || resposta.status === 404) {
-                return this.setState({ msgError:"Usuário ou senha incorretos." });
-              } 
+                return this.setState({ msgError: "Usuário ou senha incorretos." });
+              }
             }.bind(this)
           })
         }}
@@ -142,14 +142,23 @@ class Login extends Component {
                   <div className="Login-body-userInformation">
                     <SimpleText className="userEmail">Email:</SimpleText>
                     <div className="Login-body-container">
-                      <Field name="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="email" placeholder="seuemail@email.com" />
+                      <Field
+                        name="email"
+                        className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')}
+                        type="email"
+                        placeholder="seuemail@email.com"
+                      />
                       <ErrorMessage name="email" component="div" className="invalid-feedback" />
                     </div>
                   </div>
-                    <div className="Login-body-userInformation-1">
+                  <div className="Login-body-userInformation-1">
                     <SimpleText className="userPassword">Senha:</SimpleText>
                     <div className="Login-body-container">
-                      <Field name="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} type="password" />
+                      <Field
+                        name="password"
+                        className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')}
+                        type="password"
+                      />
                       <ErrorMessage name="password" component="div" className="invalid-feedback" />
                     </div>
                   </div>
