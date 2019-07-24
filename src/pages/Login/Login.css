@@ -68,6 +68,9 @@
     width: 100%;
   }
 
+  .userEmail, .userPassword{
+    padding: 10px;
+  }
   .Login-body-buttons{
     display: flex;
     flex-direction: column;
@@ -77,18 +80,22 @@
   }
 
   .Login-body-container{
-    text-align: right;
-    padding-right: 30px;
-    width: 80%;
-    height: 20px;
+    width: 100%;
   }
 
   .login_loading{
     width: 50px;
     margin:0;
   }
+
+  .invalid-password{
+    text-align: right;
+    width: 80%;
+    color: firebrick;
+  }
   .Login-body-userInformation, .Login-body-userInformation-1{
     display: flex;
+    padding: 5px;
     flex-direction: row;
     align-items: center;
     width: 80%;

@@ -15,19 +15,17 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: "",
-      password: "",
       id: "",
       login: false,
+      msgError: "",
       redirect: false,
       redirectNewAccount: false,
       token: "",
-      errors: [],
       buttonStatus: 'Login-body-buttonLogin',
       buttonValue: 'Entrar',
       loadingImage: 'login_none'
     };
-    this.showValidationError = this.showValidationError.bind(this);
+
     this.inputRef = React.createRef();
     this.buttonRef = React.createRef();
     this.inputEmailRef = React.createRef();
@@ -59,42 +57,6 @@ class Login extends Component {
     })
   }
 
-  submitLogin(e) {
-    if (this.state.email === "") {
-      return this.showValidationError('email', 'O email não pode estar vazio!');
-    } else if (this.state.password === "") {
-      return this.showValidationError('password', 'A senha deve ser preenchida!');
-    }
-    this.setState({ buttonStatus: 'Login-body-buttonLoginCarregando', buttonValue: 'Carregando', loadingImage: 'login_loading' })
-    $.ajax({
-      url: 'https://api-sky.herokuapp.com/api/auth/sign-in',
-      contentType: 'application/json',
-      dataType: 'json',
-      type: 'post',
-      data: JSON.stringify({
-        email: this.state.email,
-        senha: this.state.password,
-      }),
-      success: function (resposta) {
-        this.setState({
-          token: resposta.token,
-          id: resposta.id
-        })
-        this.clearValidationError("login");
-        return this.setRedirect();
-      }.bind(this),
-      error: function (resposta) {
-        this.setState({ buttonStatus: 'Login-body-buttonLogin', buttonValue: 'Entrar', loadingImage: 'login_none' })
-        if (resposta.status === 401) {
-          return this.showValidationError('login', 'A senha informada está incorreta.');
-        } else if (resposta.status === 404) {
-          return this.showValidationError('login', 'O email informado não foi localizado.');
-        }
-
-      }.bind(this)
-    })
-  }
-
   // componentDidMount() {
   //   this.inputEmailRef.current.focusTextInput();
   // }
@@ -112,24 +74,6 @@ class Login extends Component {
 
   }
 
-  showValidationError(elm, msg) {
-    this.setState((prevState) => ({
-      errors: [...prevState.errors, { elm, msg }]
-    }));
-  }
-
-  clearValidationError(elm, msg) {
-    this.setState((prevState) => {
-      let newArr = [];
-      for (let err of prevState.errors) {
-        if (elm != err.elm) {
-          newArr.push(err);
-        }
-      }
-      return { errors: newArr };;
-    });
-  }
-
   handleSubmit = (e) => {
     if (e.key === "Enter") {
       this.inputRef.current.focusTextInput();
@@ -143,22 +87,6 @@ class Login extends Component {
   };
 
   render() {
-
-    // let emailErr = null,
-    //   passwordErr = null,
-    //   loginErr = null;
-
-    // for (let err of this.state.errors) {
-    //   if (err.elm === "email") {
-    //     emailErr = err.msg;
-    //   } else if (err.elm === "password") {
-    //     passwordErr = err.msg;
-    //   } else if (err.elm === "login") {
-    //     loginErr = err.msg;
-
-    //   }
-    // }
-
     return (
       <Formik
         initialValues={{
@@ -170,11 +98,35 @@ class Login extends Component {
             .email('Email inválido.')
             .required('Email é obrigatório.'),
           password: Yup.string()
-            .min(6, 'A senha precisa conter no mínimo 6 caracteres.')
+            .min(5, 'A senha precisa conter no mínimo 5 caracteres.')
             .required('Senha é obrigatória.')
         })}
+
         onSubmit={fields => {
-          alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
+          this.setState({ buttonStatus: 'Login-body-buttonLoginCarregando', buttonValue: 'Carregando', loadingImage: 'login_loading' })
+          $.ajax({
+            url: 'https://api-sky.herokuapp.com/api/auth/sign-in',
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'post',
+            data: JSON.stringify({
+              email: fields.email,
+              senha: fields.password,
+            }),
+            success: function (resposta) {
+              this.setState({
+                token: resposta.token,
+                id: resposta.id
+              })
+              return this.setRedirect();
+            }.bind(this),
+            error: function (resposta) {
+              this.setState({ buttonStatus: 'Login-body-buttonLogin', buttonValue: 'Entrar', loadingImage: 'login_none' })
+              if (resposta.status === 401 || resposta.status === 404) {
+                return this.setState({ msgError:"Usuário ou senha incorretos." });
+              } 
+            }.bind(this)
+          })
         }}
 
         render={({ errors, status, touched }) => (
@@ -189,36 +141,28 @@ class Login extends Component {
                 <div className="Login-body-middleForm">
                   <div className="Login-body-userInformation">
                     <SimpleText className="userEmail">Email:</SimpleText>
-                    {/* <InputText onChange={this.onEmailChange.bind(this)} ref={this.inputEmailRef} onKeyPress={this.handleSubmit.bind(this)} type="text" ></InputText> */}
-                    <Field name="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="email" placeholder="seuemail@email.com" />
-                    <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                    <div className="Login-body-container">
+                      <Field name="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="email" placeholder="seuemail@email.com" />
+                      <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                    </div>
                   </div>
-                  <div className="Login-body-container">
-                    {/* <span className="Login-body-error">{emailErr ? emailErr : ""}</span> */}
-                  </div>
-
-                  <div className="Login-body-userInformation-1">
+                    <div className="Login-body-userInformation-1">
                     <SimpleText className="userPassword">Senha:</SimpleText>
-                    <Field name="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} type="password"/>
-                    <ErrorMessage name="password" component="div" className="invalid-feedback" />
-                    {/* <InputText onChange={this.onPasswordChange.bind(this)} onKeyPress={this.handleSumitButton.bind(this)} ref={this.inputRef} type="password"></InputText> */}
+                    <div className="Login-body-container">
+                      <Field name="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} type="password" />
+                      <ErrorMessage name="password" component="div" className="invalid-feedback" />
+                    </div>
                   </div>
-                  <div className="Login-body-container">
-                    {/* <span className="Login-body-error">{passwordErr ? passwordErr : ""}</span> */}
-                  </div>
-                  {/* <span className="Login-body-error">{loginErr ? loginErr : ""}</span> */}
-
+                  <span className="invalid-password">{this.state.msgError}</span>
                   <SimpleLink>Recuperar a senha</SimpleLink>
                 </div>
                 <div className="Login-body-buttons">
                   <ButtonDefault className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</ButtonDefault>
                   {this.renderRedirect()}
-                  <button className={this.state.buttonStatus} ref={this.buttonRef} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
+                  <button className={this.state.buttonStatus} ref={this.buttonRef}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
                 </div>
-
               </div>
             </div>
-
           </Form>
         )}
       />
