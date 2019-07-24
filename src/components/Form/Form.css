@@ -12,6 +12,10 @@
     flex-direction: column;
 }
 
+.invalid-feedback{
+    text-align: right !important;
+}
+
 .newAccount-form-buttons{
     width: 100%;
     display: flex;
@@ -140,7 +144,8 @@
 
 @media (min-width: 1200px) {
    .newAccount-form-image{
-    height: 300px;
+    height: auto;
     width: auto;
+    max-height: 300px;
  }
 }

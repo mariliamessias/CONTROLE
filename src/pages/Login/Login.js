@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import * as Yup from 'yup';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import $ from 'jquery';
 import ButtonDefault from '../../components/Button/ButtonDefault';
 import InputText from '../../components/InputText/InputTex';
@@ -52,10 +54,10 @@ class Login extends Component {
   }
 
   newAccount = () => {
-     this.setState({
-        redirectNewAccount: true
-      })
-    }
+    this.setState({
+      redirectNewAccount: true
+    })
+  }
 
   submitLogin(e) {
     if (this.state.email === "") {
@@ -93,9 +95,9 @@ class Login extends Component {
     })
   }
 
-  componentDidMount() {
-    this.inputEmailRef.current.focusTextInput();
-  }
+  // componentDidMount() {
+  //   this.inputEmailRef.current.focusTextInput();
+  // }
 
   onEmailChange(e) {
     this.setState({ email: e.target.value });
@@ -142,57 +144,84 @@ class Login extends Component {
 
   render() {
 
-    let emailErr = null,
-      passwordErr = null,
-      loginErr = null;
+    // let emailErr = null,
+    //   passwordErr = null,
+    //   loginErr = null;
 
-    for (let err of this.state.errors) {
-      if (err.elm === "email") {
-        emailErr = err.msg;
-      } else if (err.elm === "password") {
-        passwordErr = err.msg;
-      } else if (err.elm === "login") {
-        loginErr = err.msg;
+    // for (let err of this.state.errors) {
+    //   if (err.elm === "email") {
+    //     emailErr = err.msg;
+    //   } else if (err.elm === "password") {
+    //     passwordErr = err.msg;
+    //   } else if (err.elm === "login") {
+    //     loginErr = err.msg;
 
-      }
-    }
+    //   }
+    // }
 
     return (
-      <div className="Login">
-        <div className="Login-body">
-          <div className="Login-bodyTop">
-            <img className="Login-body-image" src={Logo} />
-            <h2 className="Login-body-title">Controle</h2>
-          </div>
-          <SimpleText className="simpleSubtitle">Informe abaixo seus dados de acesso:</SimpleText>
-          <div className="Login-body-middleForm">
-            <div className="Login-body-userInformation">
-              <SimpleText className="userEmail">Email:</SimpleText>
-              <InputText onChange={this.onEmailChange.bind(this)} ref={this.inputEmailRef} onKeyPress={this.handleSubmit.bind(this)} type="text" ></InputText>
-            </div>
-            <div className="Login-body-container">
-              <span className="Login-body-error">{emailErr ? emailErr : ""}</span>
+      <Formik
+        initialValues={{
+          password: '',
+          email: '',
+        }}
+        validationSchema={Yup.object().shape({
+          email: Yup.string()
+            .email('Email inválido.')
+            .required('Email é obrigatório.'),
+          password: Yup.string()
+            .min(6, 'A senha precisa conter no mínimo 6 caracteres.')
+            .required('Senha é obrigatória.')
+        })}
+        onSubmit={fields => {
+          alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
+        }}
+
+        render={({ errors, status, touched }) => (
+          <Form className="Form">
+            <div className="Login">
+              <div className="Login-body">
+                <div className="Login-bodyTop">
+                  <img className="Login-body-image" src={Logo} />
+                  <h2 className="Login-body-title">Controle</h2>
+                </div>
+                <SimpleText className="simpleSubtitle">Informe abaixo seus dados de acesso:</SimpleText>
+                <div className="Login-body-middleForm">
+                  <div className="Login-body-userInformation">
+                    <SimpleText className="userEmail">Email:</SimpleText>
+                    {/* <InputText onChange={this.onEmailChange.bind(this)} ref={this.inputEmailRef} onKeyPress={this.handleSubmit.bind(this)} type="text" ></InputText> */}
+                    <Field name="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="email" placeholder="seuemail@email.com" />
+                    <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                  </div>
+                  <div className="Login-body-container">
+                    {/* <span className="Login-body-error">{emailErr ? emailErr : ""}</span> */}
+                  </div>
+
+                  <div className="Login-body-userInformation-1">
+                    <SimpleText className="userPassword">Senha:</SimpleText>
+                    <Field name="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} type="password"/>
+                    <ErrorMessage name="password" component="div" className="invalid-feedback" />
+                    {/* <InputText onChange={this.onPasswordChange.bind(this)} onKeyPress={this.handleSumitButton.bind(this)} ref={this.inputRef} type="password"></InputText> */}
+                  </div>
+                  <div className="Login-body-container">
+                    {/* <span className="Login-body-error">{passwordErr ? passwordErr : ""}</span> */}
+                  </div>
+                  {/* <span className="Login-body-error">{loginErr ? loginErr : ""}</span> */}
+
+                  <SimpleLink>Recuperar a senha</SimpleLink>
+                </div>
+                <div className="Login-body-buttons">
+                  <ButtonDefault className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</ButtonDefault>
+                  {this.renderRedirect()}
+                  <button className={this.state.buttonStatus} ref={this.buttonRef} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
+                </div>
+
+              </div>
             </div>
 
-            <div className="Login-body-userInformation-1">
-              <SimpleText className="userPassword">Senha:</SimpleText>
-              <InputText onChange={this.onPasswordChange.bind(this)} onKeyPress={this.handleSumitButton.bind(this)} ref={this.inputRef} type="password"></InputText>
-            </div>
-            <div className="Login-body-container">
-              <span className="Login-body-error">{passwordErr ? passwordErr : ""}</span>
-            </div>
-            <span className="Login-body-error">{loginErr ? loginErr : ""}</span>
-
-            <SimpleLink>Recuperar a senha</SimpleLink>
-          </div>
-          <div className="Login-body-buttons">
-            <ButtonDefault className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</ButtonDefault>
-            {this.renderRedirect()}
-            <button className={this.state.buttonStatus} ref={this.buttonRef} onClick={this.submitLogin.bind(this)}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
-          </div>
-
-        </div>
-      </div>
+          </Form>
+        )}
+      />
     );
   }
 }
