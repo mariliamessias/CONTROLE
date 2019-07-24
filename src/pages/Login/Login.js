@@ -74,6 +74,10 @@ class Login extends Component {
 
   }
 
+  handleError = () => {
+    this.setState({ msgError: "" })
+  }
+
   handleSubmit = (e) => {
     if (e.key === "Enter") {
       this.inputRef.current.focusTextInput();
@@ -98,7 +102,6 @@ class Login extends Component {
             .email('Email inválido.')
             .required('Email é obrigatório.'),
           password: Yup.string()
-            .min(5, 'A senha precisa conter no mínimo 5 caracteres.')
             .required('Senha é obrigatória.')
         })}
 
@@ -123,7 +126,7 @@ class Login extends Component {
             error: function (resposta) {
               this.setState({ buttonStatus: 'Login-body-buttonLogin', buttonValue: 'Entrar', loadingImage: 'login_none' })
               if (resposta.status === 401 || resposta.status === 404) {
-                return this.setState({ msgError: "Usuário ou senha incorretos." });
+                return this.setState({ msgError: "Email ou senha incorretos." });
               }
             }.bind(this)
           })
@@ -147,6 +150,9 @@ class Login extends Component {
                         className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')}
                         type="email"
                         placeholder="seuemail@email.com"
+                        onClick={ () =>
+                          this.handleError()
+                        }
                       />
                       <ErrorMessage name="email" component="div" className="invalid-feedback" />
                     </div>
@@ -158,6 +164,9 @@ class Login extends Component {
                         name="password"
                         className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')}
                         type="password"
+                        onClick ={()=>
+                          this.handleError()
+                        }
                       />
                       <ErrorMessage name="password" component="div" className="invalid-feedback" />
                     </div>
