@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import check from '../../images/check.png';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -11,6 +12,7 @@ import SimpleText from '../SimpleText/SimpleText';
 import excluir from '../../images/delete.png';
 import editar from '../../images/change.png';
 import carregando from '../../images/loading.svg';
+import * as Yup from 'yup';
 import React from 'react';
 import './Content.css';
 
@@ -384,41 +386,94 @@ class Content extends React.Component {
 
     return (
       <div className="Content">
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Despesa</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <SimpleText>Descrição da Despesa:</SimpleText>
-            <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText>
-            <span className="Login-body-error">{descErr ? descErr : ""}</span>
-            <SimpleText>Data de vencimento:</SimpleText>
-            <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
-            <span className="Login-body-error">{dataErr ? dataErr : ""}</span>
-            <SimpleText>Valor da despesa:</SimpleText>
-            <div className="Menu-items-select">
-              <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
-            </div>
-            <span className="Login-body-error">{valorErr ? valorErr : ""}</span>
-            <SimpleText>De que Usuário é a conta?</SimpleText>
-            <div className="Menu-items-select">
-              <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
-                <option value="" disabled>Selecione um Usuario</option>
-                <option value="mol">Mol</option>
-                <option value="coita">Coita</option>
-              </select>
-              <span className="Login-body-error">{userErr ? userErr : ""}</span>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Cancelar
-    </Button>
-            <Button disabled={this.state.disabled} variant="primary" onClick={(event) => { this.save(this.state.cadastrar) }}>
-              Salvar
-    </Button>
-          </Modal.Footer>
-        </Modal>
+
+        {/*modal estava aqui */}
+        <Formik
+          initialValues={{
+            dateVencto: '',
+            usuario: '',
+            description: '',
+            value: ''
+          }}
+          validationSchema={Yup.object().shape({
+            dateVencto: Yup.date()
+              .required('Data é obrigatória'),
+            usuario: Yup.string()
+              .required('Usuário é obrigatório.'),
+            description: Yup.string()
+              .required('Descrição é obrigatória'),
+            value: Yup.number()
+              .required('Valor é obrigatório')
+          })}
+
+          onSubmit={fields => { alert('teste') }}
+
+          render={({ errors, status, touched }) => (
+
+            <Form className="Form">
+            <Modal show={this.state.show} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Despesa</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {/* <SimpleText>Descrição da Despesa:</SimpleText>
+                <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText> */}
+                <SimpleText>Descrição da Despesa:</SimpleText>
+                <Field
+                  name="description"
+                  className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')}
+                  type="text"
+                  placeholder="Conta de telefone"
+                />
+                <ErrorMessage name="description" component="div" className="invalid-feedback" />
+
+                {/* <span className="Login-body-error">{descErr ? descErr : ""}</span> */}
+                <SimpleText>Data de vencimento:</SimpleText>
+                {/* <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
+                <span className="Login-body-error">{dataErr ? dataErr : ""}</span> */}
+                <Field
+                  name="dateVencto"
+                  className={'form-control' + (errors.dateVencto && touched.dateVencto ? ' is-invalid' : '')}
+                  type="date"
+                />
+                <ErrorMessage name="dateVencto" component="div" className="invalid-feedback" />
+
+                <SimpleText>Valor da despesa:</SimpleText>
+                {/* <div className="Menu-items-select">
+                  <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
+                </div>
+                <span className="Login-body-error">{valorErr ? valorErr : ""}</span> */}
+                <Field
+                  name="value"
+                  className={'form-control' + (errors.value && touched.value ? ' is-invalid' : '')}
+                  type="number"
+                />
+                <ErrorMessage name="value" component="div" className="invalid-feedback" />
+
+                <SimpleText>De que Usuário é a conta?</SimpleText>
+                <div className="Menu-items-select">
+                  <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
+                    <option value="" disabled>Selecione um Usuario</option>
+                    <option value="mol">Mol</option>
+                    <option value="coita">Coita</option>
+                  </select>
+                  <span className="Login-body-error">{userErr ? userErr : ""}</span>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Cancelar
+  </Button>
+                {/* <Button disabled={this.state.disabled} type="submit" variant="primary" onClick={(event) => { this.save(this.state.cadastrar) }}> */}
+                <Button disabled={this.state.disabled} type="submit" variant="primary">
+                  Salvar
+  </Button>
+
+              </Modal.Footer>
+            </Modal>
+            </Form>
+          )}
+        />
 
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
