@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import PubSub from 'pubsub-js';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
 import check from '../../images/check.png';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -12,7 +11,6 @@ import SimpleText from '../SimpleText/SimpleText';
 import excluir from '../../images/delete.png';
 import editar from '../../images/change.png';
 import carregando from '../../images/loading.svg';
-import * as Yup from 'yup';
 import React from 'react';
 import './Content.css';
 
@@ -34,7 +32,6 @@ class Content extends React.Component {
       showModal: false,
       showSair: false,
       showPagar: false,
-      disabled: false,
       cadastrar: false,
       despesas: [],
       description: '',
@@ -44,7 +41,9 @@ class Content extends React.Component {
       value: '',
       item: '',
       usuario: '',
-      errors: [],
+      // errors: [],
+      fields: {},
+      errors: {}
     };
 
     this.save = this.save.bind(this);
@@ -54,7 +53,7 @@ class Content extends React.Component {
     this.setUsuario = this.setUsuario.bind(this);
     this.setValue = this.setValue.bind(this);
     this.editarDespesa = this.editarDespesa.bind(this);
-    this.showValidationError = this.showValidationError.bind(this);
+    // this.showValidationError = this.showValidationError.bind(this);
 
   }
   pagarDespesa() {
@@ -357,123 +356,185 @@ class Content extends React.Component {
     this.clearValidationError("valor");
   }
 
-  showValidationError(elm, msg) {
+  // showValidationError(elm, msg) {
+  //   this.setState((prevState) => ({
+  //     errors: [...prevState.errors, { elm, msg }]
+  //   }));
+  // }
+
+  handleValidation() {
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    //description
+    if (!fields["description"]) {
+      formIsValid = false;
+      errors["description"] = "Descrição precisa ser preenchida";
+    }
+
+
+    //DataVcto
+    if (!fields["dateVencto"]) {
+      formIsValid = false;
+      errors["dateVencto"] = "Data de vencimento precisa ser preenchida";
+    }
+
+    //Value
+    if (!fields["value"]) {
+      formIsValid = false;
+      errors["value"] = "Valor precisa ser preenchido";
+    }
+
+    //User
+    if (!fields["user"]) {
+      formIsValid = false;
+      errors["user"] = "Usuário precisa ser selecionado";
+    }
+
+    // if (typeof fields["name"] !== "undefined") {
+    //   if (!fields["name"].match(/^[a-zA-Z]+$/)) {
+    //     formIsValid = false;
+    //     errors["name"] = "Only letters";
+    //   }
+    // }
+
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  }
+
+  contactSubmit(e) {
+    e.preventDefault();
+    this.handleValidation();
+
+    // if(this.handleValidation()){
+    //    alert("Form submitted");
+    // }else{
+    //    alert("Form has errors.")
+    // }
+
+  }
+
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    if (field === "value") {
+      fields[field] = e;
+      this.setState({ fields });
+    } else {
+      fields[field] = e.target.value;
+      this.setState({ fields });
+
+    }
+
+
     this.setState((prevState) => ({
-      errors: [...prevState.errors, { elm, msg }]
+      errors: [field, '']
     }));
   }
 
   render() {
 
-    const { value } = this.state;
+    // const { value } = this.state;
 
-    let descErr = null,
-      dataErr = null,
-      valorErr = null,
-      userErr = null;
+    // let descErr = null,
+    //   dataErr = null,
+    //   valorErr = null,
+    //   userErr = null;
 
-    for (let err of this.state.errors) {
-      if (err.elm === "desc") {
-        descErr = err.msg;
-      } else if (err.elm === "data") {
-        dataErr = err.msg;
-      } else if (err.elm === "valor") {
-        valorErr = err.msg;
-      } else if (err.elm === "usuario") {
-        userErr = err.msg;
-      }
-    }
+    // for (let err of this.state.errors) {
+    //   if (err.elm === "desc") {
+    //     descErr = err.msg;
+    //   }
+    //   if (err.elm === "data") {
+    //     dataErr = err.msg;
+    //   }
+    //   if (err.elm === "valor") {
+    //     valorErr = err.msg;
+    //   }
+    //   if (err.elm === "usuario") {
+    //     userErr = err.msg;
+    //   }
+    // }
 
     return (
       <div className="Content">
+        <Modal show={this.state.show} onHide={this.handleClose}>
+        <form name="contactform" className="contactform" onSubmit={this.contactSubmit.bind(this)}>
 
-        {/*modal estava aqui */}
-        <Formik
-          initialValues={{
-            dateVencto: '',
-            usuario: '',
-            description: '',
-            value: ''
-          }}
-          validationSchema={Yup.object().shape({
-            dateVencto: Yup.date()
-              .required('Data é obrigatória'),
-            usuario: Yup.string()
-              .required('Usuário é obrigatório.'),
-            description: Yup.string()
-              .required('Descrição é obrigatória'),
-            value: Yup.number()
-              .required('Valor é obrigatório')
-          })}
+          <Modal.Header closeButton>
+            <Modal.Title>Despesa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* <Modal.Header closeButton>
+            <Modal.Title>Despesa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <SimpleText>Descrição da Despesa:</SimpleText>
+            <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText>
+            <span className="Login-body-error">{descErr ? descErr : ""}</span>
+            <SimpleText>Data de vencimento:</SimpleText>
+            <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
+            <span className="Login-body-error">{dataErr ? dataErr : ""}</span>
+            <SimpleText>Valor da despesa:</SimpleText>
+            <div className="Menu-items-select">
+              <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
+            </div>
+            <span className="Login-body-error">{valorErr ? valorErr : ""}</span>
+            <SimpleText>De que Usuário é a conta?</SimpleText>
+            <div className="Menu-items-select">
+              <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
+                <option value="" disabled>Selecione um Usuario</option>
+                <option value="mol">Mol</option>
+                <option value="coita">Coita</option>
+              </select>
+              <span className="Login-body-error">{userErr ? userErr : ""}</span>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
+            <Button variant="primary" onClick={(event) => { this.save(this.state.cadastrar) }}>Salvar</Button>
 
-          onSubmit={fields => { alert('teste') }}
+          </Modal.Footer> */}
+              <div className="col-md-6">
+                <fieldset>
+                  {/* description */}
+                  <SimpleText>Descrição da Despesa:</SimpleText>
+                  <input ref="description" type="text" size="30" placeholder="Ex.Conta de Luz" onChange={this.handleChange.bind(this, "description")} value={this.state.fields["description"] || ''} />
+                  <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
+                  <br />
+                  {/* dateVencto */}
+                  <SimpleText>Data de vencimento:</SimpleText>
+                  <input refs="dateVencto" type="data" size="30" onChange={this.handleChange.bind(this, "dateVencto")} value={this.state.fields["dateVencto"] || ''} />
+                  <span style={{ color: "red" }}>{this.state.errors["dateVencto"]}</span>
+                  <br />
+                  {/* Value */}
+                  <SimpleText>Valor da despesa:</SimpleText>
+                  <div className="Menu-items-select">
+                    <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
+                  </div>
+                  <span style={{ color: "red" }}>{this.state.errors["value"]}</span>
+                  {/* User */}
+                  <SimpleText>De que Usuário é a conta?</SimpleText>
+                  <div className="Menu-items-select">
+                    <select className="form-control-lg" type="text" onChange={this.handleChange.bind(this, "user")} value={this.state.fields["user"] || ''}>
+                      <option value="" disabled>Selecione um Usuario</option>
+                      <option value="mol">Mol</option>
+                      <option value="coita">Coita</option>
+                    </select>
+                  </div>
+                  <span style={{ color: "red" }}>{this.state.errors["user"]}</span>
 
-          render={({ errors, status, touched }) => (
+                </fieldset>
+              </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
+            <Button variant="primary" type="submit" /*onClick={(event) => { this.save(this.state.cadastrar) }}*/>Salvar</Button>
+          </Modal.Footer>
+          </form>
+        </Modal>
 
-            <Form className="Form">
-            <Modal show={this.state.show} onHide={this.handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Despesa</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {/* <SimpleText>Descrição da Despesa:</SimpleText>
-                <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText> */}
-                <SimpleText>Descrição da Despesa:</SimpleText>
-                <Field
-                  name="description"
-                  className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')}
-                  type="text"
-                  placeholder="Conta de telefone"
-                />
-                <ErrorMessage name="description" component="div" className="invalid-feedback" />
-
-                {/* <span className="Login-body-error">{descErr ? descErr : ""}</span> */}
-                <SimpleText>Data de vencimento:</SimpleText>
-                {/* <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
-                <span className="Login-body-error">{dataErr ? dataErr : ""}</span> */}
-                <Field
-                  name="dateVencto"
-                  className={'form-control' + (errors.dateVencto && touched.dateVencto ? ' is-invalid' : '')}
-                  type="date"
-                />
-                <ErrorMessage name="dateVencto" component="div" className="invalid-feedback" />
-
-                <SimpleText>Valor da despesa:</SimpleText>
-                {/* <div className="Menu-items-select">
-                  <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
-                </div>
-                <span className="Login-body-error">{valorErr ? valorErr : ""}</span> */}
-                <Field
-                  name="value"
-                  className={'form-control' + (errors.value && touched.value ? ' is-invalid' : '')}
-                  type="number"
-                />
-                <ErrorMessage name="value" component="div" className="invalid-feedback" />
-
-                <SimpleText>De que Usuário é a conta?</SimpleText>
-                <div className="Menu-items-select">
-                  <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
-                    <option value="" disabled>Selecione um Usuario</option>
-                    <option value="mol">Mol</option>
-                    <option value="coita">Coita</option>
-                  </select>
-                  <span className="Login-body-error">{userErr ? userErr : ""}</span>
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleClose}>
-                  Cancelar
-  </Button>
-                {/* <Button disabled={this.state.disabled} type="submit" variant="primary" onClick={(event) => { this.save(this.state.cadastrar) }}> */}
-                <Button disabled={this.state.disabled} type="submit" variant="primary">
-                  Salvar
-  </Button>
-
-              </Modal.Footer>
-            </Modal>
-            </Form>
-          )}
-        />
 
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
@@ -483,12 +544,8 @@ class Content extends React.Component {
             <SimpleText>Tem certeza que deseja excluir essa despesa?</SimpleText>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleCloseModal}>
-              Cancelar
-    </Button>
-            <Button variant="primary" onClick={(event) => { this.excluirDespesa() }}>
-              Confirmar
-    </Button>
+            <Button variant="secondary" onClick={this.handleCloseModal}>Cancelar</Button>
+            <Button variant="primary" onClick={(event) => { this.excluirDespesa() }}>Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
@@ -500,12 +557,8 @@ class Content extends React.Component {
             <SimpleText>Tem certeza que deseja confirmar o pagamento dessa despesa?</SimpleText>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClosePagar}>
-              Cancelar
-    </Button>
-            <Button variant="primary" onClick={(event) => { this.pagarDespesa() }}>
-              Confirmar
-    </Button>
+            <Button variant="secondary" onClick={this.handleClosePagar}>Cancelar</Button>
+            <Button variant="primary" onClick={(event) => { this.pagarDespesa() }}>Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
@@ -517,9 +570,7 @@ class Content extends React.Component {
             <SimpleText>Tem certeza que deseja sair?</SimpleText>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleCloseSair}>
-              Cancelar
-    </Button>
+            <Button variant="secondary" onClick={this.handleCloseSair}>Cancelar</Button>
             <Button>
               <Link to="/" className="Menu-items-btn-sair">Sair</Link>
             </Button>
