@@ -48,10 +48,6 @@ class Content extends React.Component {
 
     this.save = this.save.bind(this);
     this.pagarDespesa = this.pagarDespesa.bind(this);
-    this.setDescription = this.setDescription.bind(this);
-    this.setDateVencto = this.setDateVencto.bind(this);
-    this.setUsuario = this.setUsuario.bind(this);
-    this.setValue = this.setValue.bind(this);
     this.editarDespesa = this.editarDespesa.bind(this);
     // this.showValidationError = this.showValidationError.bind(this);
 
@@ -177,6 +173,10 @@ class Content extends React.Component {
         this.setState({ cadastrar: false });
         dateConv = date.getUTCFullYear() + '-' + ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + date.getUTCDate()).slice(-2);
       }
+      
+      /*pendente */
+      
+      console.log(item)
       this.setState({
         _id: item._id,
         description: item.description,
@@ -185,6 +185,16 @@ class Content extends React.Component {
         status: item.status,
         usuario: item.usuario
       })
+
+      let fields = this.state.fields;
+
+      fields['description'] = item.description;
+      fields['value'] = item.value;
+      fields['dateVencto'] = item.dateVencto;
+      fields['usuario'] = item.usuario;
+
+      console.log(this.state.fields);
+
     } else {
       this.setState({
         description: '',
@@ -336,31 +346,6 @@ class Content extends React.Component {
     });
   }
 
-  setDescription(evento) {
-    this.setState({ description: evento.target.value });
-    this.clearValidationError("desc");
-  }
-
-  setDateVencto(evento) {
-    this.setState({ dateVencto: evento.target.value });
-    this.clearValidationError("data");
-  }
-
-  setUsuario(evento) {
-    this.setState({ usuario: evento.target.value });
-    this.clearValidationError("usuario");
-  }
-
-  setValue(evento, value, maskedVaklue) {
-    this.setState({ value: value });
-    this.clearValidationError("valor");
-  }
-
-  // showValidationError(elm, msg) {
-  //   this.setState((prevState) => ({
-  //     errors: [...prevState.errors, { elm, msg }]
-  //   }));
-  // }
 
   handleValidation() {
     let fields = this.state.fields;
@@ -387,18 +372,10 @@ class Content extends React.Component {
     }
 
     //User
-    if (!fields["user"]) {
+    if (!fields["usuario"]) {
       formIsValid = false;
-      errors["user"] = "Usuário precisa ser selecionado";
+      errors["usuario"] = "Usuário precisa ser selecionado";
     }
-
-    // if (typeof fields["name"] !== "undefined") {
-    //   if (!fields["name"].match(/^[a-zA-Z]+$/)) {
-    //     formIsValid = false;
-    //     errors["name"] = "Only letters";
-    //   }
-    // }
-
 
     this.setState({ errors: errors });
     return formIsValid;
@@ -407,13 +384,6 @@ class Content extends React.Component {
   contactSubmit(e) {
     e.preventDefault();
     this.handleValidation();
-
-    // if(this.handleValidation()){
-    //    alert("Form submitted");
-    // }else{
-    //    alert("Form has errors.")
-    // }
-
   }
 
   handleChange(field, e) {
@@ -424,9 +394,7 @@ class Content extends React.Component {
     } else {
       fields[field] = e.target.value;
       this.setState({ fields });
-
     }
-
 
     this.setState((prevState) => ({
       errors: [field, '']
@@ -434,28 +402,6 @@ class Content extends React.Component {
   }
 
   render() {
-
-    // const { value } = this.state;
-
-    // let descErr = null,
-    //   dataErr = null,
-    //   valorErr = null,
-    //   userErr = null;
-
-    // for (let err of this.state.errors) {
-    //   if (err.elm === "desc") {
-    //     descErr = err.msg;
-    //   }
-    //   if (err.elm === "data") {
-    //     dataErr = err.msg;
-    //   }
-    //   if (err.elm === "valor") {
-    //     valorErr = err.msg;
-    //   }
-    //   if (err.elm === "usuario") {
-    //     userErr = err.msg;
-    //   }
-    // }
 
     return (
       <div className="Content">
@@ -517,7 +463,7 @@ class Content extends React.Component {
                   {/* User */}
                   <SimpleText>De que Usuário é a conta?</SimpleText>
                   <div className="Menu-items-select">
-                    <select className="form-control-lg" type="text" onChange={this.handleChange.bind(this, "user")} value={this.state.fields["user"] || ''}>
+                    <select className="form-control-lg" type="text" onChange={this.handleChange.bind(this, "usuario")} value={this.state.fields["usuario"] || ''}>
                       <option value="" disabled>Selecione um Usuario</option>
                       <option value="mol">Mol</option>
                       <option value="coita">Coita</option>
