@@ -41,7 +41,6 @@ class Content extends React.Component {
       value: '',
       item: '',
       usuario: '',
-      // errors: [],
       fields: {},
       errors: {}
     };
@@ -49,7 +48,6 @@ class Content extends React.Component {
     this.save = this.save.bind(this);
     this.pagarDespesa = this.pagarDespesa.bind(this);
     this.editarDespesa = this.editarDespesa.bind(this);
-    // this.showValidationError = this.showValidationError.bind(this);
 
   }
   pagarDespesa() {
@@ -167,42 +165,27 @@ class Content extends React.Component {
 
   handleShow(item) {
     let date = new Date(item.dateVencto);
+    let fields = this.state.fields;
     let dateConv = '';
     if (item.description || item.value || item.dateVencto || item.status || item.usuario) {
       if (item.dateVencto) {
         this.setState({ cadastrar: false });
         dateConv = date.getUTCFullYear() + '-' + ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + date.getUTCDate()).slice(-2);
       }
-      
-      /*pendente */
-      
-      console.log(item)
-      this.setState({
-        _id: item._id,
-        description: item.description,
-        value: item.value,
-        dateVencto: dateConv,
-        status: item.status,
-        usuario: item.usuario
-      })
-
-      let fields = this.state.fields;
 
       fields['description'] = item.description;
       fields['value'] = item.value;
-      fields['dateVencto'] = item.dateVencto;
+      fields['dateVencto'] = dateConv;
       fields['usuario'] = item.usuario;
+      fields['status'] = item.status;
 
-      console.log(this.state.fields);
+      this.setState({ fields, errors: {} });
 
     } else {
       this.setState({
-        description: '',
-        value: '',
-        dateVencto: '',
-        status: '',
-        usuario: '',
-        cadastrar: true
+        cadastrar: true,
+        fields: {},
+        errors: {}
       })
     };
     this.setState({ show: true });
@@ -352,26 +335,21 @@ class Content extends React.Component {
     let errors = {};
     let formIsValid = true;
 
-    //description
     if (!fields["description"]) {
       formIsValid = false;
       errors["description"] = "Descrição precisa ser preenchida";
     }
 
-
-    //DataVcto
     if (!fields["dateVencto"]) {
       formIsValid = false;
       errors["dateVencto"] = "Data de vencimento precisa ser preenchida";
     }
 
-    //Value
     if (!fields["value"]) {
       formIsValid = false;
       errors["value"] = "Valor precisa ser preenchido";
     }
 
-    //User
     if (!fields["usuario"]) {
       formIsValid = false;
       errors["usuario"] = "Usuário precisa ser selecionado";
@@ -402,46 +380,15 @@ class Content extends React.Component {
   }
 
   render() {
-
     return (
       <div className="Content">
         <Modal show={this.state.show} onHide={this.handleClose}>
-        <form name="contactform" className="contactform" onSubmit={this.contactSubmit.bind(this)}>
+          <form name="contactform" className="contactform" onSubmit={this.contactSubmit.bind(this)}>
 
-          <Modal.Header closeButton>
-            <Modal.Title>Despesa</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {/* <Modal.Header closeButton>
-            <Modal.Title>Despesa</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <SimpleText>Descrição da Despesa:</SimpleText>
-            <InputText type="text" placeholder="Ex. conta de luz" value={this.state.description} onChange={this.setDescription}></InputText>
-            <span className="Login-body-error">{descErr ? descErr : ""}</span>
-            <SimpleText>Data de vencimento:</SimpleText>
-            <InputText type="date" value={this.state.dateVencto} onChange={this.setDateVencto}></InputText>
-            <span className="Login-body-error">{dataErr ? dataErr : ""}</span>
-            <SimpleText>Valor da despesa:</SimpleText>
-            <div className="Menu-items-select">
-              <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," value={value} onChange={this.setValue} />
-            </div>
-            <span className="Login-body-error">{valorErr ? valorErr : ""}</span>
-            <SimpleText>De que Usuário é a conta?</SimpleText>
-            <div className="Menu-items-select">
-              <select className="form-control-lg" type="text" value={this.state.usuario} onChange={this.setUsuario}>
-                <option value="" disabled>Selecione um Usuario</option>
-                <option value="mol">Mol</option>
-                <option value="coita">Coita</option>
-              </select>
-              <span className="Login-body-error">{userErr ? userErr : ""}</span>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
-            <Button variant="primary" onClick={(event) => { this.save(this.state.cadastrar) }}>Salvar</Button>
-
-          </Modal.Footer> */}
+            <Modal.Header closeButton>
+              <Modal.Title>Despesa</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
               <div className="col-md-6">
                 <fieldset>
                   {/* description */}
@@ -473,14 +420,13 @@ class Content extends React.Component {
 
                 </fieldset>
               </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
-            <Button variant="primary" type="submit" /*onClick={(event) => { this.save(this.state.cadastrar) }}*/>Salvar</Button>
-          </Modal.Footer>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
+              <Button variant="primary" type="submit" /*onClick={(event) => { this.save(this.state.cadastrar) }}*/>Salvar</Button>
+            </Modal.Footer>
           </form>
         </Modal>
-
 
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
