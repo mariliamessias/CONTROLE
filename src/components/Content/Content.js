@@ -116,6 +116,9 @@ class Content extends React.Component {
   }
 
   editarDespesa() {
+    const valueDespesa = (this.state.fields['value']);
+    console.log(valueDespesa);
+    console.log(valueDespesa.indexOf(","))
     $.ajax({
       url: 'https://api-despesas.herokuapp.com/despesas/' + this.state.fields['_id'],
       contentType: 'application/json',
@@ -124,7 +127,7 @@ class Content extends React.Component {
         description: this.state.fields['description'],
         usuario: this.state.fields['usuario'],
         dateVencto: this.state.fields['dateVencto'],
-        value: parseFloat((this.state.fields['value']).split("$")[1]),
+        value: valueDespesa.indexOf(",") >= 0 ? valueDespesa.replace(",", "") : valueDespesa,
         status: 'cadastrada'
       }),
       success: function (resposta) {
@@ -244,6 +247,7 @@ class Content extends React.Component {
   save(cadastrar) {
     if (cadastrar) {
       if (this.state.fields.description != "" && this.state.fields.description != undefined && this.state.fields.dateVencto != "" && this.state.fields.dateVencto != undefined && this.state.fields.value != "" && this.state.fields.value != undefined && this.state.fields.usuario != "" && this.state.fields.usuario != undefined) {
+        const valueDespesa = (this.state.fields['value']).split("R$ ")[1];
         $.ajax({
           url: 'https://api-despesas.herokuapp.com/despesas',
           contentType: 'application/json',
@@ -253,7 +257,7 @@ class Content extends React.Component {
             description: this.state.fields['description'],
             usuario: this.state.fields['usuario'],
             dateVencto: this.state.fields['dateVencto'],
-            value: parseFloat((this.state.fields['value']).split("$")[1]),
+            value: valueDespesa.indexOf(",") > 0 ? valueDespesa.replace(",", "") : valueDespesa,
             status: 'cadastrada'
           }),
           success: function (resposta) {
@@ -343,7 +347,7 @@ class Content extends React.Component {
                 <fieldset>
                   {/* description */}
                   <SimpleText className="title-form">Descrição da Despesa:</SimpleText>
-                  <InputText ref="description" type="text" size="30" placeholder="Ex.Conta de Luz" onChange={this.handleChange.bind(this, "description")} value={this.state.fields["description"] || ''} />
+                  <InputText refs="description" type="text" size="30" placeholder="Ex.Conta de Luz" onChange={this.handleChange.bind(this, "description")} value={this.state.fields["description"] || ''} />
                   <span className="error-modal"style={{ color: "red" }}>{this.state.errors["description"]}</span>
                   <br />
                   {/* dateVencto */}
@@ -353,9 +357,7 @@ class Content extends React.Component {
                   <br />
                   {/* Value */}
                   <SimpleText className="title-form">Valor da despesa:</SimpleText>
-                  <div className="Menu-items-select">
-                    <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
-                  </div>
+                  <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
                   <span className="error-modal" style={{ color: "red" }}>{this.state.errors["value"]}</span>
                   {/* User */}
                   <SimpleText className="title-form">De que Usuário é a conta?</SimpleText>
@@ -433,9 +435,9 @@ class Content extends React.Component {
               this.state.isLoading ? (<div className="loadingImg"><img className="home__loading" src={carregando} alt="Carregando" /></div>) :
                 (this.state.despesas.map((item) => {
                   if (item !== '' && item !== undefined) {
-
                     let dateTr = new Date(item.dateVencto);
                     dateTr.setUTCHours(5);
+                    let valor = item.value;
                     let dateCon = '';
 
                     dateCon = ('0' + dateTr.getUTCDate()).slice(-2) + '/' + ('0' + (dateTr.getMonth() + 1)).slice(-2) + '/' + dateTr.getFullYear();
@@ -445,7 +447,7 @@ class Content extends React.Component {
                         <td>{item.description}</td>
                         <td>{item.usuario}</td>
                         <td>{dateCon}</td>
-                        <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
+                        <td>{ valor.indexOf("R$") >= 0 ? item.value : `R$ ${parseFloat(item.value).toFixed(2)}`}</td>
                         <td className="operacoes">
                           <div className="operacoes">
                             <button className="btn btn-success" onClick={() => this.handleShowPagar(item)}><img className="iconOperations" src={check} /></button>
