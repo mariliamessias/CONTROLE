@@ -17,6 +17,7 @@ import './Content.css';
 class Content extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
@@ -25,6 +26,9 @@ class Content extends React.Component {
     this.handleShowSair = this.handleShowSair.bind(this);
     this.handleClosePagar = this.handleClosePagar.bind(this);
     this.handleCloseSair = this.handleCloseSair.bind(this);
+    this.save = this.save.bind(this);
+    this.pagarDespesa = this.pagarDespesa.bind(this);
+    this.editarDespesa = this.editarDespesa.bind(this);
 
     this.state = {
       isLoading: true,
@@ -34,20 +38,10 @@ class Content extends React.Component {
       showPagar: false,
       cadastrar: false,
       despesas: [],
-      description: '',
-      dateVencto: '',
-      _id: '',
-      status: '',
-      value: '',
       item: '',
-      usuario: '',
       fields: {},
       errors: {}
     };
-
-    this.save = this.save.bind(this);
-    this.pagarDespesa = this.pagarDespesa.bind(this);
-    this.editarDespesa = this.editarDespesa.bind(this);
 
   }
   pagarDespesa() {
@@ -123,14 +117,14 @@ class Content extends React.Component {
 
   editarDespesa() {
     $.ajax({
-      url: 'https://api-despesas.herokuapp.com/despesas/' + this.state._id,
+      url: 'https://api-despesas.herokuapp.com/despesas/' + this.state.fields['_id'],
       contentType: 'application/json',
       type: 'PUT',
       data: JSON.stringify({
-        description: this.state.description,
-        usuario: this.state.usuario,
-        dateVencto: this.state.dateVencto,
-        value: this.state.value,
+        description: this.state.fields['description'],
+        usuario: this.state.fields['usuario'],
+        dateVencto: this.state.fields['dateVencto'],
+        value: parseFloat((this.state.fields['value']).split("$")[1]),
         status: 'cadastrada'
       }),
       success: function (resposta) {
@@ -173,6 +167,7 @@ class Content extends React.Component {
         dateConv = date.getUTCFullYear() + '-' + ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + date.getUTCDate()).slice(-2);
       }
 
+      fields['_id'] = item._id;
       fields['description'] = item.description;
       fields['value'] = item.value;
       fields['dateVencto'] = dateConv;
@@ -248,17 +243,17 @@ class Content extends React.Component {
 
   save(cadastrar) {
     if (cadastrar) {
-      if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
+      if (this.state.fields.description != "" && this.state.fields.description != undefined && this.state.fields.dateVencto != "" && this.state.fields.dateVencto != undefined && this.state.fields.value != "" && this.state.fields.value != undefined && this.state.fields.usuario != "" && this.state.fields.usuario != undefined) {
         $.ajax({
           url: 'https://api-despesas.herokuapp.com/despesas',
           contentType: 'application/json',
           dataType: 'json',
           type: 'post',
           data: JSON.stringify({
-            description: this.state.description,
-            usuario: this.state.usuario,
-            dateVencto: this.state.dateVencto,
-            value: this.state.value,
+            description: this.state.fields['description'],
+            usuario: this.state.fields['usuario'],
+            dateVencto: this.state.fields['dateVencto'],
+            value: parseFloat((this.state.fields['value']).split("$")[1]),
             status: 'cadastrada'
           }),
           success: function (resposta) {
@@ -269,66 +264,22 @@ class Content extends React.Component {
               return new Date(a.dateVencto).getTime() - new Date(b.dateVencto).getTime()
             });
 
-            this.setState({ despesas: itensDespesa });
+            this.setState({ despesas: itensDespesa, fields: {} });
             this.handleClose();
-            this.state.description = "";
-            this.state.dateVencto = "";
-            this.state.usuario = "";
-            this.state.value = "";
-            this.state.status = "";
 
             PubSub.publish("atualizaResposta", itensDespesa);
           }.bind(this),
           error: function (resposta) {
+            console.log(resposta);
           }
         })
-      } else {
-        if (this.state.description === "") {
-          return this.showValidationError('desc', 'Preencha a descrição.');
-        }
-        if (this.state.dateVencto === "") {
-          return this.showValidationError('data', 'Preencha a data.');
-        }
-        if (this.state.value === "") {
-          return this.showValidationError('valor', 'Preencha o valor.');
-        }
-        if (this.state.usuario === "") {
-          return this.showValidationError('usuario', 'Selecione um Usuario.');
-        }
-
       }
     } else {
-      if (this.state.description != "" && this.state.dateVencto != "" && this.state.value != "" && this.state.usuario != "") {
+      if (this.state.fields.description != "" && this.state.fields.description != undefined && this.state.fields.dateVencto != "" && this.state.fields.dateVencto != undefined && this.state.fields.value != "" && this.state.fields.value != undefined && this.state.fields.usuario != "" && this.state.fields.usuario != undefined) {
         this.editarDespesa();
-      } else {
-        if (this.state.description === "") {
-          return this.showValidationError('desc', 'Preencha a descrição.');
-        }
-        if (this.state.dateVencto === "") {
-          return this.showValidationError('data', 'Preencha a data.');
-        }
-        if (this.state.value === "") {
-          return this.showValidationError('valor', 'Preencha o valor.');
-        }
-        if (this.state.usuario === "") {
-          return this.showValidationError('usuario', 'Selecione um Usuario.');
-        }
       }
     }
   }
-
-  clearValidationError(elm, msg) {
-    this.setState((prevState) => {
-      let newArr = [];
-      for (let err of prevState.errors) {
-        if (elm != err.elm) {
-          newArr.push(err);
-        }
-      }
-      return { errors: newArr };;
-    });
-  }
-
 
   handleValidation() {
     let fields = this.state.fields;
@@ -383,32 +334,31 @@ class Content extends React.Component {
     return (
       <div className="Content">
         <Modal show={this.state.show} onHide={this.handleClose}>
-          <form name="contactform" className="contactform" onSubmit={this.contactSubmit.bind(this)}>
-
+          <form onSubmit={this.contactSubmit.bind(this)}>
             <Modal.Header closeButton>
               <Modal.Title>Despesa</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="col-md-6">
+              <div>
                 <fieldset>
                   {/* description */}
-                  <SimpleText>Descrição da Despesa:</SimpleText>
-                  <input ref="description" type="text" size="30" placeholder="Ex.Conta de Luz" onChange={this.handleChange.bind(this, "description")} value={this.state.fields["description"] || ''} />
-                  <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
+                  <SimpleText className="title-form">Descrição da Despesa:</SimpleText>
+                  <InputText ref="description" type="text" size="30" placeholder="Ex.Conta de Luz" onChange={this.handleChange.bind(this, "description")} value={this.state.fields["description"] || ''} />
+                  <span className="error-modal"style={{ color: "red" }}>{this.state.errors["description"]}</span>
                   <br />
                   {/* dateVencto */}
-                  <SimpleText>Data de vencimento:</SimpleText>
-                  <input refs="dateVencto" type="data" size="30" onChange={this.handleChange.bind(this, "dateVencto")} value={this.state.fields["dateVencto"] || ''} />
-                  <span style={{ color: "red" }}>{this.state.errors["dateVencto"]}</span>
+                  <SimpleText className="title-form">Data de vencimento:</SimpleText>
+                  <InputText refs="dateVencto" type="date" size="30" onChange={this.handleChange.bind(this, "dateVencto")} value={this.state.fields["dateVencto"] || ''} />
+                  <span className="error-modal" style={{ color: "red" }}>{this.state.errors["dateVencto"]}</span>
                   <br />
                   {/* Value */}
-                  <SimpleText>Valor da despesa:</SimpleText>
+                  <SimpleText className="title-form">Valor da despesa:</SimpleText>
                   <div className="Menu-items-select">
                     <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" decimalSeparator="." thousandSeparator="," onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
                   </div>
-                  <span style={{ color: "red" }}>{this.state.errors["value"]}</span>
+                  <span className="error-modal" style={{ color: "red" }}>{this.state.errors["value"]}</span>
                   {/* User */}
-                  <SimpleText>De que Usuário é a conta?</SimpleText>
+                  <SimpleText className="title-form">De que Usuário é a conta?</SimpleText>
                   <div className="Menu-items-select">
                     <select className="form-control-lg" type="text" onChange={this.handleChange.bind(this, "usuario")} value={this.state.fields["usuario"] || ''}>
                       <option value="" disabled>Selecione um Usuario</option>
@@ -416,14 +366,13 @@ class Content extends React.Component {
                       <option value="coita">Coita</option>
                     </select>
                   </div>
-                  <span style={{ color: "red" }}>{this.state.errors["user"]}</span>
-
+                  <span className="error-modal" style={{ color: "red" }}>{this.state.errors["usuario"]}</span>
                 </fieldset>
               </div>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={this.handleClose}>Cancelar</Button>
-              <Button variant="primary" type="submit" /*onClick={(event) => { this.save(this.state.cadastrar) }}*/>Salvar</Button>
+              <Button variant="primary" type="submit" onClick={(event) => { this.save(this.state.cadastrar) }}>Salvar</Button>
             </Modal.Footer>
           </form>
         </Modal>
