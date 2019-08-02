@@ -13,8 +13,7 @@ class SideBar extends Component {
       valueMol: ''
     }
   }
-
-
+  
   componentWillMount() {
     let despesaCoita = 0;
     let despesaMol = 0;
@@ -80,11 +79,11 @@ class SideBar extends Component {
     return (
       <Menu>
         <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Usuario 2:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> da Coita:</SimpleText>
         <SimpleText className="homeStatusValorEmDia"><b>{`R$ ${this.state.valueCoita}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Usuario 1:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Mol:</SimpleText>
         <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueMol}`}</b></SimpleText>
-        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> dos dois Usuarios:</SimpleText>
+        <SimpleText className="homeStatus">Saldo de <b>Despesas</b> das duas lontras:</SimpleText>
         <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueTotal}`}</b></SimpleText>
 
       </Menu>

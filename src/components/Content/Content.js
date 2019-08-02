@@ -116,9 +116,7 @@ class Content extends React.Component {
   }
 
   editarDespesa() {
-    const valueDespesa = (this.state.fields['value']);
-    console.log(valueDespesa);
-    console.log(valueDespesa.indexOf(","))
+    const valueDespesa = (this.state.fields['value']).split("R$ ")[1];
     $.ajax({
       url: 'https://api-despesas.herokuapp.com/despesas/' + this.state.fields['_id'],
       contentType: 'application/json',
@@ -274,7 +272,7 @@ class Content extends React.Component {
             PubSub.publish("atualizaResposta", itensDespesa);
           }.bind(this),
           error: function (resposta) {
-            console.log(resposta);
+            console.log(`Mensagem: ${resposta}`);
           }
         })
       }
