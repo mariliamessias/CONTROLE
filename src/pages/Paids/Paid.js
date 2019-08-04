@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SideBar from '../../components/Sidebar/Sidebar';
-import ButtonDefault from '../../components/Button/ButtonDefault';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Table from 'react-bootstrap/Table';
 import excluir from '../../images/delete.png';
@@ -20,16 +19,41 @@ class Paid extends Component {
     this.handleShowSair = this.handleShowSair.bind(this);
     this.handleCloseSair = this.handleCloseSair.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggleGraph = this.toggleGraph.bind(this);
+    this.toggleSeveral = this.toggleSeveral.bind(this);
 
     this.state = {
       despesas: [],
       showSair: false,
-      collapse: false
+      collapse: false,
+      collapseTwo: false,
+      collapseThree: false,
+      buttonText: false,
+      buttonTextTwo: false,
+      buttonTextThree: false,
     }
   }
 
   toggle() {
-    this.setState(state => ({ collapse: !state.collapse }));
+    this.setState(state => ({
+      collapse: !state.collapse,
+      buttonText: !state.buttonText
+    }));
+  }
+
+  toggleGraph() {
+    this.setState(state => ({
+      collapseTwo: !state.collapseTwo,
+      buttonTextTwo: !state.buttonTextTwo
+    }));
+  }
+
+  
+  toggleSeveral() {
+    this.setState(state => ({
+      collapseThree: !state.collapseThree,
+      buttonTextThree: !state.buttonTextThree
+    }));
   }
 
   handleShowSair() {
@@ -88,57 +112,101 @@ class Paid extends Component {
         </Modal>
         <SideBar />
         <Menu />
-        <div className="Paid-container-toggle">
-          <ButtonDefault className="buttonNewUser" color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Mostrar Despesas Pagas</ButtonDefault>
-          <Collapse isOpen={this.state.collapse}>
-            <Card>
-              <CardBody>
-                <Table striped bordered hover className="tabela">
-                  <thead>
-                    <tr>
-                      <th>Despesa</th>
-                      <th>Usuário</th>
-                      <th>Data de Vencimento</th>
-                      <th>Valor</th>
-                      <th>Operacao</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      (this.state.despesas.map((item) => {
-                        if (item !== '' && item !== undefined) {
+        <div className="Paid-container-full">
+          <div className="Paid-container-toggle">
+            <div className="Paid-container-one">
+              <Button
+                className="Paid-container-button"
+                onClick={this.toggle}
+              >
+                {this.state.buttonText == false ? 'Mostrar Despesas Pagas' : 'Ocultar Despesas Pagas'}
+              </Button>
+            </div>
+            <div className="Paid-container-two">
+              <Collapse isOpen={this.state.collapse}>
+                <Card>
+                  <CardBody>
+                    <Table striped bordered hover className="tabela">
+                      <thead>
+                        <tr>
+                          <th>Despesa</th>
+                          <th>Usuário</th>
+                          <th>Data de Vencimento</th>
+                          <th>Valor</th>
+                          <th>Operacao</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          (this.state.despesas.map((item) => {
+                            if (item !== '' && item !== undefined) {
 
-                          let dateTr = new Date(item.dateVencto);
-                          dateTr.setUTCHours(5);
-                          let dateCon = '';
+                              let dateTr = new Date(item.dateVencto);
+                              dateTr.setUTCHours(5);
+                              let dateCon = '';
 
-                          dateCon = ('0' + dateTr.getUTCDate()).slice(-2) + '/' + ('0' + (dateTr.getMonth() + 1)).slice(-2) + '/' + dateTr.getFullYear();
+                              dateCon = ('0' + dateTr.getUTCDate()).slice(-2) + '/' + ('0' + (dateTr.getMonth() + 1)).slice(-2) + '/' + dateTr.getFullYear();
 
-                          return (
-                            <tr key={item._id}>
-                              <td>{item.description}</td>
-                              <td>{item.usuario}</td>
-                              <td>{dateCon}</td>
-                              <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
-                              <td className="operacoes">
-                                <div className="operacoes">
-                                  <button className="btn btn-danger"><img className="iconOperations" src={excluir} /></button>
-                                </div>
-                              </td>
-                            </tr>
-                          )
+                              return (
+                                <tr key={item._id}>
+                                  <td>{item.description}</td>
+                                  <td>{item.usuario}</td>
+                                  <td>{dateCon}</td>
+                                  <td>{`R$ ${parseFloat(item.value).toFixed(2)}`}</td>
+                                  <td className="operacoes">
+                                    <div className="operacoes">
+                                      <button className="btn btn-danger"><img className="iconOperations" src={excluir} /></button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              )
+                            }
+
+                          }))
                         }
+                      </tbody>
+                    </Table>
+                  </CardBody>
+                </Card>
+              </Collapse>
+            </div>
+            <div className="Paid-container-one">
+              <Button
+                className="Paid-container-button"
+                onClick={this.toggleGraph}
+              >
+                {this.state.buttonTextTwo == false ? 'Mostrar Gráfico de Despesas Pagas' : 'Ocultar Gráfico de Despesas Pagas'}
+              </Button>
+            </div>
+            <div className="Paid-container-two">
+              <Collapse isOpen={this.state.collapseTwo}>
+                <Card>
+                  <CardBody>
+                    <p>teste</p>
+                  </CardBody>
+                </Card>
+              </Collapse>
+            </div>
+            <div className="Paid-container-one">
+              <Button
+                className="Paid-container-button"
+                onClick={this.toggleSeveral}
+              >
+                {this.state.buttonTextThree == false ? 'Mostrar Diversos' : 'Ocultar Diversos'}
+              </Button>
+            </div>
+            <div className="Paid-container-two">
+              <Collapse isOpen={this.state.collapseThree}>
+                <Card>
+                  <CardBody>
+                    <p>teste</p>
+                  </CardBody>
+                </Card>
+              </Collapse>
+            </div>
+          </div>
 
-                      }))
-                    }
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-          </Collapse>
         </div>
-
-
       </div>
     );
   }

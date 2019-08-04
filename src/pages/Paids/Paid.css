@@ -1,4 +1,4 @@
-.tabela{
+.tabela {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -6,14 +6,56 @@
     margin-top: 0px !important;
 }
 
-.Paid{
+.Paid {
     padding: 0px;
     color: white;
-   }
+}
+.teste{
+    position: relative;
+}
 
- .Paid-container-toggle{
-     margin: 80px;
-     width: 90%;
-     position: absolute;
-     z-index: -1;
- }
+.Paid-container-toggle {
+    margin: 80px;
+    width: 90%;
+    height: 170px;
+    z-index: -1;
+}
+
+.Paid-container-button{
+    background: #742d96;
+    border: white 2px solid;
+}
+
+.Paid-container-button:hover{
+    background: #d88afa;
+    border: white 2px solid;
+}
+
+.Login-body-image {
+    height: 100%!important;
+    width: 25%;
+}
+
+.Paid-container-full {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: absolute;
+    height: auto;
+    z-index: -1;
+}
+
+.Paid-container-two{
+    margin-bottom: 20px;
+}
+
+.Paid-container-one {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #a55bc7;
+    margin-bottom: 20px;
+
+}
