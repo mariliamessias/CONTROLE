@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SideBar from '../../components/Sidebar/Sidebar';
+import { Bar, Line } from 'react-chartjs-2';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Table from 'react-bootstrap/Table';
 import excluir from '../../images/delete.png';
@@ -13,6 +14,8 @@ import Menu from '../../components/Menu/Menu';
 import './Paid.css';
 
 class Paid extends Component {
+  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/xqjtetw0/';
+
   constructor(props) {
     super(props)
 
@@ -31,6 +34,8 @@ class Paid extends Component {
       buttonText: false,
       buttonTextTwo: false,
       buttonTextThree: false,
+      despesasPagasCoita: [],
+      despesasPagasMol: []
     }
   }
 
@@ -42,13 +47,33 @@ class Paid extends Component {
   }
 
   toggleGraph() {
+    let despesasCoita = [0,0,0,0,0,0,0,0,0,0,0,0];
+    let despesasMol = [0,0,0,0,0,0,0,0,0,0,0,0];
+    const today = new Date();
+    const year = today.getFullYear();
+
+    this.state.despesas.forEach(item => {
+      const date = new Date(item.dateVencto);
+      const monthItem = date.getUTCMonth() + 1;
+      const yearItem = date.getFullYear();
+      if (item.status === 'paga' && year === yearItem) {
+        if (item.usuario === 'coita') {
+            despesasCoita[monthItem -1] = parseFloat(item.value) + despesasCoita[monthItem -1]; 
+        } else{
+          despesasMol[monthItem -1] = parseFloat(item.value) + despesasMol[monthItem -1]; 
+        }
+      }
+
+    });
+
     this.setState(state => ({
       collapseTwo: !state.collapseTwo,
-      buttonTextTwo: !state.buttonTextTwo
+      buttonTextTwo: !state.buttonTextTwo,
+      despesasPagasCoita: despesasCoita,
+      despesasPagasMol: despesasMol
     }));
   }
 
-  
   toggleSeveral() {
     this.setState(state => ({
       collapseThree: !state.collapseThree,
@@ -79,7 +104,6 @@ class Paid extends Component {
         result.sort(function (a, b) {
           return new Date(b.dateVencto).getTime() - new Date(a.dateVencto).getTime()
         });
-
         this.setState({
           despesas: result,
         });
@@ -92,6 +116,34 @@ class Paid extends Component {
   }
 
   render() {
+    const data = {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      datasets: [
+        {
+          label: 'Coita',
+          fillColor: 'rgba(220,220,220,0.2)',
+          strokeColor: 'rgba(150, 100, 149, 1)',
+          pointColor: 'rgba(220,220,220,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          borderColor: 'rgba(236, 154, 2, 1)',
+          data: this.state.despesasPagasCoita
+        },
+        {
+          label: 'Mol',
+          fillColor: 'rgba(151,187,205,0.2)',
+          borderColor: 'rgba(150, 56, 149, 1)',
+          strokeColor: 'rgba(150, 56, 149, 1)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          data: this.state.despesasPagasMol
+        },
+        
+      ]
+    };
     return (
       <div className="Paid">
         <Modal show={this.state.showSair} onHide={this.handleCloseSair}>
@@ -112,6 +164,7 @@ class Paid extends Component {
         </Modal>
         <SideBar />
         <Menu />
+
         <div className="Paid-container-full">
           <div className="Paid-container-toggle">
             <div className="Paid-container-one">
@@ -182,7 +235,7 @@ class Paid extends Component {
               <Collapse isOpen={this.state.collapseTwo}>
                 <Card>
                   <CardBody>
-                    <p>teste</p>
+                  <Line data={data} />
                   </CardBody>
                 </Card>
               </Collapse>
@@ -199,7 +252,7 @@ class Paid extends Component {
               <Collapse isOpen={this.state.collapseThree}>
                 <Card>
                   <CardBody>
-                    <p>teste</p>
+                    {}
                   </CardBody>
                 </Card>
               </Collapse>
