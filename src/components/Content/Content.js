@@ -355,7 +355,7 @@ class Content extends React.Component {
                   <br />
                   {/* Value */}
                   <SimpleText className="title-form">Valor da despesa:</SimpleText>
-                  <CurrencyInput className="form-control-lg" prefix="R$ " precision="2" onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
+                  <CurrencyInput className="inputValue" prefix="R$ " precision="2" onChange={this.handleChange.bind(this, "value")} value={this.state.fields["value"] || ''} />
                   <span className="error-modal" style={{ color: "red" }}>{this.state.errors["value"]}</span>
                   {/* User */}
                   <SimpleText className="title-form">De que Usuário é a conta?</SimpleText>

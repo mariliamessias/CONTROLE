@@ -10,3 +10,9 @@
     position: relative;
     width: auto;
 }
+
+.inputValue {
+    padding: 10px;
+    width: 85%;
+    margin: 10px;
+}
