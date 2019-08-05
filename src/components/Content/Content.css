@@ -5,3 +5,8 @@
 .title-form{
     margin-left: 10px !important;
 }
+
+.loadingImg {
+    position: relative;
+    width: auto;
+}

@@ -417,6 +417,9 @@ class Content extends React.Component {
             </Button>
           </Modal.Footer>
         </Modal>
+{
+  this.state.isLoading ? (<div className="loadingImg"><img className="home__loading" src={carregando} alt="Carregando" /></div>) :
+
 
         <Table striped bordered hover className="tabela">
           <thead>
@@ -430,7 +433,6 @@ class Content extends React.Component {
           </thead>
           <tbody>
             {
-              this.state.isLoading ? (<div className="loadingImg"><img className="home__loading" src={carregando} alt="Carregando" /></div>) :
                 (this.state.despesas.map((item) => {
                   if (item !== '' && item !== undefined) {
                     let dateTr = new Date(item.dateVencto);
@@ -461,7 +463,8 @@ class Content extends React.Component {
             }
           </tbody>
 
-        </Table>
+        </Table>}
+
       </div>
     )
   }
