@@ -5,7 +5,53 @@
     width: 100%;
     height: 100%;
 }
+/*  */
 
+.Home-container-toggle {
+  margin: 80px;
+  width: 90%;
+  height: 170px;
+  z-index: -1;
+}
+
+.Home-container-button{
+  background: #c65600;
+  border: white 2px solid;
+}
+
+.Home-container-button:hover{
+  background: #ff8533;
+  border: white 2px solid;
+}
+
+.Login-body-image {
+  height: 100%!important;
+  width: 25%;
+}
+
+.Home-container-full {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  position: absolute;
+  height: auto;
+  z-index: -1;
+}
+
+.Home-container-two{
+  margin-bottom: 20px;
+}
+
+.Home-container-one {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffb662;
+  margin-bottom: 20px;
+}
+/*  */
 #page-wrap {
     text-align: center;
   }

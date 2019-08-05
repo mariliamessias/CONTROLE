@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SideBar from '../../components/Sidebar/Sidebar';
-import { Bar, Line } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Collapse, CardBody, Card } from 'reactstrap';
 import Table from 'react-bootstrap/Table';
 import excluir from '../../images/delete.png';
