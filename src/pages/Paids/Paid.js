@@ -214,7 +214,6 @@ class Paid extends Component {
                                 </tr>
                               )
                             }
-
                           }))
                         }
                       </tbody>

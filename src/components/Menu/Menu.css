@@ -4,7 +4,7 @@
 }
 
 .Menu-items {
-    background-color: #ff8533;
+    background-color: #72D0DC;
     padding: 20px;
     width: 100%;
     height: 80px;
@@ -17,7 +17,7 @@
 }
 
 .Menu-items-home {
-    background-color: #a34eca;
+    background-color: #BA81A7;
     padding: 20px;
     width: 100%;
     height: 80px;
@@ -36,7 +36,7 @@
 }
 
 .Menu-items li:hover {
-    background: red;
+    background: #61C8C4;
     cursor: pointer;
     border-radius: 5px;
 }

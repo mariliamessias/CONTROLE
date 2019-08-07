@@ -1,13 +1,12 @@
 .newAccount{
     padding: 30px;
-    background-color: #ffb380;
+    background-color: #733f62;
     background-attachment: fixed;
     text-align: center;
     height: 100%;
 }
 
 .newAccount-content-title{
-    font-family: 'Courier New', Courier, monospace;
     font-size: 30px;
 }
 .newAccount-content-subtitle{

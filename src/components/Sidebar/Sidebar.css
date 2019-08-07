@@ -1,0 +1,18 @@
+.sidebar-button{
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin: 0px;
+    background: #733f62;
+    border: none;
+}
+
+.sidebar-button:hover{
+    background: #c08cae;
+}
+
+.sidebar-title{
+    margin: 0px;
+    padding: 20px;
+    text-align: center;
+}

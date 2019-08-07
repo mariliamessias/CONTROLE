@@ -28,11 +28,6 @@
     border: white 2px solid;
 }
 
-.Login-body-image {
-    height: 100%!important;
-    width: 25%;
-}
-
 .Paid-container-full {
     display: flex;
     width: 100%;

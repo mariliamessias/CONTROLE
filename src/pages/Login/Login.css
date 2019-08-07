@@ -5,7 +5,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #ffb380;
+    background-color: #733f62;
   }
 
   .login_none {
@@ -28,17 +28,17 @@
 
   .buttonNewUser {
     color: white;
-    background-color: #7300e6;
+    background-color: #923a75;
     border: solid 2px black;
     padding: 10px;
     width: 70%;
     border-radius: 10px;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: Roboto, monospace; */
     font-size: 18px;
   }
 
   .buttonNewUser:hover, .Login-body-buttonLogin:hover{
-    background-color: #661aff;
+    background-color: #6d2c57;
     text-decoration: none;
     color: white;
   }
@@ -49,7 +49,7 @@
   }
 
   .Login-body{ 
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: Roboto, Courier, monospace; */
     color: black;
     background-color: #fff;
     border: solid black 5px;
@@ -105,7 +105,7 @@
     border-radius: 10px;
     padding: 10px;
     width: 30%;
-    background-color: #4d0099;
+    background-color: #3caaa6;
     border: solid 2px black;
     color: white;
     text-decoration: none;

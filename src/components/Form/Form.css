@@ -72,19 +72,19 @@
     min-width: 50%;
 }
 .button-newAccount{
-    background-color: #7300e6;
+    background-color: #923a75;
     border: solid 2px black;
     padding: 10px;
     color: white;
     margin: 10px;
     width: 20% !important;
     border-radius: 10px;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: Roboto, Courier, monospace; */
     font-size: 18px;
 }
 
 .button-newAccount:hover{
-    background-color: #661aff;
+    background-color: #6d2c57;
     text-decoration: none;
     color: white;
   }

@@ -3,6 +3,7 @@ import { slide as Menu } from 'react-burger-menu';
 import SimpleText from '../SimpleText/SimpleText';
 import PubSub from 'pubsub-js';
 import $ from 'jquery';
+import './Sidebar.css';
 
 class SideBar extends Component {
   constructor(props, context) {
@@ -78,14 +79,20 @@ class SideBar extends Component {
 
     return (
       <Menu>
-        <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
+        <div className="sidebar-title">
+          <p>MOL</p>
+        </div>
+        <button className="sidebar-button">Despesas em Aberto</button>
+        <button className="sidebar-button">Despesas Pagass</button>
+        <button className="sidebar-button">Sair</button>
+
+        {/* <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
         <SimpleText className="homeStatus">Saldo de <b>Despesas</b> da Coita:</SimpleText>
         <SimpleText className="homeStatusValorEmDia"><b>{`R$ ${this.state.valueCoita}`}</b></SimpleText>
         <SimpleText className="homeStatus">Saldo de <b>Despesas</b> do Mol:</SimpleText>
         <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueMol}`}</b></SimpleText>
         <SimpleText className="homeStatus">Saldo de <b>Despesas</b> das duas lontras:</SimpleText>
-        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueTotal}`}</b></SimpleText>
-
+        <SimpleText className="homeStatusValorVencidas"><b>{`R$ ${this.state.valueTotal}`}</b></SimpleText> */}
       </Menu>
     );
   }
