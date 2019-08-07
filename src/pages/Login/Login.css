@@ -29,10 +29,11 @@
   .buttonNewUser {
     color: white;
     background-color: #923a75;
-    border: solid 2px black;
+    border: none;
+    /* border: solid 2px black; */
     padding: 10px;
     width: 70%;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* font-family: Roboto, monospace; */
     font-size: 18px;
   }
@@ -52,8 +53,9 @@
     /* font-family: Roboto, Courier, monospace; */
     color: black;
     background-color: #fff;
-    border: solid black 5px;
-    border-radius: 20px; 
+    /* border: solid black 5px;
+    border-radius: 20px;  */
+    border: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,11 +104,12 @@
   }
 
   .Login-body-buttonLogin{
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 10px;
     width: 30%;
     background-color: #3caaa6;
-    border: solid 2px black;
+    border: none;
+    /* border: solid 2px black; */
     color: white;
     text-decoration: none;
   }

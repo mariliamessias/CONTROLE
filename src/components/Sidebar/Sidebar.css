@@ -5,10 +5,13 @@
     margin: 0px;
     background: #733f62;
     border: none;
+    text-decoration: none;
+    text-align: center;
 }
 
 .sidebar-button:hover{
     background: #c08cae;
+    text-decoration: none;
 }
 
 .sidebar-title{

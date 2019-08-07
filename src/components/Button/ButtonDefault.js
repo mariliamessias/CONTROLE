@@ -4,7 +4,6 @@ import './ButtonDefault.css';
 class ButtonDefault extends React.Component{
   constructor(props){
     super(props);
-
  }
 
   render(){

@@ -14,12 +14,12 @@
 }
 
 .Home-container-button{
-  background: #61C8C4;
+  background: #BA81A7;
   border: white 2px solid;
 }
 
 .Home-container-button:hover{
-  background: #42bdb9;
+  background: #BA81A7;
   border: white 2px solid;
 }
 
@@ -47,7 +47,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: #72d0dc;
+  background: #BA81A7;
   margin-bottom: 20px;
 }
 

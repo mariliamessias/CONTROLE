@@ -43,22 +43,13 @@ class Menu extends Component {
 
     return (
       <div className="Menu">
-        {window.location.pathname == '/home' ?
-          <ul className="Menu-items-home">
-            <p className="Menu-items-userName">{/*this.props.state.nome*/}</p>
-            {this.renderRedirect()}
-            <li ><Link to="/pagas" className="Menu-items-btn-sair">Consultar Despesas Pagas</Link></li>
-            <li onClick={this.showModal}>Cadastrar Despesa</li>
-            <li onClick={this.sairModal}>Sair</li>
-          </ul> :
           <ul className="Menu-items">
             <p className="Menu-items-userName">{/*this.props.state.nome*/}</p>
             {this.renderRedirect()}
-            <li ><Link to="/pagas" className="Menu-items-btn-sair">Consultar Despesas Pagas</Link></li>
-            <li onClick={this.showModal}>Cadastrar Despesa</li>
-            <li onClick={this.sairModal}>Sair</li>
+            {/* <li ><Link to="/pagas" className="Menu-items-btn-sair">Consultar Despesas Pagas</Link></li> */}
+            {/* <li onClick={this.showModal}>Cadastrar Despesa</li> */}
+            {/* <li onClick={this.sairModal}>Sair</li> */}
           </ul>
-        }
       </div>
     );
   }

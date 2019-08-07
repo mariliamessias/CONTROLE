@@ -18,8 +18,9 @@
     margin: 20px auto 20px auto;
     padding: 20px;
     background: white; 
-    border: solid 5px black;
-    border-radius: 20px; 
+    /* border: solid 5px black; */
+    /* border-radius: 20px;  */
+    border: none;
 }
 
 

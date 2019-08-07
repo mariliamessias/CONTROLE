@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
 import SimpleText from '../SimpleText/SimpleText';
 import PubSub from 'pubsub-js';
@@ -13,6 +14,12 @@ class SideBar extends Component {
       valueCoita: '',
       valueMol: ''
     }
+
+    this.sairModal = this.sairModal.bind(this);
+  }
+
+  sairModal(item) {
+    PubSub.publish("sairModal", item);
   }
   
   componentWillMount() {
@@ -82,9 +89,9 @@ class SideBar extends Component {
         <div className="sidebar-title">
           <p>MOL</p>
         </div>
-        <button className="sidebar-button">Despesas em Aberto</button>
-        <button className="sidebar-button">Despesas Pagass</button>
-        <button className="sidebar-button">Sair</button>
+        <Link to="/home" className="sidebar-button">Despesas em Aberto</Link>
+        <Link to="/pagas" className="sidebar-button">Despesas Pagas</Link>
+        <button className="sidebar-button" onClick={this.sairModal} >Sair</button>
 
         {/* <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
         <SimpleText className="homeStatus">Saldo de <b>Despesas</b> da Coita:</SimpleText>

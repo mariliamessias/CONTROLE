@@ -143,13 +143,13 @@ class Login extends Component {
                 {/* <SimpleText className="simpleSubtitle">Informe abaixo seus dados de acesso:</SimpleText> */}
                 <div className="Login-body-middleForm">
                   <div className="Login-body-userInformation">
-                    <SimpleText className="userEmail">Email:</SimpleText>
+                    {/* <SimpleText className="userEmail">Email:</SimpleText> */}
                     <div className="Login-body-container">
                       <Field
                         name="email"
                         className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')}
                         type="email"
-                        placeholder="seuemail@email.com"
+                        placeholder="Email"
                         onClick={ () =>
                           this.handleError()
                         }
@@ -158,12 +158,13 @@ class Login extends Component {
                     </div>
                   </div>
                   <div className="Login-body-userInformation-1">
-                    <SimpleText className="userPassword">Senha:</SimpleText>
+                    {/* <SimpleText className="userPassword">Senha:</SimpleText> */}
                     <div className="Login-body-container">
                       <Field
                         name="password"
                         className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')}
                         type="password"
+                        placeholder="••••••"
                         onClick ={()=>
                           this.handleError()
                         }
