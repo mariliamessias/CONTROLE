@@ -178,7 +178,7 @@ class Login extends Component {
                 <div className="Login-body-buttons">
                   <div className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</div>
                   {this.renderRedirect()}
-                  <div className={this.state.buttonStatus} ref={this.buttonRef}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</div>
+                  <ButtonDefault className={this.state.buttonStatus} ref={this.buttonRef}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</ButtonDefault>
                 </div>
               </div>
             </div>
