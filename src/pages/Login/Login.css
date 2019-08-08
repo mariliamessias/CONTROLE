@@ -28,14 +28,19 @@
 
   .buttonNewUser {
     color: white;
+    cursor: pointer;
     background-color: #923a75;
     border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     /* border: solid 2px black; */
-    padding: 10px;
-    width: 70%;
+    padding: 10px 0px;
+    height: 40px;
+    /* width: 70%; */
     /* border-radius: 10px; */
     /* font-family: Roboto, monospace; */
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .buttonNewUser:hover, .Login-body-buttonLogin:hover{
@@ -53,6 +58,8 @@
     /* font-family: Roboto, Courier, monospace; */
     color: black;
     background-color: #fff;
+    width: 400px;
+    height: 400px;
     /* border: solid black 5px;
     border-radius: 20px;  */
     border: none;
@@ -104,9 +111,17 @@
   }
 
   .Login-body-buttonLogin{
+    font-size: 16px;
     /* border-radius: 10px; */
+    cursor: pointer;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 10px;
+    text-align: center;
     width: 30%;
+    height: 40px;
     background-color: #3caaa6;
     border: none;
     /* border: solid 2px black; */
@@ -142,7 +157,7 @@
   }  
 
   .buttonNewUser{
-    width: 100%;
+    width: 90%;
     padding: 10px;
   }
 
@@ -163,6 +178,7 @@
 
   .Login-body-buttonLogin{
     width: 90%;
+    margin-top: 10px;
   }
 
   .Login-body-buttonLoginCarregando{
@@ -197,6 +213,7 @@
 
   .Login-body-buttonLogin{
     width: 90%;
+    margin-top: 10px;
   }
 
   .Login-body-buttonLoginCarregando{
@@ -213,11 +230,16 @@
   } 
   .Login-body{
     padding: 30px;
-    width: 50%;
+    /* width: 50%; */
+  }
+
+  .buttonNewUser {
+    padding: 10px 20px;
   }
 
   .Login-body-buttons{
     flex-direction: row;
+    justify-content: space-around;
   }
 }
 
@@ -229,10 +251,15 @@
   } 
   .Login-body{
     padding: 20px;
-    width: 500px;
+    width: 400px;
   }
-
+  
+  .buttonNewUser {
+    padding: 10px 20px;
+  }
   .Login-body-buttons{
     flex-direction: row;
+    justify-content: space-around;
+
   }
 }

@@ -176,9 +176,9 @@ class Login extends Component {
                   <SimpleLink>Recuperar a senha</SimpleLink>
                 </div>
                 <div className="Login-body-buttons">
-                  <ButtonDefault className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</ButtonDefault>
+                  <div className="buttonNewUser" onClick={this.newAccount.bind(this)}>Criar Conta</div>
                   {this.renderRedirect()}
-                  <button className={this.state.buttonStatus} ref={this.buttonRef}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</button>
+                  <div className={this.state.buttonStatus} ref={this.buttonRef}><img className={this.state.loadingImage} src={carregando} alt="Carregando" />{this.state.buttonValue}</div>
                 </div>
               </div>
             </div>
