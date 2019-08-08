@@ -86,6 +86,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
   }
 
   .Login-body-container{
@@ -155,6 +156,7 @@
   .Login-body-image{
     height: 100px;
     width: 190px;
+    margin-top: 60px;
   }  
 
   .buttonNewUser{
@@ -186,6 +188,10 @@
     width: 90%;
   }
 
+  .Login-body-buttons{
+    margin-bottom: 70px;
+  }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -193,6 +199,7 @@
   .Login-body-image{
     height: 100px;
     width: 200px;
+    margin-top: 60px;
   }  
 
   .Login-body{
@@ -219,6 +226,10 @@
 
   .Login-body-buttonLoginCarregando{
     width: 90%;
+  }
+
+  .Login-body-buttons{
+    margin-bottom: 70px;
   }
 
  }
