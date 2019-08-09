@@ -34,12 +34,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* border: solid 2px black; */
     padding: 10px 0px;
     height: 40px;
-    /* width: 70%; */
-    /* border-radius: 10px; */
-    /* font-family: Roboto, monospace; */
     font-size: 16px;
   }
 
@@ -55,13 +51,10 @@
   }
 
   .Login-body{ 
-    /* font-family: Roboto, Courier, monospace; */
     color: black;
     background-color: #fff;
     width: 400px;
     height: 400px;
-    /* border: solid black 5px;
-    border-radius: 20px;  */
     border: none;
     display: flex;
     flex-direction: column;
@@ -77,9 +70,6 @@
     width: 100%;
   }
 
-  .userEmail, .userPassword{
-    padding: 10px;
-  }
   .Login-body-buttons{
     display: flex;
     flex-direction: column;
@@ -89,12 +79,16 @@
     margin-bottom: 20px;
   }
 
+  .ButtonDefault{
+    width: 40%;
+  }
+
   .Login-body-container{
     width: 100%;
   }
 
   .login_loading{
-    width: 50px;
+    width: 40px;
     margin:0;
   }
 
@@ -113,7 +107,6 @@
 
   .Login-body-buttonLogin{
     font-size: 16px;
-    /* border-radius: 10px; */
     cursor: pointer;
     border: none;
     display: flex;
@@ -125,7 +118,6 @@
     height: 40px;
     background-color: #3caaa6;
     border: none;
-    /* border: solid 2px black; */
     color: white;
     text-decoration: none;
     text-align: center;
@@ -133,11 +125,11 @@
   }
 
   .Login-body-buttonLoginCarregando{
-    border-radius: 12px;
     padding: 0px;
-    width: 40%;
-    background-color: #ff8533;
-    border: solid 2px black;
+    width: 100%;
+    height: 40px;
+    background-color: #215e5c;
+    border: none;
     color: white;
     text-decoration: none;
   }
@@ -185,7 +177,8 @@
   }
 
   .Login-body-buttonLoginCarregando{
-    width: 90%;
+    width: 100%;
+    margin-top: 10px;
   }
 
   .Login-body-buttons{
@@ -225,7 +218,8 @@
   }
 
   .Login-body-buttonLoginCarregando{
-    width: 90%;
+    width: 100%;
+    margin-top: 10px;
   }
 
   .Login-body-buttons{

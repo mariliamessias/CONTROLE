@@ -143,7 +143,6 @@ class Login extends Component {
                 {/* <SimpleText className="simpleSubtitle">Informe abaixo seus dados de acesso:</SimpleText> */}
                 <div className="Login-body-middleForm">
                   <div className="Login-body-userInformation">
-                    {/* <SimpleText className="userEmail">Email:</SimpleText> */}
                     <div className="Login-body-container">
                       <Field
                         name="email"
@@ -158,7 +157,6 @@ class Login extends Component {
                     </div>
                   </div>
                   <div className="Login-body-userInformation-1">
-                    {/* <SimpleText className="userPassword">Senha:</SimpleText> */}
                     <div className="Login-body-container">
                       <Field
                         name="password"
