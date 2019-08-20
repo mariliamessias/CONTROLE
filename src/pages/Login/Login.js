@@ -45,7 +45,7 @@ class Login extends Component {
       }} />
     } else if (this.state.redirectNewAccount) {
       return <Redirect to={{
-        pathname: '/novaConta',
+        pathname: '/novousuario',
         //state: { token: this.state.token , id: this.state.id}
       }} />
     }
