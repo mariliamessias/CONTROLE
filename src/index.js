@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
 import Paid from './pages/Paids/Paid';
 import NewAccount from './pages/NewAccount/NewAccount';
+import Opened from './pages/Opened/Opened';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -14,7 +15,8 @@ ReactDOM.render(
         <Route path="/" exact={true} component={Login}/>
         <Route path="/home" component={Home}/>
         <Route path="/pagas" component={Paid}/>
-        <Route path="/novaConta" component={NewAccount}/>
+        <Route path="/novousuario" component={NewAccount}/>
+        <Route path="/aberto" component={Opened}/>
     </Switch>
 </BrowserRouter>
 , document.getElementById('root'));

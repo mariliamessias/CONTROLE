@@ -8,26 +8,66 @@
     background-color: #733f62;
   }
 
-  .login_none {
-    display: none;    
-  }
-
-  .Login-body-subTitle{
-    margin: 0px;
-  }
-
-  .Login-bodyTop{
+  .container-login{
+    display: flex;
     width: 100%;
+    height: auto;
   }
 
-  .Login-body-error{
-    color: red;
-    font-size: 12px;
-    padding: 0px;
+  .container-login-left{
+    width: 50%;
+    background: #215e5c;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+.container-login-title{
+  font-size: 20px;
+  text-align: left;
+}
+
+.container-login-left-content p{
+  margin-top:20px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.container-login-left-content{
+  padding: 40px;
+  background: #fff;
+  max-width: 400px;
+  min-width: 400px;
+  min-height: 400px;
+  max-height: 400px;
+}
+.container-login-right{
+  width: 50%;
+  height: 100vh;
+}
+
+.login_none {
+  display: none;    
+}
+
+.Login-body-subTitle{
+  margin: 0px;
+}
+
+.Login-bodyTop{
+  width: 100%;
+}
+
+.Login-body-error{
+  color: red;
+  font-size: 12px;
+  padding: 0px;
+}
 
   .buttonNewUser {
     color: white;
+    text-align: center;
     cursor: pointer;
     background-color: #923a75;
     border: none;
@@ -135,6 +175,13 @@
   }
 
 @media (max-width: 767px) {
+  .container-login{
+    flex-direction: column;
+  }
+
+  .container-login-left, .container-login-right{
+    width: 100%;
+  }
 
   .Login{
     padding: 20px;
@@ -195,6 +242,14 @@
     margin-top: 60px;
   }  
 
+  .container-login{
+    flex-direction: column;
+  }
+
+  .container-login-left, .container-login-right{
+    width: 100%;
+  }
+  
   .Login-body{
     padding: 30px
   }
@@ -245,7 +300,9 @@
 
   .Login-body-buttons{
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
+    padding-right: 40px;
+
   }
 }
 
@@ -262,10 +319,11 @@
   
   .buttonNewUser {
     padding: 10px 20px;
+    width: 40%;
   }
   .Login-body-buttons{
     flex-direction: row;
-    justify-content: space-around;
-
+    justify-content: flex-end;
+    padding-right: 40px;
   }
 }
