@@ -9,6 +9,17 @@ import './Form.css';
 class FormApp extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+
+    }
+    
+    this.getInfoHandler = this.getInfoHandler.bind(this);
+    
+  }
+
+  getInfoHandler(){
+    alert('teste');
   }
 
   render() {
@@ -42,6 +53,7 @@ class FormApp extends React.Component {
             .required('Confirmação de senha é obrigatória.')
         })}
         onSubmit={fields => {
+          alert(this.props.showSocialIcons);
           alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
         }}
         render={({ errors, status, touched }) => (
@@ -50,27 +62,32 @@ class FormApp extends React.Component {
             <div className="newAccount-form-content">
               <div className="newAccount-form-group-one">
                 <div className="newAccount-form">
-                <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Coloque o email que você mais utiliza:</label>
+                  <div className="newAccount-form-item">
+                    <label className="newAccount-form-item-text">{this.props.showSocialIcons ? "Informe o email que você utiliza na rede social selecionada:" : "Coloque o email que você mais utiliza:"}</label>
                     <Field name="email" type="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
                     <ErrorMessage name="email" component="div" className="invalid-feedback" />
                   </div>
-                  <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
-                    <Field name="confEmail" type="email" className={'form-control' + (errors.confEmail && touched.confEmail ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
-                    <ErrorMessage name="confEmail" component="div" className="invalid-feedback" />
+                  <div className="newAccount-form-buttons" style={{ display: this.props.showSocialIcons ? 'flex' : 'none' }}>
+                    <Link className="button-newAccount" to="/">Cancelar</Link>
+                    <Button className="button-newAccount" onClick={this.getInfoHandler}>Consultar</Button>
                   </div>
-                  {/* <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Informe para nós seu telefone celular:</label>
-                    <Field name="telefone" className={'form-control' + (errors.telefone && touched.telefone ? ' is-invalid' : '')} type="text" placeholder="Exemplo: 11988887777" />
-                    <ErrorMessage name="telefone" component="div" className="invalid-feedback" />
-                  </div>                   */}
                 </div>
               </div>
             </div>
-            <div className="newAccount-form-group-two">
+            <div className="newAccount-form-group-two" style={{ display: this.props.showSocialIcons ? 'none' : 'block' }}>
+
               <div className="newAccount-form">
-                {/* <div className="newAccount-form-item">
+                <div className="newAccount-form-item">
+                  <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
+                  <Field name="confEmail" type="email" className={'form-control' + (errors.confEmail && touched.confEmail ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
+                  <ErrorMessage name="confEmail" component="div" className="invalid-feedback" />
+                </div>
+                <div className="newAccount-form-item" >
+                  <label className="newAccount-form-item-text">Informe para nós seu telefone celular:</label>
+                  <Field name="telefone" className={'form-control' + (errors.telefone && touched.telefone ? ' is-invalid' : '')} type="text" placeholder="Exemplo: 11988887777" />
+                  <ErrorMessage name="telefone" component="div" className="invalid-feedback" />
+                </div>
+                <div className="newAccount-form-item">
                   <label className="newAccount-form-item-text">Gostaríamos muito de saber seu nome, informe para nós:</label>
                   <Field name="nome" className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} type="text" placeholder="Nome mais lindo do mundo" />
                   <ErrorMessage name="nome" component="div" className="invalid-feedback" />
@@ -84,13 +101,15 @@ class FormApp extends React.Component {
                   <label className="newAccount-form-item-text">Só pra confirmar, repita ela aqui, por favor:</label>
                   <Field name="confSenha" type="password" className={'form-control' + (errors.confSenha && touched.confSenha ? ' is-invalid' : '')} type="password" />
                   <ErrorMessage name="confSenha" component="div" className="invalid-feedback" />
-                </div>*/}
-              </div> 
-              <div className="newAccount-form-buttons">
-              <Link className="button-newAccount" to="/">Cancelar</Link>
-              <Button className="button-newAccount" type="submit">Confirmar</Button>
+                </div>
+                <div className="newAccount-form-buttons">
+                  <Link className="button-newAccount" to="/">Cancelar</Link>
+                  <Button className="button-newAccount" type="submit">Confirmar</Button>
+                </div>
+              </div>
+
             </div>
-            </div>
+
           </Form>
         )}
       />

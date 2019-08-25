@@ -18,6 +18,11 @@
     width: 100%;
 }
 
+.button-back{
+    width: 70px;
+    height: 70px;
+}
+
 .newAccount-content{
     display: flex;
     margin: auto;

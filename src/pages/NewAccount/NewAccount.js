@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import FormApp from '../../components/Form/Form';
 import SimpleText from '../../components/SimpleText/SimpleText';
+import Back from '../../images/back.png'
 import Facebook from '../../images/facebook.png';
 import Gmail from '../../images/iconGmail.png';
 import Github from '../../images/github.png';
@@ -72,9 +73,9 @@ class NewAccount extends Component {
     return (
       <div className="newAccount">
         <div className="newAccount-content">
-          <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }} className="button-newAccount" to="/">Voltar</Link>
+          <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }}  className="button-back" to="/"><img src={Back} className="button-back"></img></Link>
 
-          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios</strong> : <div> <strong className="newAccount-content-subtitle">
+          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova conta a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios</strong> : <div> <strong className="newAccount-content-subtitle">
             Use as informações das suas redes sociais para criar uma conta ou
             </strong> <a style={{ display: this.state.showLinkDefault ? 'block' : 'none' }}
               href='#'
@@ -112,7 +113,7 @@ class NewAccount extends Component {
           </div>
           <div className="newAccount-content-form">
             <div style={{ display: this.state.showForm ? 'block' : 'none' }}>
-              <FormApp></FormApp>
+              <FormApp showSocialIcons={this.state.showSocialIcons}></FormApp>
             </div>
           </div>
         </div>
