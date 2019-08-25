@@ -1,9 +1,10 @@
 .newAccount{
-    padding: 30px;
+    padding: 50px;
     background-color: #733f62;
     background-attachment: fixed;
+    height: auto;
+    min-height: 100vh;
     text-align: center;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,24 +20,29 @@
 
 .newAccount-content{
     display: flex;
-    padding: 20px;
+    margin: auto;
+    padding: 30px;
     background: white; 
-    min-height: 500px;
-    max-height: 600px;
     min-width: 500px;
     max-width: 1000px;
-    border: none;
     flex-direction: column;
 }
 
 img {
-    width: 100px;
+    width: 120px;
+    margin: 0 20px 0 20px;
     padding: 10px;
-    height: 100px;
+    height: 120px;
 }
 
-.newAccount-content-icons{
-    margin: auto;
+.newAccount-content-social strong{
+    margin-bottom: 40px;
+}
+.newAccount-content-social{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
 
 img:hover{
@@ -49,6 +55,8 @@ img:hover{
  
     .newAccount-content{
         width: 80%;
+        display: flex;
+        flex-direction: row;
    }  
 }
 
@@ -60,7 +68,9 @@ img:hover{
 
 @media (min-width: 1200px) {
     .newAccount-content{
-        width: 80%;
+        width: 50%;
+        display: flex;
+        background-attachment: scroll;
    }
   
 }
