@@ -12,6 +12,7 @@ class NewAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      mediaSelected:  "",
       showForm: false,
       showButtonVoltar: true,
       showSocialIcons: true,
@@ -39,29 +40,35 @@ class NewAccount extends Component {
   }
 
   formHandlerFacebook() {
-    this.setState({ 
-      showForm: true, 
-      showButtonVoltar: false, 
-      enableGmail: false, 
-      enableGithub: false 
+    this.setState({
+      showForm: true,
+      showButtonVoltar: false,
+      enableGmail: false,
+      enableGithub: false,
+      showLinkDefault: false,
+      mediaSelected: "facebook"
     });
   }
 
-  formHandlerGithub(){
+  formHandlerGithub() {
     this.setState({
       showForm: true,
-      showButtonVoltar: false, 
-      enableFacebook: false, 
-      enableGmail: false 
+      showButtonVoltar: false,
+      enableFacebook: false,
+      enableGmail: false,
+      showLinkDefault: false,
+      mediaSelected: "gitHub"
     });
   }
 
-  formHandlerGmail(){
+  formHandlerGmail() {
     this.setState({
       showForm: true,
-      showButtonVoltar: false, 
-      enableFacebook: false, 
-      enableGithub: false 
+      showButtonVoltar: false,
+      enableFacebook: false,
+      enableGithub: false,
+      showLinkDefault: false,
+      mediaSelected: "gmail"
     });
   }
   newAccountDefault() {
@@ -73,26 +80,29 @@ class NewAccount extends Component {
     return (
       <div className="newAccount">
         <div className="newAccount-content">
-          <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }}  className="button-back" to="/"><img src={Back} className="button-back"></img></Link>
-
-          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova conta a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios</strong> : <div> <strong className="newAccount-content-subtitle">
-            Use as informações das suas redes sociais para criar uma conta ou
-            </strong> <a style={{ display: this.state.showLinkDefault ? 'block' : 'none' }}
+          <div className="newAccount-content-top">
+            <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }} className="button-back" to="/"><img src={Back} className="button-back"></img></Link>
+            <p style={{ display: this.state.showLinkDefault ? 'block' : 'none' }} className="newAccount-content-paragraph">caso queira 
+            <a 
               href='#'
-              onClick={this.newAccountDefault}>clique aqui e não utilize nenhuma.
-            </a>
+              onClick={this.newAccountDefault}> crie sua conta sem utilizar nenhuma rede social.
+            </a></p>
+          </div>
+          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova conta a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios</strong> : <div> <strong className="newAccount-content-subtitle">
+            Use as informações das suas redes sociais para criar uma conta, basta selecionar uma abaixo:
+            </strong>
           </div>
           }
 
           <div className="newAccount-content-social"
             style={{ display: this.state.showSocialIcons ? 'block' : 'none' }}>
             <img src={Facebook} alt="Logo Facebook"
-            onClick={this.formHandlerFacebook} 
-            style={{
-              cursor: this.state.enableFacebook ? 'pointer' : 'auto',
-              transform: this.state.enableFacebook ? 'scale(1.1}' : 'scale(1)',
-              opacity: this.state.enableFacebook ? '1' : '0.5'
-            }}
+              onClick={this.formHandlerFacebook}
+              style={{
+                cursor: this.state.enableFacebook ? 'pointer' : 'auto',
+                transform: this.state.enableFacebook ? 'scale(1.1}' : 'scale(1)',
+                opacity: this.state.enableFacebook ? '1' : '0.5'
+              }}
             ></img>
             <img src={Github} alt="Logo Github"
               onClick={this.formHandlerGithub}
@@ -103,7 +113,7 @@ class NewAccount extends Component {
               }}>
             </img>
             <img src={Gmail} alt="Logo Gmail"
-              onClick={this.formHandlerGmail} 
+              onClick={this.formHandlerGmail}
               style={{
                 cursor: this.state.enableGmail ? 'pointer' : 'auto',
                 transform: this.state.enableGmail ? 'scale(1.1}' : 'scale(1)',
@@ -113,7 +123,7 @@ class NewAccount extends Component {
           </div>
           <div className="newAccount-content-form">
             <div style={{ display: this.state.showForm ? 'block' : 'none' }}>
-              <FormApp showSocialIcons={this.state.showSocialIcons}></FormApp>
+              <FormApp showSocialIcons={this.state.showSocialIcons} mediaSelected={this.state.mediaSelected}></FormApp>
             </div>
           </div>
         </div>

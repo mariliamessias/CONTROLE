@@ -73,7 +73,7 @@
     padding: 10px;
     color: white;
     margin: 10px;
-    width: 20% !important;
+    width: auto !important;
     border:none;
     /* border-radius: 10px; */
     /* font-family: Roboto, Courier, monospace; */

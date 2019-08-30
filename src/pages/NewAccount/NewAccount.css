@@ -23,6 +23,19 @@
     height: 70px;
 }
 
+.newAccount-content-paragraph{
+    width: 250px;
+    text-align: right;
+    padding: 10px;
+}
+.newAccount-content-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
 .newAccount-content{
     display: flex;
     margin: auto;

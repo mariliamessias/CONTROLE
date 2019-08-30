@@ -19,7 +19,7 @@ class FormApp extends React.Component {
   }
 
   getInfoHandler(){
-    alert('teste');
+    alert('teste  ');
   }
 
   render() {
@@ -63,13 +63,16 @@ class FormApp extends React.Component {
               <div className="newAccount-form-group-one">
                 <div className="newAccount-form">
                   <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">{this.props.showSocialIcons ? "Informe o email que você utiliza na rede social selecionada:" : "Coloque o email que você mais utiliza:"}</label>
+                    <label className="newAccount-form-item-text">{this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : `Coloque o email que você mais utiliza:`}</label>
                     <Field name="email" type="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
                     <ErrorMessage name="email" component="div" className="invalid-feedback" />
                   </div>
                   <div className="newAccount-form-buttons" style={{ display: this.props.showSocialIcons ? 'flex' : 'none' }}>
                     <Link className="button-newAccount" to="/">Cancelar</Link>
-                    <Button className="button-newAccount" onClick={this.getInfoHandler}>Consultar</Button>
+                    <Button className="button-newAccount" 
+                      onClick={this.getInfoHandler}
+                      style={{ background: this.props.mediaSelected == "facebook"? '#347aeb' : this.props.mediaSelected == "gitHub" ? '#191d24' : '#db212a' }}
+                      >Buscar no {this.props.mediaSelected}</Button>
                   </div>
                 </div>
               </div>
