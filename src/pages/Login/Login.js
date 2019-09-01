@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import $ from 'jquery';
 import ButtonDefault from '../../components/Button/ButtonDefault';
-import InputText from '../../components/InputText/InputTex';
 import SimpleText from '../../components/SimpleText/SimpleText';
 import Logo from '../../images/lontrasLogo.jpg'
 import SimpleLink from '../../components/SimpleLink/SimpleLink';
