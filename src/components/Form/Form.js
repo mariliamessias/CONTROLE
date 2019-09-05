@@ -11,13 +11,18 @@ class FormApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: {},
+      fields: {
+        nome: '',
+        email: '',
+        confEmail: ''
+      },
       errors: {},
-      showForm : false
+      showForm: false
     }
   }
 
   handleChange(field, e) {
+    e.preventDefault();
     let fields = this.state.fields;
     let errors = {};
     if (field === "value") {
@@ -56,6 +61,7 @@ class FormApp extends Component {
   async handleSend() {
     let fields = this.state.fields;
     let errors = {};
+    let resp = {};
 
     if (!fields["email"]) {
       errors["email"] = "O email precisa ser preenchido";
@@ -64,23 +70,24 @@ class FormApp extends Component {
       if (this.props.mediaSelected == "gitHub") {
 
         const response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
-        console.log(response);
         const result = response.data.items;
         if (result.length == 1) {
-          result.map(async res => {
-            this.setState({
-              showForm: true
-            })
-            const resp = await axios.get(`https://api.github.com/users/${res.login}`)
+          const res = result[0];
+          resp = await axios.get(`https://api.github.com/users/${res.login}`)
+          if (resp) {
             fields['nome'] = resp.data.name;
             fields['confEmail'] = this.state.fields['email'];
-            // console.log(resp.data.name)
-           
-          })
+            this.setState({
+              showForm: true,
+              fields
+            })
+          } else errors["email"] = "Infelizmente não localizamos a conta informada"
+
         } else errors["email"] = "Infelizmente não localizamos a conta informada";
       }
     }
-    this.setState({ fields, errors });
+
+    this.setState({ errors });
   }
 
   handleValidation() {
@@ -124,7 +131,7 @@ class FormApp extends Component {
                 <label className="newAccount-form-item-text">{this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : `Coloque o email que você mais utiliza:`}</label>
                 <InputText
                   onChange={this.handleChange.bind(this, "email")}
-                  value={this.state.fields["email"] || ''}
+                  value={this.state.fields["email"]}
                   name="email"
                   type="email"
                   placeholder="Ex.: email.maravilhoso@provedor.com"
@@ -149,6 +156,7 @@ class FormApp extends Component {
             <div className="newAccount-form-item">
               <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
               <InputText
+                value={this.state.fields["confEmail"]}
                 name="confEmail"
                 onChange={this.handleChange.bind(this, "confEmail")}
                 errors={this.state.errors['confEmail']}
@@ -169,6 +177,7 @@ class FormApp extends Component {
               <InputText
                 onChange={this.handleChange.bind(this, "nome")}
                 errors={this.state.errors['nome']}
+                value={this.state.fields["nome"] || ''}
                 name="nome"
                 type="text"
                 placeholder="Nome mais lindo do mundo" />
