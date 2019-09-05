@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import InputText from '../InputText/InputTex';
 import axios from 'axios';
 import Icon from '../../images/lontraIcon.png';
+import Github from '../../images/github.png';
 import './Form.css';
 
 class FormApp extends Component {
@@ -14,7 +15,8 @@ class FormApp extends Component {
       fields: {
         nome: '',
         email: '',
-        confEmail: ''
+        confEmail: '',
+        avatarUrl: ''
       },
       errors: {},
       showForm: false
@@ -77,9 +79,10 @@ class FormApp extends Component {
           if (resp) {
             fields['nome'] = resp.data.name;
             fields['confEmail'] = this.state.fields['email'];
+            fields['avatarUrl'] = resp.data.avatar_url;
             this.setState({
               showForm: true,
-              fields
+              fields,
             })
           } else errors["email"] = "Infelizmente não localizamos a conta informada"
 
@@ -128,6 +131,14 @@ class FormApp extends Component {
           <div className="newAccount-form-group-one">
             <div className="newAccount-form">
               <div className="newAccount-form-item">
+                <div className="newAccount-image-container">
+                  <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
+                    style={{
+                      display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
+                      cursor: this.state.enableGithub ? 'pointer' : 'auto',
+                    }}>
+                  </img>
+                </div>
                 <label className="newAccount-form-item-text">{this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : `Coloque o email que você mais utiliza:`}</label>
                 <InputText
                   onChange={this.handleChange.bind(this, "email")}
@@ -152,6 +163,7 @@ class FormApp extends Component {
 
         <div className="newAccount-form-group-two"
           style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'block' }}>
+
           <div className="newAccount-form">
             <div className="newAccount-form-item">
               <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
@@ -167,6 +179,7 @@ class FormApp extends Component {
               <label className="newAccount-form-item-text">Informe para nós seu telefone celular:</label>
               <InputText
                 name="telefone"
+                value={this.state.fields["telefone"] || ''}
                 onChange={this.handleChange.bind(this, "telefone")}
                 errors={this.state.errors['telefone']}
                 type="text"
