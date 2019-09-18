@@ -63,12 +63,12 @@ class FormApp extends Component {
 
   componentDidMount() {
     PubSub.subscribe('mostrarIcones', (topico, objeto) => {
-        if(!objeto){
-          this.setState({
-            showImage: false,
-          });
-        }
-      });
+      if (!objeto) {
+        this.setState({
+          showImage: false,
+        });
+      }
+    });
   }
 
   async handleSend() {
@@ -147,11 +147,11 @@ class FormApp extends Component {
             <div className="newAccount-form">
               <div className="newAccount-form-item">
                 <div className="newAccount-image-container"
-                   style={{
-                    display: this.state.showImage ? 'flex' : 'none' ,
+                  style={{
+                    display: this.state.showImage ? 'flex' : 'none',
                     backgroundImage: `url(${wavesBackground})`,
                   }}
-                  >
+                >
                   <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
                     style={{
                       display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
@@ -159,7 +159,8 @@ class FormApp extends Component {
                     }}>
                   </img>
                 </div>
-                <label className="newAccount-form-item-text">{this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : `Coloque o email que você mais utiliza:`}</label>
+                <label className="newAccount-form-item-text">
+                  {this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : this.state.showForm ? `Seu email no ${this.props.mediaSelected}:`:`Coloque o email que você mais utiliza:`}</label>
                 <InputText
                   onChange={this.handleChange.bind(this, "email")}
                   value={this.state.fields["email"]}
@@ -183,10 +184,11 @@ class FormApp extends Component {
 
         <div className="newAccount-form-group-two"
           style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'block' }}>
-
           <div className="newAccount-form">
-            <div className="newAccount-form-item">
-              <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
+            <div className="newAccount-form-item"
+              style={{ display: !this.props.showSocialIcons && this.state.showForm ? 'none' : 'flex' }}>
+              <label className="newAccount-form-item-text">
+                Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
               <InputText
                 value={this.state.fields["confEmail"]}
                 name="confEmail"
@@ -194,6 +196,17 @@ class FormApp extends Component {
                 errors={this.state.errors['confEmail']}
                 type="email"
                 placeholder="Ex.: email.maravilhoso@provedor.com" />
+            </div>
+            <div className="newAccount-form-item">
+              <label className="newAccount-form-item-text">
+                {this.state.showForm ? `Seu nome no ${this.props.mediaSelected}:`: `Gostaríamos muito de saber seu nome, informe para nós:`}</label>
+              <InputText
+                onChange={this.handleChange.bind(this, "nome")}
+                errors={this.state.errors['nome']}
+                value={this.state.fields["nome"] || ''}
+                name="nome"
+                type="text"
+                placeholder="Nome mais lindo do mundo" />
             </div>
             <div className="newAccount-form-item" >
               <label className="newAccount-form-item-text">Informe para nós seu telefone celular:</label>
@@ -204,16 +217,6 @@ class FormApp extends Component {
                 errors={this.state.errors['telefone']}
                 type="text"
                 placeholder="Exemplo: 11988887777" />
-            </div>
-            <div className="newAccount-form-item">
-              <label className="newAccount-form-item-text">Gostaríamos muito de saber seu nome, informe para nós:</label>
-              <InputText
-                onChange={this.handleChange.bind(this, "nome")}
-                errors={this.state.errors['nome']}
-                value={this.state.fields["nome"] || ''}
-                name="nome"
-                type="text"
-                placeholder="Nome mais lindo do mundo" />
             </div>
             <div className="newAccount-form-item">
               <label className="newAccount-form-item-text">Indicamos utilizar uma senha forte, assim como você:</label>
