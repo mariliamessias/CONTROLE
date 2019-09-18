@@ -1,113 +1,227 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Icon from '../../images/lontraIcon.png';
 import Button from 'react-bootstrap/Button';
-import * as Yup from 'yup';
+import InputText from '../InputText/InputTex';
+import axios from 'axios';
+import Icon from '../../images/lontraIcon.png';
+import Github from '../../images/github.png';
 import './Form.css';
 
-class FormApp extends React.Component {
+class FormApp extends Component {
+
   constructor(props) {
     super(props);
+    this.state = {
+      fields: {
+        nome: '',
+        email: '',
+        confEmail: '',
+        avatarUrl: ''
+      },
+      errors: {},
+      showForm: false
+    }
+  }
+
+  handleChange(field, e) {
+    e.preventDefault();
+    let fields = this.state.fields;
+    let errors = {};
+    if (field === "value") {
+      fields[field] = e;
+      this.setState({ fields });
+    } else {
+      fields[field] = e.target.value;
+      this.setState({ fields });
+    }
+
+    if (this.state.fields[field] != '') {
+      this.setState((prevState) => ({
+        errors: [field, '']
+      }));
+    } else {
+      if (!fields[field]) {
+
+        switch (field) {
+          case "confEmail": errors[field] = `A confirmação de email precisa ser preenchida`; break;
+          case "email": errors[field] = `O email precisa ser preenchido`; break;
+          case "telefone": errors[field] = `O telefone precisa ser preenchido`; break;
+          case "nome": errors[field] = `O nome precisa ser preenchido`; break;
+          case "senha": errors[field] = `A senha precisa ser preenchida`; break;
+          case "confSenha": errors[field] = `A confirmação de senha precisa ser preenchida`; break;
+        }
+      }
+      this.setState({ errors: errors });
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.handleValidation();
+  }
+
+  async handleSend() {
+    let fields = this.state.fields;
+    let errors = {};
+    let resp = {};
+
+    if (!fields["email"]) {
+      errors["email"] = "O email precisa ser preenchido";
+    }
+    else {
+      if (this.props.mediaSelected == "gitHub") {
+
+        const response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
+        const result = response.data.items;
+        if (result.length == 1) {
+          const res = result[0];
+          resp = await axios.get(`https://api.github.com/users/${res.login}`)
+          if (resp) {
+            fields['nome'] = resp.data.name;
+            fields['confEmail'] = this.state.fields['email'];
+            fields['avatarUrl'] = resp.data.avatar_url;
+            this.setState({
+              showForm: true,
+              fields,
+            })
+          } else errors["email"] = "Infelizmente não localizamos a conta informada"
+
+        } else errors["email"] = "Infelizmente não localizamos a conta informada";
+      }
+    }
+
+    this.setState({ errors });
+  }
+
+  handleValidation() {
+    let fields = this.state.fields;
+    let errors = {};
+
+    if (!fields["confEmail"]) {
+      errors["confEmail"] = "A confirmação de email precisa ser preenchida`";
+    }
+
+    if (!fields["email"]) {
+      errors["email"] = "O email precisa ser preenchido";
+    }
+
+    if (!fields["telefone"]) {
+      errors["telefone"] = "O telefone precisa ser preenchido";
+    }
+
+    if (!fields["nome"]) {
+      errors["nome"] = "O nome precisa ser preenchido";
+    }
+
+    if (!fields["senha"]) {
+      errors["senha"] = "A senha precisa ser preenchida";
+    }
+
+    if (!fields["confSenha"]) {
+      errors["confSenha"] = "A confirmação de senha precisa ser preenchida";
+    }
+
+    this.setState({ errors: errors });
   }
 
   render() {
     return (
-      <Formik
-        initialValues={{
-          senha: '',
-          confSenha: '',
-          telefone: '',
-          email: '',
-          confEmail: '',
-          nome: ''
-        }}
-        validationSchema={Yup.object().shape({
-          telefone: Yup.string()
-            .required('Telefone é obrigatório.'),
-          nome: Yup.string()
-            .required('Nome é obrigatório.'),
-          email: Yup.string()
-            .email('Email inválido.')
-            .required('Email é obrigatório.'),
-          confEmail: Yup.string()
-            .email('Email inválido.')
-            .oneOf([Yup.ref('email'), null], 'Emails não são iguais.')
-            .required('Confirmação do email é obrigatória.'),
-          senha: Yup.string()
-            .min(6, 'A senha precisa conter no mínimo 6 caracteres.')
-            .required('Senha é obrigatória.'),
-          confSenha: Yup.string()
-            .oneOf([Yup.ref('senha'), null], 'Senhas não iguais.')
-            .required('Confirmação de senha é obrigatória.')
-        })}
-        onSubmit={fields => {
-          alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
-        }}
-        render={({ errors, status, touched }) => (
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        <div className="newAccount-form-content">
+          <div className="newAccount-form-group-one">
+            <div className="newAccount-form">
+              <div className="newAccount-form-item">
+                <div className="newAccount-image-container">
+                  <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
+                    style={{
+                      display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
+                      cursor: this.state.enableGithub ? 'pointer' : 'auto',
+                    }}>
+                  </img>
+                </div>
+                <label className="newAccount-form-item-text">{this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : `Coloque o email que você mais utiliza:`}</label>
+                <InputText
+                  onChange={this.handleChange.bind(this, "email")}
+                  value={this.state.fields["email"]}
+                  name="email"
+                  type="email"
+                  placeholder="Ex.: email.maravilhoso@provedor.com"
+                  errors={this.state.errors['email']}
+                />
+              </div>
+              <div className="newAccount-form-buttons" style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'flex' : 'none' }}>
+                <Link className="button-newAccount" to="/">Cancelar</Link>
+                <Button className="button-newAccount"
+                  onClick={this.handleSend.bind(this)}
+                  style={{ background: this.props.mediaSelected == "facebook" ? '#347aeb' : this.props.mediaSelected == "gitHub" ? '#191d24' : '#db212a' }}>
+                  Buscar no {this.props.mediaSelected}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <Form className="Form">
-            <div className="newAccount-form-content">
-              <div className="newAccount-form-group-one">
-                <div className="newAccount-form-icon">
-                  <img className="newAccount-form-image" src={Icon} />
-                </div>
-                <div className="newAccount-form">
-                  <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Para te notificar e te ajudar a controlar suas despesas, informe para nós seu telefone celular:</label>
-                    <Field name="telefone" className={'form-control' + (errors.telefone && touched.telefone ? ' is-invalid' : '')} type="text" placeholder="Exemplo: 11988887777" />
-                    <ErrorMessage name="telefone" component="div" className="invalid-feedback" />
-                  </div>
-                  <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Coloque o email que você mais utiliza:</label>
-                    <Field name="email" type="email" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
-                    <ErrorMessage name="email" component="div" className="invalid-feedback" />
-                  </div>
-                  <div className="newAccount-form-item">
-                    <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
-                    <Field name="confEmail" type="email" className={'form-control' + (errors.confEmail && touched.confEmail ? ' is-invalid' : '')} type="text" placeholder="Ex.: email.maravilhoso@provedor.com" />
-                    <ErrorMessage name="confEmail" component="div" className="invalid-feedback" />
-                  </div>
-                </div>
-              </div>
+        <div className="newAccount-form-group-two"
+          style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'block' }}>
+
+          <div className="newAccount-form">
+            <div className="newAccount-form-item">
+              <label className="newAccount-form-item-text">Acreditamos em você, mas seria legal se você repetisse ele aqui:</label>
+              <InputText
+                value={this.state.fields["confEmail"]}
+                name="confEmail"
+                onChange={this.handleChange.bind(this, "confEmail")}
+                errors={this.state.errors['confEmail']}
+                type="email"
+                placeholder="Ex.: email.maravilhoso@provedor.com" />
             </div>
-            <div className="newAccount-form-group-two">
-              <div className="newAccount-form">
-                <div className="newAccount-form-item">
-                  <label className="newAccount-form-item-text">Gostaríamos muito de saber seu nome, informe para nós:</label>
-                  <Field name="nome" className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} type="text" placeholder="Nome mais lindo do mundo" />
-                  <ErrorMessage name="nome" component="div" className="invalid-feedback" />
-                </div>
-                <div className="newAccount-form-item">
-                  <label className="newAccount-form-item-text">Indicamos utilizar uma senha forte, assim como você:</label>
-                  <Field name="senha" type="password" className={'form-control' + (errors.senha && touched.senha ? ' is-invalid' : '')} type="password" />
-                  <ErrorMessage name="senha" component="div" className="invalid-feedback" />
-                </div>
-                <div className="newAccount-form-item">
-                  <label className="newAccount-form-item-text">Só pra confirmar, repita ela aqui, por favor:</label>
-                  <Field name="confSenha" type="password" className={'form-control' + (errors.confSenha && touched.confSenha ? ' is-invalid' : '')} type="password" />
-                  <ErrorMessage name="confSenha" component="div" className="invalid-feedback" />
-                </div>
-              </div>
+            <div className="newAccount-form-item" >
+              <label className="newAccount-form-item-text">Informe para nós seu telefone celular:</label>
+              <InputText
+                name="telefone"
+                value={this.state.fields["telefone"] || ''}
+                onChange={this.handleChange.bind(this, "telefone")}
+                errors={this.state.errors['telefone']}
+                type="text"
+                placeholder="Exemplo: 11988887777" />
             </div>
+            <div className="newAccount-form-item">
+              <label className="newAccount-form-item-text">Gostaríamos muito de saber seu nome, informe para nós:</label>
+              <InputText
+                onChange={this.handleChange.bind(this, "nome")}
+                errors={this.state.errors['nome']}
+                value={this.state.fields["nome"] || ''}
+                name="nome"
+                type="text"
+                placeholder="Nome mais lindo do mundo" />
+            </div>
+            <div className="newAccount-form-item">
+              <label className="newAccount-form-item-text">Indicamos utilizar uma senha forte, assim como você:</label>
+              <InputText
+                onChange={this.handleChange.bind(this, "senha")}
+                errors={this.state.errors['senha']}
+                name="senha"
+                type="password" />
+            </div>
+            <div className="newAccount-form-item">
+              <label className="newAccount-form-item-text">Só pra confirmar, repita ela aqui, por favor:</label>
+              <InputText
+                onChange={this.handleChange.bind(this, "confSenha")}
+                errors={this.state.errors['confSenha']}
+                name="confSenha"
+                type="password" />
+            </div>
+
             <div className="newAccount-form-buttons">
               <Link className="button-newAccount" to="/">Cancelar</Link>
               <Button className="button-newAccount" type="submit">Confirmar</Button>
             </div>
-          </Form>
-        )}
-      />
-    )
-  }
+          </div>
+        </div>
+      </form>
+    );
 
-  handleSubmit = event => {
-    event.preventDefault();
   }
-
 }
 
-
-
 export default FormApp;
-
-

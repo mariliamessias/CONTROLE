@@ -1,0 +1,113 @@
+.Home{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.Home-container-toggle {
+  margin: 80px;
+  width: 90%;
+  height: 170px;
+  z-index: -1;
+}
+
+.Home-container-button{
+  background: #BA81A7;
+  border: white 2px solid;
+}
+
+.Home-container-button:hover{
+  background: #BA81A7;
+  border: white 2px solid;
+}
+
+/* .Login-body-image {
+  height: 100%!important;
+  width: 25%;
+} */
+
+.Home-container-full {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  position: absolute;
+  height: auto;
+  z-index: -1;
+}
+
+.Home-container-two{
+  margin-bottom: 20px;
+}
+
+.Home-container-one {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #BA81A7;
+  margin-bottom: 20px;
+}
+
+#page-wrap {
+    text-align: center;
+  }
+  
+  .bm-item {
+    display: inline-block;
+    text-decoration: none;
+    color: #d1d1d1;
+    transition: color 0.2s;
+  }
+  
+  .bm-item:hover {
+    color: white;
+  }
+  
+  .bm-burger-button {
+    position: fixed;
+    width: 26px;
+    height: 20px;
+    left: 36px;
+    top: 36px;
+  }
+  
+  .bm-burger-bars {
+    background: #373a47;
+  }
+  
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .bm-cross {
+    background: #bdc3c7;
+  }
+  
+  .bm-menu {
+    background: #94517e;
+    /* padding: 2.5em 1.5em 0; */
+    /* font-size: 1.15em; */
+  }
+  
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  .bm-item-list {
+    color: #b8b7ad;
+  }
+  
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  
+@media (max-width: 767px) {
+  .bm-burger-button {
+    top: 20px;
+    left: 30px;
+  }
+}

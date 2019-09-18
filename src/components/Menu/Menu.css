@@ -89,8 +89,6 @@
         padding: 70px 0 20px 0;
     }
     .Menu-items, .Menu-items-home {
-        height: 150px;
-        flex-direction: column;
         list-style-type: none;
         justify-content: flex-end;
         position: fixed;
@@ -115,14 +113,3 @@
         width: 50%;
     }
 }
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .Menu-items, .Menu-items-home {
-        height: 60px;
-        padding: 10px;
-    }
-}
-
-@media (min-width: 992px) and (max-width: 1199px) {}
-
-@media (min-width: 1200px) {}

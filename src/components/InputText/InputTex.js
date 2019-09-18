@@ -23,14 +23,18 @@ class InputText extends React.Component{
     return (
       <div className="InputText">
           <input 
-          type={this.props.type} 
-          placeholder={this.props.placeholder}
-          className="InputText-text" 
-          value={this.props.value} 
-          onChange={this.props.onChange} 
-          onKeyPress={this.props.onKeyPress}
-          ref={this.setTextInputRef}
+            style={{ borderColor: this.props.errors ? 'red' : '#000' }}
+            type={this.props.type} 
+            placeholder={this.props.placeholder}
+            className="InputText-text" 
+            value={this.props.value} 
+            onChange={this.props.onChange} 
+            onKeyPress={this.props.onKeyPress}
+            ref={this.setTextInputRef}
           />
+
+          <span className="error-input">{this.props.errors}</span>
+
       </div>
     );
   }

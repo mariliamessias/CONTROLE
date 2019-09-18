@@ -11,17 +11,37 @@
     padding: 0px 30px 0px 10px;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .invalid-feedback{
     text-align: right !important;
 }
-
+.btn{
+    border-radius: 0px;
+}
 .newAccount-form-buttons{
     width: 100%;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.newAccount-image-container{
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    border-top: #6d2c57;
+}
+
+.newAccount-profile-image{
+    width: 200px;
+    height: 200px;
+    transform: scale(1) !important;
+    border: black solid 1px;
+    border-radius: 50%;
 }
 
 .newAccount-form-item{
@@ -45,6 +65,7 @@
 .newAccount-form-content{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .newAccount-form-group-one{
@@ -57,28 +78,18 @@
     width: 100%;
 }
 
-.newAccount-form-image{
-   max-width: 100% !important;
-   height: 350px;
-   width: 400px;
-}
-
 .Form-Error{
     color: red;
     text-align: right;
 }
 
-.newAccount-form-icon{
-    width: 50%;
-    min-width: 50%;
-}
 .button-newAccount{
     background-color: #923a75;
     border: solid 2px black;
     padding: 10px;
     color: white;
     margin: 10px;
-    width: 20% !important;
+    width: auto !important;
     border:none;
     /* border-radius: 10px; */
     /* font-family: Roboto, Courier, monospace; */
@@ -102,16 +113,6 @@
     .button-newAccount{
         width: 100% !important;
     }
-
-    .newAccount-form-icon{
-        width: 60%;
-    }
-
-    
-    .newAccount-form-image{
-        height: auto;
-        width: auto;
-     }
   
   }
 
@@ -124,30 +125,13 @@
     .button-newAccount{
         width: 30% !important;
     }
-
-    .newAccount-form-image{
-        height: auto;
-        width: auto;
-     }
-  
-  
+ 
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-   .newAccount-form-icon{
-    width: 70%;
-}
 
-.newAccount-form-image{
-    height: 300px;
-    width: 300px;
- }
 }
 
 @media (min-width: 1200px) {
-   .newAccount-form-image{
-    height: auto;
-    width: auto;
-    max-height: 300px;
- }
+ 
 }

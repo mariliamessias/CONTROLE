@@ -1,9 +1,13 @@
 .newAccount{
-    padding: 30px;
+    padding: 50px;
     background-color: #733f62;
     background-attachment: fixed;
+    height: auto;
+    min-height: 100vh;
     text-align: center;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .newAccount-content-title{
@@ -14,20 +18,63 @@
     width: 100%;
 }
 
-.newAccount-content{
-    margin: 20px auto 20px auto;
-    padding: 20px;
-    background: white; 
-    /* border: solid 5px black; */
-    /* border-radius: 20px;  */
-    border: none;
+.button-back{
+    width: 70px;
+    height: 70px;
 }
 
+.newAccount-content-paragraph{
+    width: 250px;
+    text-align: right;
+    padding: 10px;
+}
+.newAccount-content-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.newAccount-content{
+    display: flex;
+    margin: auto;
+    padding: 30px;
+    background: white; 
+    min-width: 500px;
+    max-width: 1000px;
+    flex-direction: column;
+}
+
+img {
+    width: 120px;
+    margin: 0 20px 0 20px;
+    padding: 10px;
+    height: 120px;
+}
+
+.newAccount-content-social strong{
+    margin-bottom: 40px;
+}
+.newAccount-content-social{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+img:hover{
+    transform: scale(1.1);
+    transition: transform 0.4s;
+    cursor: pointer;
+}
 
 @media (min-width: 768px) and (max-width: 991px) {
  
     .newAccount-content{
         width: 80%;
+        display: flex;
+        flex-direction: column;
    }  
 }
 
@@ -40,6 +87,8 @@
 @media (min-width: 1200px) {
     .newAccount-content{
         width: 50%;
+        display: flex;
+        background-attachment: scroll;
    }
   
 }
