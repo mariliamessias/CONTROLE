@@ -85,8 +85,8 @@ class NewAccount extends Component {
   }
   newAccountDefault() {
     this.setState({ showSocialIcons: false, showForm: true, showLinkDefault: false, showButtonVoltar: false });
+    PubSub.publish("mostrarIcones", false);
   }
-
   
   render() {
 

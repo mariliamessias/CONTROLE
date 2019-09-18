@@ -30,17 +30,22 @@
 
 .newAccount-image-container{
     width: 100%;
-    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     border-top: #6d2c57;
+    background-size: contain ;
+     background-size: 450px 280px; 
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 20px;
+
 }
 
 .newAccount-profile-image{
+    margin: 10px;
     width: 200px;
     height: 200px;
     transform: scale(1) !important;
-    border: black solid 1px;
     border-radius: 50%;
 }
 

@@ -4,8 +4,7 @@ import Button from 'react-bootstrap/Button';
 import InputText from '../InputText/InputTex';
 import axios from 'axios';
 import PubSub from 'pubsub-js';
-import Icon from '../../images/lontraIcon.png';
-import Github from '../../images/github.png';
+import wavesBackground from '../../images/waves.png';
 import './Form.css';
 
 class FormApp extends Component {
@@ -20,7 +19,8 @@ class FormApp extends Component {
         avatarUrl: ''
       },
       errors: {},
-      showForm: false
+      showForm: false,
+      showImage: true
     }
   }
 
@@ -59,6 +59,16 @@ class FormApp extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.handleValidation();
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('mostrarIcones', (topico, objeto) => {
+        if(!objeto){
+          this.setState({
+            showImage: false,
+          });
+        }
+      });
   }
 
   async handleSend() {
@@ -136,7 +146,12 @@ class FormApp extends Component {
           <div className="newAccount-form-group-one">
             <div className="newAccount-form">
               <div className="newAccount-form-item">
-                <div className="newAccount-image-container">
+                <div className="newAccount-image-container"
+                   style={{
+                    display: this.state.showImage ? 'flex' : 'none' ,
+                    backgroundImage: `url(${wavesBackground})`,
+                  }}
+                  >
                   <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
                     style={{
                       display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
