@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PubSub from 'pubsub-js';
 import { Link, Redirect } from 'react-router-dom';
 import FormApp from '../../components/Form/Form';
 import SimpleText from '../../components/SimpleText/SimpleText';
@@ -37,6 +38,17 @@ class NewAccount extends Component {
       enableGmail: true,
       enableFacebook: true
     });
+
+
+      PubSub.subscribe('mostrarIcones', (topico, objeto) => {
+        if(objeto){
+          this.setState({
+            showSocialIcons: false,
+          });
+        }
+      });
+
+
   }
 
   formHandlerFacebook() {
@@ -75,6 +87,7 @@ class NewAccount extends Component {
     this.setState({ showSocialIcons: false, showForm: true, showLinkDefault: false, showButtonVoltar: false });
   }
 
+  
   render() {
 
     return (
@@ -88,12 +101,11 @@ class NewAccount extends Component {
               onClick={this.newAccountDefault}> crie sua conta sem utilizar nenhuma rede social.
             </a></p>
           </div>
-          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova conta a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios</strong> : <div> <strong className="newAccount-content-subtitle">
+          {this.state.showForm == true ? this.state.showSocialIcons == true ? <strong>Crie uma nova conta a partir da rede social selecionada:</strong> : <strong>Certifique-se de preencher todos os campos obrigatórios:</strong> : <div> <strong className="newAccount-content-subtitle">
             Use as informações das suas redes sociais para criar uma conta, basta selecionar uma abaixo:
             </strong>
           </div>
           }
-
           <div className="newAccount-content-social"
             style={{ display: this.state.showSocialIcons ? 'block' : 'none' }}>
             <img src={Facebook} alt="Logo Facebook"

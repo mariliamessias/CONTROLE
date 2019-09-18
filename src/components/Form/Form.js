@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import InputText from '../InputText/InputTex';
 import axios from 'axios';
+import PubSub from 'pubsub-js';
 import Icon from '../../images/lontraIcon.png';
 import Github from '../../images/github.png';
 import './Form.css';
@@ -69,6 +70,7 @@ class FormApp extends Component {
       errors["email"] = "O email precisa ser preenchido";
     }
     else {
+
       if (this.props.mediaSelected == "gitHub") {
 
         const response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
@@ -84,6 +86,9 @@ class FormApp extends Component {
               showForm: true,
               fields,
             })
+
+            PubSub.publish("mostrarIcones", true);
+
           } else errors["email"] = "Infelizmente não localizamos a conta informada"
 
         } else errors["email"] = "Infelizmente não localizamos a conta informada";
