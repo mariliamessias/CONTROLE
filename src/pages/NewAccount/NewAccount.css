@@ -1,9 +1,10 @@
 .newAccount{
-    padding: 50px;
+    padding: 50px 20px;
     background-color: #733f62;
     background-attachment: fixed;
     height: auto;
     min-height: 100vh;
+    max-height: 300vh;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -67,6 +68,15 @@ img:hover{
     transform: scale(1.1);
     transition: transform 0.4s;
     cursor: pointer;
+}
+
+@media (max-width: 767px) {
+
+    .newAccount-content{
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+   }  
 }
 
 @media (min-width: 768px) and (max-width: 991px) {

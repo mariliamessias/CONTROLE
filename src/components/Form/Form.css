@@ -96,8 +96,9 @@
     margin: 10px;
     width: auto !important;
     border:none;
-    /* border-radius: 10px; */
-    /* font-family: Roboto, Courier, monospace; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
 }
 
@@ -108,6 +109,10 @@
   }
 
 @media (max-width: 767px) {
+    .newAccount-image-container{
+        background-size: 250px 280px;
+    }
+    
    .newAccount-form{
        padding: 5px;
    }
