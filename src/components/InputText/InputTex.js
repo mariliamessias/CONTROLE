@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './InputText.css';
 
-class InputText extends React.Component{
-  constructor(props){
+class InputText extends React.Component {
+  constructor(props) {
     super(props);
 
     this.textInput = null;
@@ -18,22 +18,28 @@ class InputText extends React.Component{
   componentDidMount() {
     this.focusTextInput();
   }
-  
-  render(){
+
+  render() {
     return (
       <div className="InputText">
-          <input 
-            style={{ borderColor: this.props.errors ? 'red' : '#000' }}
-            type={this.props.type} 
-            placeholder={this.props.placeholder}
-            className="InputText-text" 
-            value={this.props.value} 
-            onChange={this.props.onChange} 
-            onKeyPress={this.props.onKeyPress}
-            ref={this.setTextInputRef}
-          />
+        <input
+        autoComplete="none"
+        autoCorrect="off"
+        spellCheck="off"
+          style={{
+            borderColor: this.props.errors ? 'red' : '#000',
+          }}
+          type={this.props.type}
+          placeholder={this.props.placeholder}
+          className="InputText-text"
+          value={this.props.value}
+          onChange={this.props.onChange}
+          onKeyPress={this.props.onKeyPress}
+          ref={this.setTextInputRef}
+          disabled={this.props.disabled}
+        />
 
-          <span className="error-input">{this.props.errors}</span>
+        <span className="error-input">{this.props.errors}</span>
 
       </div>
     );

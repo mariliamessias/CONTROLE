@@ -141,7 +141,9 @@ class FormApp extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <div className="newAccount-form-content">
           <div className="newAccount-form-group-one">
             <div className="newAccount-form">
@@ -159,9 +161,12 @@ class FormApp extends Component {
                     }}>
                   </img>
                 </div>
-                <label className="newAccount-form-item-text">
-                  {this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : this.state.showForm ? `Seu email no ${this.props.mediaSelected}:`:`Coloque o email que você mais utiliza:`}</label>
+                <label className="newAccount-form-item-text"
+                  style={{ display: this.state.showForm ? "none" : "block" }}>
+
+                  {this.props.showSocialIcons ? `Informe o email que você utiliza no ${this.props.mediaSelected}:` : this.state.showForm ? `` : `Coloque o email que você mais utiliza:`}</label>
                 <InputText
+                  disabled={this.state.showForm ? "disabled" : ""}
                   onChange={this.handleChange.bind(this, "email")}
                   value={this.state.fields["email"]}
                   name="email"
@@ -198,9 +203,12 @@ class FormApp extends Component {
                 placeholder="Ex.: email.maravilhoso@provedor.com" />
             </div>
             <div className="newAccount-form-item">
-              <label className="newAccount-form-item-text">
-                {this.state.showForm ? `Seu nome no ${this.props.mediaSelected}:`: `Gostaríamos muito de saber seu nome, informe para nós:`}</label>
+              <label className="newAccount-form-item-text"
+                style={{ display: this.state.showForm ? "none" : "block" }}
+              >
+                {this.state.showForm ? `` : `Gostaríamos muito de saber seu nome, informe para nós:`}</label>
               <InputText
+                disabled={this.state.showForm ? "disabled" : ""}
                 onChange={this.handleChange.bind(this, "nome")}
                 errors={this.state.errors['nome']}
                 value={this.state.fields["nome"] || ''}
