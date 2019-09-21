@@ -94,14 +94,11 @@ class Login extends Component {
       <div className="container-login">
         <div className="container-login-left">
           <div className="container-login-left-content">
-            <strong className="container-login-title">Quer gerenciar suas despesas?</strong>
-            <p>
-            is simply dummy text of the printing and typesetting industry. 
-            specimen book. It has survived not only five centuries, 
-            but also the leap into electronic typesetting, remaining essentially 
-            unchanged. It was popularised in the 1960s with the release of Letraset sheets 
-            like Aldus PageMaker including versions of Lorem Ipsum
-            </p>
+            <strong className="container-login-title">Gerencie as despesas que quiser!</strong>
+           
+            <p> Ao criar sua conta você estará um passo a frente de todas as outras plataformas de gerenciamento de despesas. </p>
+            <p className="container-paragraph">Então não perca tempo, crie já uma conta e comece agora mesmo.</p>
+            
             <div className="buttonNewUser" onClick={this.newAccount.bind(this)}>Sign Up</div>
 
           </div>

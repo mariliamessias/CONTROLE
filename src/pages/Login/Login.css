@@ -78,7 +78,9 @@
     height: 40px;
     font-size: 16px;
   }
-
+.container-paragraph{
+  margin-bottom: 70px;
+}
   .buttonNewUser:hover, .Login-body-buttonLogin:hover{
     background-color: #6d2c57;
     text-decoration: none;
@@ -115,12 +117,12 @@
     flex-direction: column;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     margin-bottom: 20px;
   }
 
   .ButtonDefault{
-    width: 40%;
+    /* width: 50% !important; */
   }
 
   .Login-body-container{
@@ -129,7 +131,9 @@
 
   .login_loading{
     width: 40px;
+    height: auto !important;
     margin:0;
+    padding: 0px !important;
   }
 
   .invalid-password{
@@ -154,19 +158,21 @@
     justify-content: center;
     padding: 10px;
     text-align: center;
-    width: 100%;
-    height: 40px;
+    width: 200px;
+    height: auto;
     background-color: #3caaa6;
     border: none;
     color: white;
     text-decoration: none;
     text-align: center;
     align-items: center;
+    flex-direction: row;
   }
 
   .Login-body-buttonLoginCarregando{
     padding: 0px;
-    width: 100%;
+    height: auto;
+    width: 200px;
     height: 40px;
     background-color: #215e5c;
     border: none;
@@ -210,7 +216,7 @@
   }
 
   .ButtonDefault{
-    width: 90%;
+    width: 100% !important;
   }
 
   .Login-body-userInformation, .Login-body-userInformation-1{
@@ -226,16 +232,25 @@
 
   .Login-body-buttonLogin{
     width: 100%;
+    height: auto;
     margin-top: 10px;
   }
 
   .Login-body-buttonLoginCarregando{
     width: 100%;
-    margin-top: 10px;
+    padding: 0px;
+    height: auto;
+    /* margin-top: 10px; */
   }
 
   .Login-body-buttons{
     margin-bottom: 70px;
+  }
+
+  .Login-body-buttonLoginCarregando{
+    width: 100%;
+    height: auto;
+    /* margin-top: 10px; */
   }
 
 }
@@ -275,12 +290,14 @@
 
   .Login-body-buttonLogin{
     width: 100%;
+    height: auto;
     margin-top: 10px;
   }
 
   .Login-body-buttonLoginCarregando{
-    width: 100%;
-    margin-top: 10px;
+    width: 150px;
+    height: auto;
+    /* margin-top: 10px; */
   }
 
   .Login-body-buttons{
@@ -307,8 +324,9 @@
 
   .Login-body-buttons{
     flex-direction: row;
-    justify-content: flex-end;
-    padding-right: 40px;
+    width: 90%;
+    /* justify-content: flex-end;
+    padding-right: 40px; */
 
   }
 }
@@ -330,7 +348,8 @@
   }
   .Login-body-buttons{
     flex-direction: row;
-    justify-content: flex-end;
-    padding-right: 40px;
+    width: 90%;
+    /* justify-content: flex-end;
+    padding-right: 40px; */
   }
 }
