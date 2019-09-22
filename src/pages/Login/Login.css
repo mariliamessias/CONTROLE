@@ -121,15 +121,12 @@
     margin-bottom: 20px;
   }
 
-  .ButtonDefault{
-    /* width: 50% !important; */
-  }
-
+ 
   .Login-body-container{
     width: 100%;
   }
 
-  .login_loading{
+  .loading{
     width: 40px;
     height: auto !important;
     margin:0;

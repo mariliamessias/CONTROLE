@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import InputText from '../InputText/InputTex';
+import carregando from '../../images/loading.svg';
 import axios from 'axios';
 import PubSub from 'pubsub-js';
 import wavesBackground from '../../images/waves.png';
@@ -21,8 +22,7 @@ class FormApp extends Component {
       errors: {},
       showForm: false,
       showImage: true,
-      // showLoading: 'content_loading'
-      showLoading: 'content_no_loading'
+      showLoading: ''
     }
   }
 
@@ -86,32 +86,40 @@ class FormApp extends Component {
       errors["email"] = "O email precisa ser preenchido";
     }
     else {
-
+      let response = {};
       if (this.props.mediaSelected == "gitHub") {
+        try{
+          response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
+          const result = response.data.items;
+          if (result.length == 1) {
+            const res = result[0];
+            resp = await axios.get(`https://api.github.com/users/${res.login}`)
+            if (resp) {
+              fields['nome'] = resp.data.name;
+              fields['confEmail'] = this.state.fields['email'];
+              fields['avatarUrl'] = resp.data.avatar_url;
+              this.setState({
+                showForm: true,
+                fields,
+              })
+  
+              PubSub.publish("mostrarIcones", true);
+  
+            } else errors["email"] = "Infelizmente não localizamos a conta informada"
+  
+          } else errors["email"] = "Infelizmente não localizamos a conta informada";
+        }catch(e){
+          errors["email"] = "Infelizmente não localizamos a conta informada";
+          console.log(e)
+        }
 
-        const response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
-        const result = response.data.items;
-        if (result.length == 1) {
-          const res = result[0];
-          resp = await axios.get(`https://api.github.com/users/${res.login}`)
-          if (resp) {
-            fields['nome'] = resp.data.name;
-            fields['confEmail'] = this.state.fields['email'];
-            fields['avatarUrl'] = resp.data.avatar_url;
-            this.setState({
-              showForm: true,
-              fields,
-            })
-
-            PubSub.publish("mostrarIcones", true);
-
-          } else errors["email"] = "Infelizmente não localizamos a conta informada"
-
-        } else errors["email"] = "Infelizmente não localizamos a conta informada";
       }
     }
 
-    this.setState({ errors });
+    this.setState({
+      errors,
+      showLoading: ''
+    });
   }
 
   handleValidation() {
@@ -161,7 +169,7 @@ class FormApp extends Component {
                   }}
                 >
                   <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
-                    style={{ 
+                    style={{
                       display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
                       cursor: this.state.enableGithub ? 'pointer' : 'auto',
                     }}>
@@ -183,11 +191,18 @@ class FormApp extends Component {
               </div>
               <div className="newAccount-form-buttons" style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'flex' : 'none' }}>
                 <Link className="button-newAccount" to="/">Cancelar</Link>
-                {/* <Button className="button-newAccount" */}
-                <Button className={this.showLoading}
+                <Button className={this.state.showLoading != "" ?
+                  this.state.showLoading :
+                  this.props.mediaSelected === "facebook" ?
+                    "content_format_facebook" :
+                    this.props.mediaSelected === "gitHub" ?
+                      "content_format_git_hub" :
+                      "content_format_gmail"}
                   onClick={this.handleSend.bind(this)}
-                  style={{ background: this.props.mediaSelected == "facebook" ? '#347aeb' : this.props.mediaSelected == "gitHub" ? '#191d24' : '#db212a' }}>
-                  Buscar no {this.props.mediaSelected}
+                >
+                  <img className={this.state.showLoading != "" ? "loading" : "loading_none"} src={carregando} alt="Carregando" />
+                  {this.state.showLoading == "" ? `Buscar no ${this.props.mediaSelected}` : "Carregando"}
+
                 </Button>
               </div>
             </div>

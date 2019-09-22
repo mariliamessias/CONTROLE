@@ -7,6 +7,23 @@
     border: none;
 }
 
+.button-newAccount{
+    background: #6d2c57;
+    width: 100px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    
+}
+
+.button-newAccount:hover{
+    background: #923a75;
+    text-decoration: none;
+    color: white;
+}
+
 .newAccount-form{
     padding: 0px 30px 0px 10px;
     display: flex;
@@ -41,8 +58,19 @@
 
 }
 
+.login_loading{
+    width: 40px;
+    height: auto !important;
+    margin:0;
+    padding: 0px !important;
+  }
+
+.loading_none {
+display: none;    
+}
+
 .content_loading{
-    background: yellow !important;
+    background: orange !important;
 }
 .newAccount-profile-image{
     margin: 10px;
@@ -91,7 +119,7 @@
     text-align: right;
 }
 
-.content_no_loading{
+/* .content_no_loading{
     background-color: #923a75;
     border: solid 2px black;
     padding: 10px;
@@ -103,13 +131,25 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
+} */
+
+.content_format_facebook {
+    background-color: dodgerblue;
+    border: solid 2px black;
 }
 
-.content_no_loading:hover{
+.content_format_git_hub{
     background-color: black;
-    text-decoration: none;
-    color: white;
-  }
+    border: solid 2px black;
+
+} 
+
+.content_format_gmail{
+    background-color: red;
+    border: solid 2px black;
+
+}
+
 
 @media (max-width: 767px) {
     .newAccount-image-container{
@@ -125,6 +165,12 @@
 
     .newAccount-form-buttons{
         flex-direction: column;
+    }
+
+    .button-newAccount{
+        width: 100%;
+        margin: 0px;
+        margin-bottom: 15px;
     }
   
   }
