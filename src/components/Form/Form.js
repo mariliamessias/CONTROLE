@@ -20,7 +20,9 @@ class FormApp extends Component {
       },
       errors: {},
       showForm: false,
-      showImage: true
+      showImage: true,
+      // showLoading: 'content_loading'
+      showLoading: 'content_no_loading'
     }
   }
 
@@ -75,6 +77,10 @@ class FormApp extends Component {
     let fields = this.state.fields;
     let errors = {};
     let resp = {};
+
+    this.setState({
+      showLoading: 'content_loading'
+    })
 
     if (!fields["email"]) {
       errors["email"] = "O email precisa ser preenchido";
@@ -155,7 +161,7 @@ class FormApp extends Component {
                   }}
                 >
                   <img className="newAccount-profile-image" src={this.state.fields['avatarUrl']} alt="Logo Github"
-                    style={{
+                    style={{ 
                       display: this.props.showSocialIcons && !this.state.showForm ? 'none' : 'flex',
                       cursor: this.state.enableGithub ? 'pointer' : 'auto',
                     }}>
@@ -177,7 +183,8 @@ class FormApp extends Component {
               </div>
               <div className="newAccount-form-buttons" style={{ display: this.props.showSocialIcons && !this.state.showForm ? 'flex' : 'none' }}>
                 <Link className="button-newAccount" to="/">Cancelar</Link>
-                <Button className="button-newAccount"
+                {/* <Button className="button-newAccount" */}
+                <Button className={this.showLoading}
                   onClick={this.handleSend.bind(this)}
                   style={{ background: this.props.mediaSelected == "facebook" ? '#347aeb' : this.props.mediaSelected == "gitHub" ? '#191d24' : '#db212a' }}>
                   Buscar no {this.props.mediaSelected}

@@ -41,6 +41,9 @@
 
 }
 
+.content_loading{
+    background: yellow !important;
+}
 .newAccount-profile-image{
     margin: 10px;
     width: 200px;
@@ -88,7 +91,7 @@
     text-align: right;
 }
 
-.button-newAccount{
+.content_no_loading{
     background-color: #923a75;
     border: solid 2px black;
     padding: 10px;
@@ -102,8 +105,8 @@
     font-size: 18px;
 }
 
-.button-newAccount:hover{
-    background-color: #6d2c57;
+.content_no_loading:hover{
+    background-color: black;
     text-decoration: none;
     color: white;
   }
@@ -120,8 +123,8 @@
        flex-direction: column;
    }
 
-    .button-newAccount{
-        width: 100% !important;
+    .newAccount-form-buttons{
+        flex-direction: column;
     }
   
   }
@@ -132,7 +135,7 @@
         flex-direction: column;
     }
 
-    .button-newAccount{
+    .content_no_loading{
         width: 30% !important;
     }
  
