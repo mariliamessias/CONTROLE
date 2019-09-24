@@ -44,7 +44,7 @@ class FormApp extends Component {
       }));
     } else {
       if (!fields[field]) {
-
+        
         switch (field) {
           case "confEmail": errors[field] = `A confirmação de email precisa ser preenchida`; break;
           case "email": errors[field] = `O email precisa ser preenchido`; break;

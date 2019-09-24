@@ -108,14 +108,14 @@ class NewAccount extends Component {
           }
           <div className="newAccount-content-social"
             style={{ display: this.state.showSocialIcons ? 'block' : 'none' }}>
-            <img src={Facebook} alt="Logo Facebook"
+            {/* <img src={Facebook} alt="Logo Facebook"
               onClick={this.formHandlerFacebook}
               style={{
                 cursor: this.state.enableFacebook ? 'pointer' : 'auto',
                 transform: this.state.enableFacebook ? 'scale(1.1}' : 'scale(1)',
                 opacity: this.state.enableFacebook ? '1' : '0.5'
               }}
-            ></img>
+            ></img> */}
             <img src={Github} alt="Logo Github"
               onClick={this.formHandlerGithub}
               style={{
@@ -124,14 +124,14 @@ class NewAccount extends Component {
                 opacity: this.state.enableGithub ? '1' : '0.5'
               }}>
             </img>
-            <img src={Gmail} alt="Logo Gmail"
+            {/* <img src={Gmail} alt="Logo Gmail"
               onClick={this.formHandlerGmail}
               style={{
                 cursor: this.state.enableGmail ? 'pointer' : 'auto',
                 transform: this.state.enableGmail ? 'scale(1.1}' : 'scale(1)',
                 opacity: this.state.enableGmail ? '1' : '0.5'
               }}>
-            </img>
+            </img> */}
           </div>
           <div className="newAccount-content-form">
             <div style={{ display: this.state.showForm ? 'block' : 'none' }}>
