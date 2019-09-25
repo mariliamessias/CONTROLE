@@ -6,6 +6,8 @@ import carregando from '../../images/loading.svg';
 import axios from 'axios';
 import PubSub from 'pubsub-js';
 import wavesBackground from '../../images/waves.png';
+import $ from 'jquery';
+
 import './Form.css';
 
 class FormApp extends Component {
@@ -17,13 +19,18 @@ class FormApp extends Component {
         nome: '',
         email: '',
         confEmail: '',
-        avatarUrl: ''
+        avatarUrl: '',
+        senha: '',
+        confSenha: '',
+        telefone: ''
       },
       errors: {},
       showForm: false,
       showImage: true,
       showLoading: ''
     }
+
+    this.saveUser = this.saveUser.bind(this);
   }
 
   handleChange(field, e) {
@@ -58,9 +65,43 @@ class FormApp extends Component {
     }
   }
 
+  saveUser() {
+    return $.ajax({
+        url: "https://api-sky.herokuapp.com/api/auth/sign-up/",
+        type: 'POST',
+        async: false,
+        dataType: "json",
+        data: JSON.stringify({
+          email: this.state.fields.email,
+          nome: this.state.fields.nome,
+          imagem: this.state.fields.avatarUrl,
+          senha: this.state.fields.senha,
+          telefones: [ this.state.fields.telefones] ,
+          
+        }),
+        contentType: 'application/json',
+        success: function (resposta) {
+          console.log('entrou')
+          this.setState({
+            token: resposta.token,
+            id: resposta.id
+          })
+          return resposta;
+        }.bind(this),
+        error: function (resposta) {
+          console.log(resposta)
+        }.bind(this)
+
+    })
+}
+
   handleSubmit(e) {
     e.preventDefault();
-    this.handleValidation();
+    const res = this.handleValidation();
+    if(res){
+      console.log(this.state.fields);
+      const res = this.saveUser();
+    } else alert('nok')
   }
 
   componentDidMount() {
@@ -151,6 +192,11 @@ class FormApp extends Component {
     }
 
     this.setState({ errors: errors });
+
+    if(Object.keys(errors).length == 0){
+      return true;
+    }else return false;
+
   }
 
   render() {
