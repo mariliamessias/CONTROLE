@@ -5,6 +5,7 @@ import InputText from '../InputText/InputTex';
 import carregando from '../../images/loading.svg';
 import axios from 'axios';
 import PubSub from 'pubsub-js';
+import Modal from 'react-bootstrap/Modal';
 import wavesBackground from '../../images/waves.png';
 import $ from 'jquery';
 
@@ -27,7 +28,9 @@ class FormApp extends Component {
       errors: {},
       showForm: false,
       showImage: true,
-      showLoading: ''
+      showLoading: '',
+      successModal: false,
+      errorModal: false
     }
 
     this.saveUser = this.saveUser.bind(this);
@@ -51,7 +54,7 @@ class FormApp extends Component {
       }));
     } else {
       if (!fields[field]) {
-        
+
         switch (field) {
           case "confEmail": errors[field] = `A confirmação de email precisa ser preenchida`; break;
           case "email": errors[field] = `O email precisa ser preenchido`; break;
@@ -66,42 +69,47 @@ class FormApp extends Component {
   }
 
   saveUser() {
+    const data = {
+      email: this.state.fields.email,
+      nome: this.state.fields.nome,
+      imagem: this.state.fields.avatarUrl,
+      senha: this.state.fields.senha,
+      telefones: [{
+        numero: this.state.fields.telefone,
+        ddd: 11
+      }],
+    }
     return $.ajax({
-        url: "https://api-sky.herokuapp.com/api/auth/sign-up/",
-        type: 'POST',
-        async: false,
-        dataType: "json",
-        data: JSON.stringify({
-          email: this.state.fields.email,
-          nome: this.state.fields.nome,
-          imagem: this.state.fields.avatarUrl,
-          senha: this.state.fields.senha,
-          telefones: [ this.state.fields.telefones] ,
-          
-        }),
-        contentType: 'application/json',
-        success: function (resposta) {
-          console.log('entrou')
-          this.setState({
-            token: resposta.token,
-            id: resposta.id
-          })
-          return resposta;
-        }.bind(this),
-        error: function (resposta) {
-          console.log(resposta)
-        }.bind(this)
-
+      url: "https://api-sky.herokuapp.com/api/auth/sign-up",
+      type: 'POST',
+      async: false,
+      dataType: "json",
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function (resposta) {
+        return resposta;
+      }.bind(this),
+      error: function (resposta) {
+        console.log(resposta)
+      }.bind(this)
     })
-}
+  }
 
   handleSubmit(e) {
     e.preventDefault();
     const res = this.handleValidation();
-    if(res){
-      console.log(this.state.fields);
-      const res = this.saveUser();
-    } else alert('nok')
+    if (res) {
+      const result = this.saveUser();
+      if(result.status === 200){
+        this.setState({
+          successModal: true
+        })
+      } else {
+        this.setState({
+          errorModal: true
+        })
+      }
+    }
   }
 
   componentDidMount() {
@@ -129,7 +137,7 @@ class FormApp extends Component {
     else {
       let response = {};
       if (this.props.mediaSelected == "gitHub") {
-        try{
+        try {
           response = await axios.get(`https://api.github.com/search/users?q=${this.state.fields['email']}`);
           const result = response.data.items;
           if (result.length == 1) {
@@ -143,13 +151,13 @@ class FormApp extends Component {
                 showForm: true,
                 fields,
               })
-  
+
               PubSub.publish("mostrarIcones", true);
-  
+
             } else errors["email"] = "Infelizmente não localizamos a conta informada"
-  
+
           } else errors["email"] = "Infelizmente não localizamos a conta informada";
-        }catch(e){
+        } catch (e) {
           errors["email"] = "Infelizmente não localizamos a conta informada";
           console.log(e)
         }
@@ -193,14 +201,42 @@ class FormApp extends Component {
 
     this.setState({ errors: errors });
 
-    if(Object.keys(errors).length == 0){
+    if (Object.keys(errors).length == 0) {
       return true;
-    }else return false;
+    } else return false;
 
   }
 
   render() {
     return (
+      <div>
+        <Modal show={this.state.successModal} onHide={this.handleCloseSair}>
+          <Modal.Header closeButton>
+            <Modal.Title>Parabéns!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Sua conta foi criada com sucesso!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button>
+              <Link to="/" className="Menu-items-btn-sair">Fazer Login</Link>
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        
+        <Modal show={this.state.errorModal} onHide={this.handleCloseSair}>
+          <Modal.Header closeButton>
+            <Modal.Title>Ops!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Infelizmmente não pudemos criar sua conta nesse momento, tente novamente mais tarde.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button>
+              <Link to="/" className="Menu-items-btn-sair">Ir para tela de Login</Link>
+            </Button>
+          </Modal.Footer>
+        </Modal>
       <form
         onSubmit={this.handleSubmit.bind(this)}
       >
@@ -318,6 +354,7 @@ class FormApp extends Component {
           </div>
         </div>
       </form>
+    </div>
     );
 
   }
