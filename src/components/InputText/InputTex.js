@@ -29,6 +29,8 @@ class InputText extends React.Component {
           style={{
             borderColor: this.props.errors ? 'red' : '#000',
           }}
+          onKeyPress={this.props.onKeyPress}
+          maxLength={this.props.maxLength}
           type={this.props.type}
           placeholder={this.props.placeholder}
           className="InputText-text"
