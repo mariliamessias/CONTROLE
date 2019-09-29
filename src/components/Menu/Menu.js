@@ -49,7 +49,7 @@ class Menu extends Component {
             {this.renderRedirect()}
             {/* <li ><Link to="/pagas" className="Menu-items-btn-sair">Consultar Despesas Pagas</Link></li> */}
             {/* <li onClick={this.showModal}>Cadastrar Despesa</li> */}
-            <li onClick={this.sairModal}><img className="Menu-items-sair" src={sair}/></li>
+            <li><img className="Menu-items-sair" onClick={this.sairModal} src={sair}/></li>
           </ul>
       </div>
     );
