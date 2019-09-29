@@ -94,7 +94,7 @@ class NewAccount extends Component {
       <div className="newAccount">
         <div className="newAccount-content">
           <div className="newAccount-content-top">
-            <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }} className="button-back" to="/"><img src={Back} className="button-back"></img></Link>
+            <Link style={{ display: this.state.showButtonVoltar ? 'block' : 'none' }} className="button-back" to="/"><img src={Back} className="new-account-img button-back"></img></Link>
             <p style={{ display: this.state.showLinkDefault ? 'block' : 'none' }} className="newAccount-content-paragraph">caso queira 
             <a 
               href='#'
@@ -116,7 +116,7 @@ class NewAccount extends Component {
                 opacity: this.state.enableFacebook ? '1' : '0.5'
               }}
             ></img> */}
-            <img src={Github} alt="Logo Github"
+            <img className="new-account-img"src={Github} alt="Logo Github"
               onClick={this.formHandlerGithub}
               style={{
                 cursor: this.state.enableGithub ? 'pointer' : 'auto',

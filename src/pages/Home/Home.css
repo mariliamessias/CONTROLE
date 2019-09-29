@@ -1,13 +1,17 @@
 .container-cards{
   padding: 30px;
+  z-index: -1;
+  position: absolute;
+  width: 100%;
 }
 .container-cards-list{
   padding: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .container-card{
-  max-width: 500px;
+  width: 100%;
+  max-width: 100%;
   min-width: 400px;
   min-height: 500px;
   max-height: 550px;

@@ -21,7 +21,7 @@ class Home extends Component {
         }
     }
 
-
+    
     render() {
 
         const data = {
@@ -56,9 +56,9 @@ class Home extends Component {
                                             <img src={add} className="container-card-header-button"></img>
                                         </div>
                                         <CardBody>
-                                            <div className="container-card-body">
+                                            {/* <div className="container-card-body">
                                                 <Line data={data} />
-                                            </div>
+                                            </div> */}
                                             <div className="container-card-body">
                                                 <div className="container-card-body-bottom">
                                                     <div className="container-card-body-left" id="UncontrolledTooltipExample">

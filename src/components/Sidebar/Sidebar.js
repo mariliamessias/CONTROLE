@@ -89,9 +89,11 @@ class SideBar extends Component {
         <div className="sidebar-title">
           <p>MOL</p>
         </div>
-        <Link to="/home" className="sidebar-button">Despesas em Aberto</Link>
+        <Link to="/home" className="sidebar-button">Visão Geral</Link>
+        <Link to="/aberto" className="sidebar-button">Despesas em Aberto</Link>
         <Link to="/pagas" className="sidebar-button">Despesas Pagas</Link>
-        <button className="sidebar-button" onClick={this.sairModal} >Sair</button>
+        <Link to="/pagas" className="sidebar-button">Configurações de Conta</Link>
+        {/* <button className="sidebar-button" onClick={this.sairModal} >Sair</button> */}
 
         {/* <SimpleText className="homeStatusTitle">Resumo de <b>Despesas</b> do Mês de <b>{meses[date]}</b>:</SimpleText>
         <SimpleText className="homeStatus">Saldo de <b>Despesas</b> da Coita:</SimpleText>
