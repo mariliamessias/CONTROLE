@@ -32,7 +32,8 @@ class FormApp extends Component {
       showImage: true,
       showLoading: '',
       successModal: false,
-      errorModal: false
+      errorModal: false,
+      message: ""
     }
 
     this.saveUser = this.saveUser.bind(this);
@@ -55,11 +56,34 @@ class FormApp extends Component {
       this.setState((prevState) => ({
         errors: [field, '']
       }));
-    }else if((fields.telefone).length < 10){
-     errors["telefone"] = `Por gentileza informar um telefone válido.`;
-           this.setState({ errors: errors });
 
-    } else {
+      if ((fields.telefone).length < 10 && fields.telefone != "") {
+        errors["telefone"] = `Por gentileza informar um telefone válido.`;
+      }
+
+      if (fields.confEmail !== fields.email && (fields.confEmail != "" && fields.email != "")) {
+        errors["confEmail"] = `A confirmação não confere com o email informado, insira novamente.`;
+      }
+
+      if (isNaN(fields.telefone) && (fields.telefone).length > 0) {
+        errors["telefone"] = `O telefone deve conter apenas números`;
+      }
+      if (fields.senha !== fields.confSenha && (fields.confSenha != "" && fields.senha != "")) {
+        errors["confSenha"] = `A confirmação não confere com a senha informada, insira novamente.`;
+      }
+      if ((fields.senha).length < 6 && fields.senha != "") {
+        errors["senha"] = `A senha precisa possuir no mínimo 6 caracteres`;
+      }
+      if ((fields.senha).length >= 6) {
+        let patt1 = /[0-9]/g;
+        let result = fields.senha.match(patt1);
+        if (result === null) {
+          errors["senha"] = `A senha precisa conter pelo menos um número`;
+        }
+      }
+      this.setState({ errors: errors });
+    }
+    else {
       if (!fields[field]) {
         switch (field) {
           case "confEmail": errors[field] = `A confirmação de email precisa ser preenchida`; break;
@@ -114,8 +138,15 @@ class FormApp extends Component {
         this.setState({
           successModal: true
         })
-      } else {
+      } else if (result.status === 400) {
         this.setState({
+          message: "Essa conta já está cadastrada. Por gentileza realize o login.",
+          errorModal: true
+        })
+      }
+      else {
+        this.setState({
+          message: "Infelizmente não pudemos criar sua conta nesse momento, tente novamente mais tarde.",
           errorModal: true
         })
       }
@@ -185,6 +216,34 @@ class FormApp extends Component {
     let fields = this.state.fields;
     let errors = {};
 
+    if (fields["confSenha"] !== fields["senha"] && (fields["confSenha"] != "" && fields["senha"] != "")) {
+      errors["confSenha"] = `A confirmação não confere com a senha informada, insira novamente.`;
+    }
+
+    if (fields["confEmail"] !== fields["email"] && (fields["confEmail"] != "" && fields["email"] != "")) {
+      errors["confEmail"] = `A confirmação não confere com o email informado, insira novamente.`;
+    }
+
+    if ((fields["telefone"]).length < 10 && fields["telefone"] != "") {
+      errors["telefone"] = `Por gentileza informar um telefone válido.`;
+    }
+
+    if (isNaN(fields["telefone"]) && (fields["telefone"]).length > 0) {
+      errors["telefone"] = `O telefone deve conter apenas números`;
+    }
+    
+    if ((fields.senha).length >= 6) {
+      let patt1 = /[0-9]/g;
+      let result = fields.senha.match(patt1);
+      if (result === null) {
+        errors["senha"] = `A senha precisa conter pelo menos um número`;
+      }
+    }
+
+    if ((fields["senha"]).length < 6 && fields["senha"] != "") {
+      errors["senha"] = `A senha precisa possuir no mínimo 6 caracteres`;
+    }
+
     if (!fields["confEmail"]) {
       errors["confEmail"] = "A confirmação de email precisa ser preenchida`";
     }
@@ -225,10 +284,10 @@ class FormApp extends Component {
             <Modal.Title>Parabéns!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <div className="content-modal-body">
-            <img className="content-modal-img" src={correct}></img>
-            <p>Sua conta foi criada com sucesso!</p>
-          </div>
+            <div className="content-modal-body">
+              <img className="content-modal-img" src={correct}></img>
+              <p>Sua conta foi criada com sucesso!</p>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button>
@@ -244,7 +303,7 @@ class FormApp extends Component {
           <Modal.Body>
             <div className="content-modal-body">
               <img className="content-modal-img" src={error}></img>
-              <p>Infelizmente não pudemos criar sua conta nesse momento, tente novamente mais tarde.</p>
+              <p>{this.state.message}</p>
             </div>
           </Modal.Body>
           <Modal.Footer>
@@ -280,6 +339,7 @@ class FormApp extends Component {
                   <InputText
                     disabled={this.state.showForm ? "disabled" : ""}
                     onChange={this.handleChange.bind(this, "email")}
+                    onBlur={this.handleChange.bind(this, "email")}
                     value={this.state.fields["email"]}
                     name="email"
                     type="email"
@@ -318,6 +378,7 @@ class FormApp extends Component {
                   value={this.state.fields["confEmail"]}
                   name="confEmail"
                   onChange={this.handleChange.bind(this, "confEmail")}
+                  onBlur={this.handleChange.bind(this, "confEmail")}
                   errors={this.state.errors['confEmail']}
                   type="email"
                   placeholder="Ex.: email.maravilhoso@provedor.com" />
@@ -330,6 +391,7 @@ class FormApp extends Component {
                 <InputText
                   disabled={this.state.showForm ? "disabled" : ""}
                   onChange={this.handleChange.bind(this, "nome")}
+                  onBlur={this.handleChange.bind(this, "nome")}
                   errors={this.state.errors['nome']}
                   value={this.state.fields["nome"] || ''}
                   name="nome"
@@ -343,6 +405,7 @@ class FormApp extends Component {
                   name="telefone"
                   value={this.state.fields["telefone"] || ''}
                   onChange={this.handleChange.bind(this, "telefone")}
+                  onBlur={this.handleChange.bind(this, "telefone")}
                   errors={this.state.errors['telefone']}
                   type="text"
                   placeholder="Exemplo: 11988887777" />
@@ -351,6 +414,7 @@ class FormApp extends Component {
                 <label className="newAccount-form-item-text">Indicamos utilizar uma senha forte, assim como você:</label>
                 <InputText
                   onChange={this.handleChange.bind(this, "senha")}
+                  onBlur={this.handleChange.bind(this, "senha")}
                   errors={this.state.errors['senha']}
                   name="senha"
                   type="password" />
@@ -359,6 +423,7 @@ class FormApp extends Component {
                 <label className="newAccount-form-item-text">Só pra confirmar, repita ela aqui, por favor:</label>
                 <InputText
                   onChange={this.handleChange.bind(this, "confSenha")}
+                  onBlur={this.handleChange.bind(this, "confSenha")}
                   errors={this.state.errors['confSenha']}
                   name="confSenha"
                   type="password" />

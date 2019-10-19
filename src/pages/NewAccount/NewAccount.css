@@ -48,10 +48,15 @@
 }
 
 .new-account-img {
-    width: 120px;
+    width: 130px;
     margin: 0 20px 0 20px;
     padding: 10px;
-    height: 120px;
+    height: 130px;
+}
+
+.new-account-img-button-back {
+    width: 70px;
+    height: 70px;
 }
 
 .newAccount-content-social strong{

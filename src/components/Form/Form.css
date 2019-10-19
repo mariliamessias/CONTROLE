@@ -21,6 +21,7 @@
     transform: scale(1) !important;
     cursor: auto !important;
     margin-bottom: 10px;
+    width: 100px;
 }
 
 .button-newAccount{

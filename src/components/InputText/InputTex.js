@@ -39,6 +39,7 @@ class InputText extends React.Component {
           onKeyPress={this.props.onKeyPress}
           ref={this.setTextInputRef}
           disabled={this.props.disabled}
+          onBlur={this.props.onBlur}
         />
 
         <span className="error-input">{this.props.errors}</span>
