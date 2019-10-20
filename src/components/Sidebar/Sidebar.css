@@ -9,6 +9,21 @@
     text-align: center;
 }
 
+.profile-info{
+    width: 100%;
+    margin: auto;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.profile-picture{
+    width: 200px;
+    border-radius: 50%;
+    transform: scale(1) !important;
+    cursor: auto !important;
+    margin: 40px auto 0 auto;
+}
+
 .sidebar-button:hover{
     background: #c08cae;
     text-decoration: none;

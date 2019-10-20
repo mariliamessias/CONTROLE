@@ -33,7 +33,7 @@ class FormApp extends Component {
       showLoading: '',
       successModal: false,
       errorModal: false,
-      message: ""
+      message: '',
     }
 
     this.saveUser = this.saveUser.bind(this);
@@ -129,25 +129,35 @@ class FormApp extends Component {
     this.setState({ successModal: false, errorModal: false })
   }
 
-  handleSubmit(e) {
+ async handleSubmit(e) {
     e.preventDefault();
+
     const res = this.handleValidation();
     if (res) {
+      this.setState({
+        showLoading: 'content_loading'
+      })
+
+      await new Promise(resolve => setTimeout(resolve, 1000)); 
+
       const result = this.saveUser();
       if (result.status === 200) {
         this.setState({
-          successModal: true
+          successModal: true,
+          showLoading: ""
         })
       } else if (result.status === 400) {
         this.setState({
           message: "Essa conta já está cadastrada. Por gentileza realize o login.",
-          errorModal: true
+          errorModal: true,
+          showLoading: ""
         })
       }
       else {
         this.setState({
           message: "Infelizmente não pudemos criar sua conta nesse momento, tente novamente mais tarde.",
-          errorModal: true
+          errorModal: true,
+          showLoading: ""
         })
       }
     }
@@ -200,7 +210,6 @@ class FormApp extends Component {
           } else errors["email"] = "Infelizmente não localizamos a conta informada";
         } catch (e) {
           errors["email"] = "Infelizmente não localizamos a conta informada";
-          console.log(e)
         }
 
       }
@@ -214,6 +223,7 @@ class FormApp extends Component {
 
   handleValidation() {
     let fields = this.state.fields;
+
     let errors = {};
 
     if (fields["confSenha"] !== fields["senha"] && (fields["confSenha"] != "" && fields["senha"] != "")) {
@@ -231,7 +241,7 @@ class FormApp extends Component {
     if (isNaN(fields["telefone"]) && (fields["telefone"]).length > 0) {
       errors["telefone"] = `O telefone deve conter apenas números`;
     }
-    
+
     if ((fields.senha).length >= 6) {
       let patt1 = /[0-9]/g;
       let result = fields.senha.match(patt1);
@@ -431,7 +441,14 @@ class FormApp extends Component {
 
               <div className="newAccount-form-buttons">
                 <Link className="button-newAccount" to="/">Cancelar</Link>
-                <Button className="button-newAccount" type="submit">Confirmar</Button>
+                {/* <Button className="button-newAccount" type="submit">Confirmar</Button> */}
+                <Button
+                  className={this.state.showLoading != "" ? this.state.showLoading : "button-newAccount"}
+                  type="submit">
+                  <img className={this.state.showLoading != "" ? "loading" : "loading_none"} src={carregando} alt="Carregando" />
+                  {this.state.showLoading == "" ? `Confirmar` : "Carregando"}
+
+                </Button>
               </div>
             </div>
           </div>

@@ -41,7 +41,7 @@ class Home extends Component {
         });
     }
     render() {
-
+        
         const data = {
             labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             datasets: [
@@ -77,7 +77,11 @@ class Home extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <SideBar />
+                <SideBar 
+                    userId={this.props.location.state.id} 
+                    userName={this.props.location.state.nome}
+                    profilePicture={this.props.location.state.profilePicture}
+                    />
 
                 <div id="page-wrap" > { /* {this.validaPagina()} */}
                     <Menu />

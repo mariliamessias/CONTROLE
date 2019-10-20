@@ -22,7 +22,9 @@ class Login extends Component {
       token: "",
       buttonStatus: 'Login-body-buttonLogin',
       buttonValue: 'Sign In',
-      loadingImage: 'login_none'
+      loadingImage: 'login_none',
+      profilePicture: "",
+      nome: ""
     };
 
     this.inputRef = React.createRef();
@@ -40,7 +42,7 @@ class Login extends Component {
     if (this.state.redirect) {
       return <Redirect to={{
         pathname: '/home',
-        //state: { token: this.state.token , id: this.state.id}
+        state: { token: this.state.token , id: this.state.id, nome: this.state.nome, profilePicture: this.state.profilePicture}
       }} />
     } else if (this.state.redirectNewAccount) {
       return <Redirect to={{
@@ -131,7 +133,9 @@ class Login extends Component {
                 success: function (resposta) {
                   this.setState({
                     token: resposta.token,
-                    id: resposta.id
+                    id: resposta.id,
+                    profilePicture: resposta.profilePicture,
+                    nome: resposta.nome
                   })
                   return this.setRedirect();
                 }.bind(this),

@@ -21,7 +21,7 @@ class SideBar extends Component {
   sairModal(item) {
     PubSub.publish("sairModal", item);
   }
-  
+
   componentWillMount() {
     let despesaCoita = 0;
     let despesaMol = 0;
@@ -86,8 +86,11 @@ class SideBar extends Component {
 
     return (
       <Menu>
-        <div className="sidebar-title">
-          <p>MOL</p>
+        <div className="profile-info">
+          <img src={this.props.profilePicture} className="profile-picture"></img>
+          <div className="sidebar-title">
+            <p>{this.props.userName}</p>
+          </div>
         </div>
         <Link to="/home" className="sidebar-button">Visão Geral</Link>
         <Link to="/aberto" className="sidebar-button">Despesas em Aberto</Link>
