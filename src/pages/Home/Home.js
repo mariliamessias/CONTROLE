@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
+
 import { UncontrolledTooltip } from 'reactstrap';
 import SimpleText from '../../components/SimpleText/SimpleText';
 import Menu from '../../components/Menu/Menu';
@@ -15,22 +16,84 @@ import add from '../../images/add.svg';
 import despesa from '../../images/sair_dinheiro.png';
 import receita from '../../images/entrar_dinheiro.png';
 
+import FusionCharts from 'fusioncharts';
+// Load the charts module
+import Charts from 'fusioncharts/fusioncharts.charts';
+import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import ReactFC from 'react-fusioncharts';
+
 import './Home.css'
 import { fdatasync } from 'fs';
+
+ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
+
+const chartConfigs = {
+    type: 'column2d',
+    width: 600,
+    height: 400,
+    dataFormat: 'json',
+    dataSource: {
+
+            "chart": {
+              "caption": "Countries With Most Oil Reserves [2017-18]",
+              "subCaption": "In MMbbl = One Million barrels",
+              "xAxisName": "Country",
+              "yAxisName": "Reserves (MMbbl)",
+              "numberSuffix": "K",
+              "theme": "fusion"
+            },
+            "data": [
+              {
+                "label": "Venezuela",
+                "value": "290"
+              },
+              {
+                "label": "Saudi",
+                "value": "260"
+              },
+              {
+                "label": "Canada",
+                "value": "180"
+              },
+              {
+                "label": "Iran",
+                "value": "140"
+              },
+              {
+                "label": "Russia",
+                "value": "115"
+              },
+              {
+                "label": "UAE",
+                "value": "100"
+              },
+              {
+                "label": "US",
+                "value": "30"
+              },
+              {
+                "label": "China",
+                "value": "30"
+              }
+            ]
+          
+     },
+  };
+
 class Home extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
             showSair: false,
-            teste: [{ id: 1, nome: "Ana" }, { id: 2, nome: "Joana" }, { id: 3, nome: "Hug" }]
+            teste: [{ id: 1, nome: "Ana" }, { id: 3, nome: "Meh" }]
         }
         this.handleCloseSair = this.handleCloseSair.bind(this);
     }
 
     handleShowSair() {
         this.setState({ showSair: true })
-      }
-      
+    }
+
     handleCloseSair() {
         this.setState({ showSair: false })
     }
@@ -41,7 +104,7 @@ class Home extends Component {
         });
     }
     render() {
-        
+
         const data = {
             labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             datasets: [
@@ -77,11 +140,11 @@ class Home extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <SideBar 
-                    userId={this.props.location.state.id} 
+                <SideBar
+                    userId={this.props.location.state.id}
                     userName={this.props.location.state.nome}
                     profilePicture={this.props.location.state.profilePicture}
-                    />
+                />
 
                 <div id="page-wrap" > { /* {this.validaPagina()} */}
                     <Menu />
@@ -91,7 +154,6 @@ class Home extends Component {
                                 return (
                                     <Card className="container-card" key={item.id}>
                                         <div className="container-card-header">
-                                            <p className="container-card-title">{item.nome}</p>
                                             <img src={add} className="container-card-header-button"></img>
                                         </div>
                                         <CardBody>
@@ -99,8 +161,11 @@ class Home extends Component {
                                                 <Line data={data} />
                                             </div> */}
                                             <div className="container-card-body">
+
                                                 <div className="container-card-body-bottom">
-                                                    <div className="container-card-body-left" id="UncontrolledTooltipExample">
+                                                <ReactFC {...chartConfigs} />;
+
+                                                     {/* <div className="container-card-body-left" id="UncontrolledTooltipExample">
                                                         <p>R$ 100,00</p>
                                                         <UncontrolledTooltip placement="right" target="UncontrolledTooltipExample">
                                                             Hello world!
@@ -112,7 +177,7 @@ class Home extends Component {
                                                         <div>
                                                             R$ 100,00
                                                         </div>
-                                                    </div>
+                                                    </div>  */}
                                                 </div>
                                             </div>
                                             {/* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> */}
