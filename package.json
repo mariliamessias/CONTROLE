@@ -10,7 +10,7 @@
     "formik": "^1.5.8",
     "fusioncharts": "^3.14.1",
     "jquery": "^3.4.0",
-    "next": "^8.0.4",
+    "next": "^9.3.2",
     "pubsub-js": "^1.7.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.6",
